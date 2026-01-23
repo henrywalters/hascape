@@ -1,0 +1,101 @@
+{
+  "id": 687250613225,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 444650129889,
+      "name": "Text",
+      "children": [],
+      "components": [
+        {
+          "id": 311643783398,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              39,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 808127579859,
+          "name": "TextMesh",
+          "params": {
+            "text": "Other",
+            "font": "runescape",
+            "size": 18,
+            "depth": 1,
+            "color": [
+              0.913098651791473,
+              1,
+              0
+            ],
+            "alignment": "Center"
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 351398056246,
+      "name": "Transform",
+      "params": {
+        "position": [
+          -23.08281899646264,
+          -26.142160119225423,
+          2.1713790487946425
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 169879586187,
+      "name": "Smooth",
+      "params": {
+        "speed": 1
+      }
+    },
+    {
+      "id": 586182127121,
+      "name": "MeshPrimitive",
+      "params": {
+        "type": "Cube",
+        "width": 50,
+        "height": 50,
+        "depth": 1,
+        "radius": 1,
+        "color": [
+          0.3371636150376657,
+          0,
+          1
+        ]
+      }
+    },
+    {
+      "id": 409135381878,
+      "name": "Player",
+      "params": {}
+    }
+  ]
+}

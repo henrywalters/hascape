@@ -1,0 +1,11 @@
+{
+  "name": "hascape",
+  "private": true,
+  "version": "1.0.0",
+  "workspaces": [
+    "common",
+    "client",
+    "server",
+    "editor"
+  ]
+}

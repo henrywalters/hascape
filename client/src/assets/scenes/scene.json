@@ -1,0 +1,198 @@
+{
+  "entities": [
+    {
+      "id": 5,
+      "name": "Camera",
+      "children": [],
+      "components": [
+        {
+          "id": 7,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              100
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 8,
+          "name": "OrthographicCamera",
+          "params": {
+            "left": -377.5,
+            "right": 377.5,
+            "bottom": -311,
+            "top": 311,
+            "near": 0.01,
+            "far": 1000
+          }
+        }
+      ]
+    },
+    {
+      "id": 89,
+      "name": "Menu",
+      "children": [
+        {
+          "id": 94,
+          "name": "Entity_1",
+          "children": [
+            {
+              "id": 97,
+              "name": "Entity_2",
+              "children": [],
+              "components": [
+                {
+                  "id": 98,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 99,
+                  "name": "Text",
+                  "params": {
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ],
+                    "font": "runescape",
+                    "text": "HaScape",
+                    "fontSize": 24,
+                    "lineSpacing": 0,
+                    "color": [
+                      0.5711248294565854,
+                      0.6172065624120635,
+                      0.007499032040460618
+                    ],
+                    "alignment": "Left"
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 95,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  212.5,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 96,
+              "name": "Container",
+              "params": {
+                "anchorAlignment": "TopCenter",
+                "anchored": true,
+                "sizeUnit": "Pixel",
+                "width": 400,
+                "height": 75,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ],
+                "color": [
+                  0.014443843592229466,
+                  0.014443843592229466,
+                  0.014443843592229466
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 90,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 91,
+          "name": "Container",
+          "params": {
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 400,
+            "height": 500,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "color": [
+              0.09758734713304495,
+              0.04817182422013895,
+              0.012983032338510335
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

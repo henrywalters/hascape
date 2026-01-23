@@ -1,0 +1,22 @@
+{
+  "name": "@hascape/common",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./messages": "./dist/messages.js"
+  },
+  "dependencies": {
+    "hagamets": "file:../../hgts",
+    "three": "^0.182.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
+  },
+  "devDependencies": {
+    "@types/three": "^0.182.0"
+  }
+}

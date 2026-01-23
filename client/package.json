@@ -1,0 +1,23 @@
+{
+  "name": "@hascape/client",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    },
+    "./client": "./dist/client.js",
+    "./manifest": "./dist/manifest.js"
+  },
+  "dependencies": {
+    "hagamets": "file:../../hgts",
+    "three": "^0.182.0"
+  },
+  "devDependencies": {
+    "@types/three": "^0.182.0"
+  },
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "watch": "tsc -p tsconfig.json --watch"
+  }
+}

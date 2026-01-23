@@ -1,0 +1,13 @@
+{
+  "name": "@hascape/editor",
+  "version": "1.0.0",
+  "type": "module",
+  "exports": {
+    ".": {
+      "default": "./dist/index.js"
+    }
+  },
+  "dependencies": {
+    "hagamets": "file:../../hgts"
+  }
+}

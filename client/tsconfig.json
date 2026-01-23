@@ -1,0 +1,25 @@
+{
+  "extends": "../tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "src",
+    "emitDeclarationOnly": false,
+    "resolveJsonModule": true,
+		"strict": true,
+		"declaration": true,
+		"declarationMap": true,
+		"sourceMap": true,
+		"inlineSources": true,
+		"outDir": "./dist",
+		"allowSyntheticDefaultImports": true,
+		"esModuleInterop": true,
+		"isolatedModules": true,
+		"skipLibCheck": true,
+		"noEmitOnError": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"strictPropertyInitialization": false,
+  },
+  "include": [
+		"src/**/*"
+	],
+}

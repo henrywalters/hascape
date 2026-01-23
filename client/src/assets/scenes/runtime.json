@@ -1,0 +1,307 @@
+{
+  "entities": [
+    {
+      "id": 153,
+      "name": "Floor",
+      "children": [],
+      "components": [
+        {
+          "id": 522575322384,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 901228334843,
+          "name": "MeshPrimitive",
+          "params": {
+            "type": "Cube",
+            "width": 500,
+            "height": 500,
+            "depth": 1,
+            "radius": 1,
+            "color": [
+              0.035601314869097636,
+              0.174647403645279,
+              0.008023192982520563
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 955292798725,
+      "name": "ChatBox",
+      "children": [
+        {
+          "id": 818439657603,
+          "name": "ChatInput",
+          "children": [
+            {
+              "id": 224696758751,
+              "name": "Entity_3",
+              "children": [],
+              "components": [
+                {
+                  "id": 655144785970,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 288984428619,
+                  "name": "TextInput",
+                  "params": {
+                    "maxLength": 16,
+                    "font": "runescape",
+                    "text": "Hello World",
+                    "fontSize": 18,
+                    "lineSpacing": 0,
+                    "color": [
+                      1,
+                      0.9559733532482866,
+                      0
+                    ],
+                    "alignment": "Left",
+                    "anchorAlignment": "Left",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 783582478620,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  -72.468,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 528031958546,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.01764195448412081,
+                  0.015996293361446288,
+                  0.015996293361446288
+                ],
+                "anchorAlignment": "BottomCenter",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 20,
+                "marginUnit": "Pixel",
+                "margin": [
+                  15,
+                  0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 283481485988,
+          "name": "ChatOutput",
+          "children": [
+            {
+              "id": 505678417332,
+              "name": "Entity_2",
+              "children": [],
+              "components": [
+                {
+                  "id": 693993978854,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 235478697990,
+                  "name": "Text",
+                  "params": {
+                    "font": "runescape",
+                    "text": "gorkill: Hello Friends",
+                    "fontSize": 18,
+                    "lineSpacing": 0,
+                    "color": [
+                      1,
+                      0.775822218312646,
+                      0
+                    ],
+                    "alignment": "Left",
+                    "anchorAlignment": "TopLeft",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      15,
+                      15
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 462542898473,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  18.11699999999999,
+                  1
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 375125241690,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.057805430183792694,
+                  0.057805430183792694,
+                  0.057805430183792694
+                ],
+                "anchorAlignment": "TopCenter",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 80,
+                "marginUnit": "Pixel",
+                "margin": [
+                  15,
+                  15
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 383479976076,
+          "name": "Transform",
+          "params": {
+            "position": [
+              -289,
+              -183.915,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 979212692151,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.11953842797895521,
+              0.035601314869097636,
+              0
+            ],
+            "anchorAlignment": "BottomLeft",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 50,
+            "height": 33,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

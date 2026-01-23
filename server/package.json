@@ -1,0 +1,36 @@
+{
+   "name": "@hascape/server",
+   "type": "module",
+   "version": "0.0.1",
+   "description": "Awesome project developed with TypeORM.",
+   "dependencies": {
+      "cors": "^2.8.5",
+      "dotenv": "^17.2.3",
+      "express": "^5.2.1",
+      "firebase-admin": "^13.6.0",
+      "hcore": "^1.2.0",
+      "pg": "^8.16.3",
+      "postgres": "^3.4.8",
+      "redis": "^5.10.0",
+      "reflect-metadata": "^0.2.2",
+      "three": "^0.182.0",
+      "typeorm": "^0.3.28",
+      "ws": "^8.19.0"
+   },
+   "scripts": {
+      "typeorm": "typeorm-ts-node-commonjs",
+      "migration:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
+      "migration:run": "npm run typeorm migration:run -- -d src/data-source.ts",
+      "migration:revert": "npm run typeorm migration:revert -- -d src/data-source.ts",
+      "migration:create": "npm run typeorm migration:create"
+   },
+   "devDependencies": {
+      "@types/cors": "^2.8.19",
+      "@types/express": "^5.0.6",
+      "@types/node": "^25.0.6",
+      "@types/redis": "^4.0.10",
+      "@types/three": "^0.182.0",
+      "@types/ws": "^8.18.1",
+      "ts-node": "^10.9.2"
+   }
+}

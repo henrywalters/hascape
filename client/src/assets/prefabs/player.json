@@ -1,0 +1,149 @@
+{
+  "id": 113745314022,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 865073073555,
+      "name": "Camera",
+      "children": [],
+      "components": [
+        {
+          "id": 185809814620,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              100
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 902599886975,
+          "name": "OrthographicCamera",
+          "params": {
+            "left": -565.5,
+            "right": 565.5,
+            "bottom": -274.5,
+            "top": 274.5,
+            "near": 0.01,
+            "far": 1000,
+            "zoom": 1
+          }
+        }
+      ]
+    },
+    {
+      "id": 627593570716,
+      "name": "Text",
+      "children": [],
+      "components": [
+        {
+          "id": 952220285084,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              41,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 735039679316,
+          "name": "TextMesh",
+          "params": {
+            "text": "Hello World",
+            "font": "runescape",
+            "size": 18,
+            "depth": 1,
+            "color": [
+              0.982250550332711,
+              1,
+              0
+            ],
+            "alignment": "Center"
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 482615559592,
+      "name": "Transform",
+      "params": {
+        "position": [
+          -9.259150886647006,
+          3.2380952729326564,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 987432625044,
+      "name": "Smooth",
+      "params": {
+        "speed": 1
+      }
+    },
+    {
+      "id": 687604212227,
+      "name": "MeshPrimitive",
+      "params": {
+        "type": "Cube",
+        "width": 50,
+        "height": 50,
+        "depth": 1,
+        "radius": 1,
+        "color": [
+          0,
+          0.006512090790025684,
+          0.9215818562755338
+        ]
+      }
+    },
+    {
+      "id": 593863859214,
+      "name": "Behavior",
+      "params": {
+        "scriptName": "PlayerController"
+      }
+    },
+    {
+      "id": 722222880561,
+      "name": "Player",
+      "params": {}
+    }
+  ]
+}
