@@ -3,7 +3,7 @@ import { Script } from "hagamets/dist/core/script.js";
 import { Button } from "hagamets/dist/common/components/ui/button.js";
 import { ClientConnect } from "@hascape/common";
 import { Client } from "../client";
-import { TextMesh } from "hagamets/dist/common/components/mesh.js";
+import { Text } from "hagamets/dist/common/components/ui/text.js";
 
 export class Login extends Script {
 
@@ -19,7 +19,7 @@ export class Login extends Script {
 
     onUpdate(dt: number) {
         const game = this.entity.scene.game as Client;
-        const message = this.entity.scene.getEntity(this.message)?.getComponent(TextMesh);
+        const message = this.entity.scene.getEntity(this.message)?.getComponent(Text);
         const button = this.entity.scene.getEntity(this.button)?.getComponent(Button);
 
         const text = `Hello ${game.user.username}`;

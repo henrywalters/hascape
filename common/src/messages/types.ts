@@ -1,6 +1,7 @@
 export enum ClientMessages {
     Connect,
     PlayerMove,
+    PlayerMessage,
 }
 
 export enum ServerMessages {
@@ -8,4 +9,5 @@ export enum ServerMessages {
     OtherPlayerJoined,
     PlayerLeft,
     PlayerMoved,
+    PlayerMessaged,
 }

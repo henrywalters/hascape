@@ -11,7 +11,7 @@ import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
 import { ServerMessages } from "./messages/types";
 import { PlayerService } from "./services/player";
 import { Vector3 } from "three";
-import { PlayerSetPosition } from "./messages/player";
+import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "./messages/player";
 
 dotenv.config({ path: '.env' })
 
@@ -77,6 +77,21 @@ AppDataSource.initialize().then(async () => {
             const player = await players.getPlayer(session.user);
             if (!player) return;
             await players.setPlayerPosition(player, setPos.position);
+        }
+
+        if (message.type === ServerMessages.PlayerSendMessage) {
+            const msg = message as PlayerSendMessage;
+            const session = await auth.getSession(msg.sessionId);
+            if (!session) return;
+            const to = await auth.getSession(msg.sentTo);
+            players.sendMessage(session.user, msg.message, to?.user);
+
+            const received = new PlayerReceivedMessaged;
+            received.message = msg.message;
+            received.username = session.user.username;
+            received.sentTo = msg.sentTo;
+            
+            pubsub.send(received);
         }
     }
 

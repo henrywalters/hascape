@@ -1,14 +1,14 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Player, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance } from "@hascape/common";
+import { ClientConnect, ClientMessages, Player, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
 import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
-import { APIMessages } from "./messages/types";
+import { APIMessages, ServerMessages } from "./messages/types";
 import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { Transform } from "hagamets/dist/common/components/transform.js";
-import { PlayerSetPosition } from "./messages/player";
+import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "./messages/player";
 import { EntityEvents } from "hagamets/dist/core/events.js";
 import { Vector3 } from "three";
 
@@ -35,6 +35,9 @@ export class Runtime extends Scene {
                     break;
                 case APIMessages.LoggedOut:
                     this.loggedOut(msg as LoggedOut);
+                    break;
+                case APIMessages.PlayerReceiveMessage:
+                    this.receiveMessage(msg as PlayerReceivedMessaged);
                     break;
             }
         }
@@ -88,6 +91,15 @@ export class Runtime extends Scene {
                     const player = entity.getComponent(Player)!;
                     player.direction.copy(move.direction);
                 }
+            }
+
+            if (message.message.type === ClientMessages.PlayerMessage) {
+                const msg = message.message as PlayerMessage;
+                let send = new PlayerSendMessage();
+                send.message = msg.message;
+                send.sentTo = msg.sentTo;
+                send.sessionId = msg.sessionId;
+                this.pubsub.send(send);
             }
         })
 
@@ -167,6 +179,19 @@ export class Runtime extends Scene {
 
             this.sockets.delete(this.socketIds.get(socket)!);
             this.socketIds.delete(socket);
+        }
+    }
+
+    private receiveMessage(msg: PlayerReceivedMessaged) {
+        if (this.players.has(msg.sentTo)) {
+            // It's a private message then
+            // TODO
+        } else {
+            const newMsg = new PlayerMessaged();
+            newMsg.message = msg.message;
+            newMsg.username = msg.username;
+            newMsg.position = new Vector3();
+            this.game.server.emit(newMsg);
         }
     }
 }

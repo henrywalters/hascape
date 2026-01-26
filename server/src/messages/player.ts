@@ -1,6 +1,6 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
-import { ServerMessages } from "./types";
-import { Param, Types } from "hagamets/dist/core/reflection.js";
+import { APIMessages, ServerMessages } from "./types";
+import { Param, Types, String } from "hagamets/dist/core/reflection.js";
 import { Vector3 } from "three";
 
 export class PlayerSetPosition extends NetMessage {
@@ -11,4 +11,31 @@ export class PlayerSetPosition extends NetMessage {
 
     @Param({type: Types.Vector3})
     position: Vector3;
+}
+
+
+export class PlayerSendMessage extends NetMessage {
+    type = ServerMessages.PlayerSendMessage;
+
+    @String()
+    sessionId: string;
+
+    @String()
+    message: string;
+
+    @String()
+    sentTo: string = "";
+}
+
+export class PlayerReceivedMessaged extends NetMessage {
+    type = APIMessages.PlayerReceiveMessage;
+
+    @String()
+    username: string;
+
+    @String()
+    sentTo: string = "";
+
+    @String()
+    message: string = "";
 }

@@ -7,7 +7,7 @@ export const AppDataSource = new DataSource({
     username: "hascape",
     password: "hascape",
     database: "hascape",
-    synchronize: false,
+    synchronize: true,
     logging: false,
     entities: ["src/entity/**/*.ts"],
     migrations: ["src/migration/**/*.ts"],

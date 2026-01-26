@@ -1,10 +1,13 @@
 import { RenderScene } from "hagamets/dist/common/scenes/renderScene.js";
 import { State } from "../state";
-import { OtherPlayerJoined, Player, PlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, ServerMessages } from "@hascape/common";
+import { OtherPlayerJoined, Player, PlayerJoined, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages } from "@hascape/common";
 import OtherPrefab from "./../assets/prefabs/otherPlayer.json";
 import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { TextMesh } from "hagamets/dist/common/components/mesh.js";
+import { Behavior } from "hagamets/dist/common/components/behavior.js";
+import { ChatBox } from "../scripts/chatBox";
+import { ScriptRegistry } from "hagamets/dist/core/script.js";
 
 export class Runtime extends RenderScene {
 
@@ -65,6 +68,21 @@ export class Runtime extends RenderScene {
                     smooth!.speed = entity.getComponent(Player)!.speed;
                     smooth!.targetPosition = moved.position as any;
                 }
+            }
+
+            if (msg.message.type === ServerMessages.PlayerMessaged) {
+                console.log(msg.message);
+                const playerMessage = msg.message as PlayerMessaged;
+                this.components.forEach(Behavior, (behavior) => {
+                    if (behavior.scriptName === 'ChatBox') {
+                        const script = ScriptRegistry.get(behavior.scriptName, behavior) as ChatBox;
+                        
+                        console.log(script);
+                        if (script) {
+                            script.addMessage(`${playerMessage.username}: ${playerMessage.message}`);
+                        }
+                    }
+                })
             }
         })
     }

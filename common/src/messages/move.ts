@@ -1,6 +1,6 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { ClientMessages, ServerMessages } from "./types";
-import { Param, Types } from "hagamets/dist/core/reflection.js";
+import { Float, Int, Param, String, Types } from "hagamets/dist/core/reflection.js";
 import { Vector3 } from "three";
 
 export class PlayerMove extends NetMessage {
@@ -9,13 +9,13 @@ export class PlayerMove extends NetMessage {
     @Param({type: Types.Vector3})
     direction: Vector3 = new Vector3();
 
-    @Param({type: Types.Int})
+    @Int()
     tick: number = 0;
 
-    @Param({type: Types.Float})
+    @Float()
     dt: number = 0;
 
-    @Param({type: Types.String})
+    @String()
     sessionId: string = "";
 }
 
@@ -25,6 +25,6 @@ export class PlayerMoved extends NetMessage {
     @Param({type: Types.Vector3})
     position: Vector3;
 
-    @Param({type: Types.String})
+    @String()
     sessionId: string = "";
 }

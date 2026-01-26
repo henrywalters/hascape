@@ -16,6 +16,7 @@ import { Runtime } from "./scenes/runtime";
 import { CameraController } from "./scripts/cameraController";
 import {Players} from "@hascape/common";
 import { PlayerController } from "./scripts/playerController";
+import { ChatBox } from "./scripts/chatBox";
 
 export const Manifest: IManifest = {
     systems: [
@@ -32,6 +33,7 @@ export const Manifest: IManifest = {
         Login,
         CameraController,
         PlayerController,
+        ChatBox,
     ],
     scenes: {
         login_menu: {
@@ -51,7 +53,7 @@ export const Manifest: IManifest = {
             }
         ]
     },
-    startScene: "runtime",
+    startScene: "login_menu",
     client: {
         address: {
             host: "127.0.0.1",

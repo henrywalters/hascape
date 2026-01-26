@@ -7,7 +7,7 @@ import { State } from "../state";
 export class PlayerController extends Script {
     onUpdate(dt: number) {
         const player = this.entity.getComponent(Player);
-        if (player && player.sessionId === State.sessionId) {
+        if (player && player.sessionId === State.sessionId && !State.isTyping) {
             const dir = this.input.getAxis(Axes.KeyboardWASD);
             player.direction.set(dir.x, dir.y, 0);
             player.direction.normalize();

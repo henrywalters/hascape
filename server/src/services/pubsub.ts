@@ -3,17 +3,19 @@ import { NetMessages } from "hagamets/dist/net/messages.js";
 import { Server } from "hagamets/dist/net/server.js";
 import { Client } from "hagamets/dist/net/client.js";
 import { LoggedIn, LoggedOut, Login, Logout } from "../messages/login";
-import { PlayerSetPosition } from "../messages/player";
+import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "../messages/player";
 
 const SERVER_MESSAGES: NetMessages = new NetMessages([
     Login,
     Logout,
     PlayerSetPosition,
+    PlayerSendMessage,
 ]);
 
 const API_MESSAGES: NetMessages = new NetMessages([
     LoggedIn,
     LoggedOut,
+    PlayerReceivedMessaged,
 ]);
 
 const API_PORT = 4301;

@@ -22,7 +22,9 @@ export class LoginMenu extends RenderScene {
 
             if (msg.message.type === ServerMessages.PlayerJoined) {
                 const joined = msg.message as PlayerJoined;
-                console.log(joined);
+                
+                // If we join, that means we're logged into the server and therefore not editing
+                State.isEditing = false;
 
                 State.sessionId = joined.player.sessionId;
 
