@@ -23,6 +23,9 @@ export class PlayerMessaged extends NetMessage {
     username: string;
 
     @String()
+    sessionId: string;
+
+    @String()
     message: string = "";
 
     @Param({type: Types.Vector3})

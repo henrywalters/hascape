@@ -34,6 +34,9 @@ export class PlayerReceivedMessaged extends NetMessage {
     username: string;
 
     @String()
+    sessionId: string;
+
+    @String()
     sentTo: string = "";
 
     @String()

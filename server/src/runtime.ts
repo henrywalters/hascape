@@ -1,6 +1,6 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Player, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged } from "@hascape/common";
+import { ClientConnect, ClientMessages, Player, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, INPC } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
 import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
@@ -10,7 +10,9 @@ import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { Transform } from "hagamets/dist/common/components/transform.js";
 import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "./messages/player";
 import { EntityEvents } from "hagamets/dist/core/events.js";
-import { Vector3 } from "three";
+import { Vector2, Vector3 } from "three";
+import { NPCs } from "@hascape/common";
+import { NPCSpawn } from "./messages/npc";
 
 export class Runtime extends Scene {
 
@@ -50,7 +52,6 @@ export class Runtime extends Scene {
                 setPos.sessionId = player.sessionId;
                 setPos.position = e.entity.position as any;
                 this.pubsub.send(setPos);
-                console.log(setPos);
             }
         })
     }
@@ -107,6 +108,7 @@ export class Runtime extends Scene {
             const moved = new PlayerMoved();
             moved.position = player.entity.position as any;
             moved.sessionId = player.sessionId;
+            moved.direction = player.direction;
             this.game.server.emit(moved);
         });
     }
@@ -191,7 +193,24 @@ export class Runtime extends Scene {
             newMsg.message = msg.message;
             newMsg.username = msg.username;
             newMsg.position = new Vector3();
+            newMsg.sessionId = msg.sessionId;
             this.game.server.emit(newMsg);
         }
+    }
+
+    private spawnNPC(type: string, position: Vector3) {
+        if (!(type in NPCs)) {
+            console.error(`NPC ${type} does not exist`);
+            return;
+        }
+
+        const npc = NPCs[type];
+
+        const spawn = new NPCSpawn();
+        spawn.npcType = type;
+        spawn.health = npc.health;
+        spawn.position = position;
+
+        this.pubsub.send(spawn);
     }
 }

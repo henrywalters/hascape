@@ -7,6 +7,8 @@ import { State } from "../state";
 import { TextInput, TextInputEvents } from "hagamets/dist/common/components/ui/textInput.js";
 import { Text } from "hagamets/dist/common/components/ui/text.js";
 import { PlayerMessage } from "@hascape/common";
+import { TextMesh } from "hagamets/dist/common/components/mesh.js";
+import { Runtime } from "../scenes/runtime";
 
 export class ChatBox extends Script {
     @Param({type: Types.Entity})
@@ -28,15 +30,14 @@ export class ChatBox extends Script {
     public addMessage(msg: string) {
         const output = this.scene.getEntity(this.output);
         if (!output) return;
+
         const textOutput = output.getComponent(Text);
         if (!textOutput) return;
         this.messages.push(msg);
         while (this.messages.length > this.maxMessages) {
             this.messages.splice(0, 1);
         }
-        console.log(this.messages);
         textOutput.text = this.messages.join('\n');
-        console.log(textOutput.text);
         textOutput.notifyUpdate();
     }
 

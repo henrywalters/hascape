@@ -1,0 +1,16 @@
+{
+  "name": "warrior_idle",
+  "url": "https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/Soldier-Idle.png",
+  "cells": {
+    "x": 6,
+    "y": 1
+  },
+  "padding": {
+    "x": 40,
+    "y": 40
+  },
+  "offset": {
+    "x": -1,
+    "y": 2
+  }
+}

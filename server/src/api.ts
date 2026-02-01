@@ -90,7 +90,8 @@ AppDataSource.initialize().then(async () => {
             received.message = msg.message;
             received.username = session.user.username;
             received.sentTo = msg.sentTo;
-            
+            received.sessionId = msg.sessionId;
+
             pubsub.send(received);
         }
     }

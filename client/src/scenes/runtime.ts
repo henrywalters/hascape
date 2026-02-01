@@ -11,6 +11,8 @@ import { ScriptRegistry } from "hagamets/dist/core/script.js";
 
 export class Runtime extends RenderScene {
 
+    private textTimeout: any;
+
     getPlayer(sessionId: string): IEntity | null {
         let out: IEntity | null = null;
         this.components.forEach(Player, (player) => {
@@ -67,17 +69,38 @@ export class Runtime extends RenderScene {
                     const smooth = entity.getComponent(Smooth);
                     smooth!.speed = entity.getComponent(Player)!.speed;
                     smooth!.targetPosition = moved.position as any;
+
+                    const player = entity.getComponent(Player)!;
+                    player.direction = moved.direction;
                 }
             }
 
             if (msg.message.type === ServerMessages.PlayerMessaged) {
-                console.log(msg.message);
                 const playerMessage = msg.message as PlayerMessaged;
+                const player = this.getPlayer(playerMessage.sessionId);
+
+                if (player) {
+                    const display = this.getEntityByName("ChatText", player);
+            
+                    if (display) {
+                        const displayText = display.getComponent(TextMesh);
+                        if (displayText) {
+                            displayText.text = playerMessage.message;
+                            displayText.notifyUpdate();
+                            if (this.textTimeout) {
+                                clearTimeout(this.textTimeout);
+                            }
+                            this.textTimeout = setTimeout(() => {
+                                displayText.text = "";
+                                displayText.notifyUpdate();
+                            }, 2000);
+                        }
+                    }
+                }
+
                 this.components.forEach(Behavior, (behavior) => {
                     if (behavior.scriptName === 'ChatBox') {
                         const script = ScriptRegistry.get(behavior.scriptName, behavior) as ChatBox;
-                        
-                        console.log(script);
                         if (script) {
                             script.addMessage(`${playerMessage.username}: ${playerMessage.message}`);
                         }

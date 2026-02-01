@@ -3,11 +3,15 @@ import { Player } from "@hascape/common";
 import { Axes } from "hagamets/dist/core/interfaces/input.js";
 import { PlayerMove } from "@hascape/common";
 import { State } from "../state";
+import { EntityEvents } from "hagamets/dist/core/events.js";
+import { PlayerAnimations } from "../components/playerAnimation";
+import { SpriteSheet } from "hagamets/dist/common/components/spriteSheet.js";
 
 export class PlayerController extends Script {
     onUpdate(dt: number) {
         const player = this.entity.getComponent(Player);
         if (player && player.sessionId === State.sessionId && !State.isTyping) {
+
             const dir = this.input.getAxis(Axes.KeyboardWASD);
             player.direction.set(dir.x, dir.y, 0);
             player.direction.normalize();
@@ -18,12 +22,9 @@ export class PlayerController extends Script {
             move.dt = dt;
             move.tick = State.tick;
 
-            try {
+            if (!State.isEditing) {
                 this.game.client.socket.send(this.game.client.clientMessages.write(move));
-            } catch (e) {
-                console.warn(e);
             }
-
         }
     }
 }

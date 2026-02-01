@@ -25,6 +25,9 @@ export class PlayerMoved extends NetMessage {
     @Param({type: Types.Vector3})
     position: Vector3;
 
+    @Param({type: Types.Vector3})
+    direction: Vector3;
+
     @String()
     sessionId: string = "";
 }

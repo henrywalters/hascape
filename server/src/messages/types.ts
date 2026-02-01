@@ -2,6 +2,7 @@ export enum APIMessages {
     LoggedIn,
     LoggedOut,
     PlayerReceiveMessage,
+    NPCSpawned,
 }
 
 export enum ServerMessages {
@@ -9,4 +10,8 @@ export enum ServerMessages {
     Logout,
     PlayerSetPosition,
     PlayerSendMessage,
+    PlayerChangeHealth,
+    NPCSpawn,
+    NPCMove,
+    NPCChangeHealth,
 }

@@ -9,5 +9,8 @@
   },
   "dependencies": {
     "hagamets": "file:../../hgts"
+  },
+  "devDependencies": {
+    "vite": "^7.3.1"
   }
 }

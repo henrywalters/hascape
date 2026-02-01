@@ -1,14 +1,14 @@
 {
-  "id": 687250613225,
+  "id": 356981338793,
   "name": "Entity_0",
   "children": [
     {
-      "id": 444650129889,
+      "id": 521156023810,
       "name": "Text",
       "children": [],
       "components": [
         {
-          "id": 311643783398,
+          "id": 804265324238,
           "name": "Transform",
           "params": {
             "position": [
@@ -29,12 +29,12 @@
           }
         },
         {
-          "id": 808127579859,
+          "id": 200240837975,
           "name": "TextMesh",
           "params": {
             "text": "Other",
             "font": "runescape",
-            "size": 18,
+            "size": 14,
             "depth": 1,
             "color": [
               0.913098651791473,
@@ -45,17 +45,61 @@
           }
         }
       ]
+    },
+    {
+      "id": 549194251833,
+      "name": "ChatText",
+      "children": [],
+      "components": [
+        {
+          "id": 407985708166,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              60,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 104576186618,
+          "name": "TextMesh",
+          "params": {
+            "text": "",
+            "font": "runescape",
+            "size": 20,
+            "depth": 1,
+            "color": [
+              0.9646862478936612,
+              1,
+              0.013702083043526807
+            ],
+            "alignment": "Center"
+          }
+        }
+      ]
     }
   ],
   "components": [
     {
-      "id": 351398056246,
+      "id": 614725356303,
       "name": "Transform",
       "params": {
         "position": [
-          -23.08281899646264,
-          -26.142160119225423,
-          2.1713790487946425
+          -4.336808689942018e-19,
+          0,
+          0
         ],
         "scale": [
           1,
@@ -70,32 +114,68 @@
       }
     },
     {
-      "id": 169879586187,
+      "id": 319643084569,
       "name": "Smooth",
       "params": {
         "speed": 1
       }
     },
     {
-      "id": 586182127121,
+      "id": 153973382757,
       "name": "MeshPrimitive",
       "params": {
-        "type": "Cube",
+        "type": "Plane",
         "width": 50,
         "height": 50,
         "depth": 1,
         "radius": 1,
         "color": [
-          0.3371636150376657,
-          0,
-          1
+          0.061246054224174035,
+          0.05286064701616471,
+          0.06662593863608139
+        ],
+        "transparent": true,
+        "opacity": 1,
+        "texture": "warrior_idle",
+        "textureMin": [
+          0.7333333333333333,
+          0.4
+        ],
+        "textureMax": [
+          0.7666666666666667,
+          0.6
         ]
       }
     },
     {
-      "id": 409135381878,
+      "id": 722313780734,
+      "name": "SpriteSheet",
+      "params": {
+        "spriteSheet": "warrior_idle",
+        "animated": true,
+        "animationSpeed": 1,
+        "timeSinceTick": 0.10493333332738,
+        "index": 88
+      }
+    },
+    {
+      "id": 745280624438,
       "name": "Player",
       "params": {}
+    },
+    {
+      "id": 125858318499,
+      "name": "PlayerAnimations",
+      "params": {
+        "idle": {
+          "animation": "warrior_idle",
+          "animationRate": 1
+        },
+        "walk": {
+          "animation": "warrior_walk",
+          "animationRate": 1
+        }
+      }
     }
   ]
 }

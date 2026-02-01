@@ -5,6 +5,9 @@ import LoginMenuData from "./assets/scenes/client_menu.json";
 import RuntimeData from "./assets/scenes/runtime.json";
 import RunescapeFont from "./assets/fonts/RuneScape_Regular.json";
 
+import WarriorWalk from "./assets/spriteSheets/warrior_walk.json";
+import WarriorIdle from "./assets/spriteSheets/warrior_idle.json"
+
 import { LoginMenu } from "./scenes/loginMenu";
 import { Renderer } from "hagamets/dist/common/systems/renderer.js";
 import { UI } from "hagamets/dist/common/systems/ui.js";
@@ -17,6 +20,8 @@ import { CameraController } from "./scripts/cameraController";
 import {Players} from "@hascape/common";
 import { PlayerController } from "./scripts/playerController";
 import { ChatBox } from "./scripts/chatBox";
+import { Animation } from "./systems/animation";
+import { PlayerAnimations } from "./components/playerAnimation";
 
 export const Manifest: IManifest = {
     systems: [
@@ -24,10 +29,12 @@ export const Manifest: IManifest = {
         UI,
         Scripts,
         Players,
+        Animation,
     ],
     components: [
         Behavior,
         Player,
+        PlayerAnimations,
     ],
     scripts: [
         Login,
@@ -51,6 +58,16 @@ export const Manifest: IManifest = {
                 name: 'runescape',
                 data: RunescapeFont as unknown as FontData,
             }
+        ],
+        textures: [
+            {
+                name: 'creepy_smile',
+                url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/creepy_smile.png?v=2'
+            }
+        ],
+        spriteSheets: [
+            WarriorWalk,
+            WarriorIdle,
         ]
     },
     startScene: "login_menu",

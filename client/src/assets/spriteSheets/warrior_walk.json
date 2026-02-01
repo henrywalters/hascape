@@ -1,0 +1,16 @@
+{
+  "name": "warrior_walk",
+  "url": "https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/Soldier-Walk.png",
+  "cells": {
+    "x": 8,
+    "y": 1
+  },
+  "padding": {
+    "x": 40,
+    "y": 40
+  },
+  "offset": {
+    "x": -1,
+    "y": 2
+  }
+}

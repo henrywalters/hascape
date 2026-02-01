@@ -6,13 +6,13 @@
       "children": [],
       "components": [
         {
-          "id": 140511251221,
+          "id": 902985924562,
           "name": "Transform",
           "params": {
             "position": [
               0,
               0,
-              0
+              -1
             ],
             "scale": [
               1,
@@ -27,10 +27,10 @@
           }
         },
         {
-          "id": 269710289347,
+          "id": 725056447785,
           "name": "MeshPrimitive",
           "params": {
-            "type": "Cube",
+            "type": "Plane",
             "width": 500,
             "height": 500,
             "depth": 1,
@@ -39,6 +39,15 @@
               0.035601314869097636,
               0.174647403645279,
               0.008023192982520563
+            ],
+            "texture": "",
+            "textureMin": [
+              0,
+              0
+            ],
+            "textureMax": [
+              1,
+              1
             ]
           }
         }
@@ -58,7 +67,7 @@
               "children": [],
               "components": [
                 {
-                  "id": 584496389924,
+                  "id": 698716070467,
                   "name": "Transform",
                   "params": {
                     "position": [
@@ -79,7 +88,7 @@
                   }
                 },
                 {
-                  "id": 578766711082,
+                  "id": 259519481643,
                   "name": "Text",
                   "params": {
                     "font": "runescape",
@@ -109,7 +118,7 @@
           ],
           "components": [
             {
-              "id": 556745911269,
+              "id": 449875266071,
               "name": "Transform",
               "params": {
                 "position": [
@@ -130,7 +139,7 @@
               }
             },
             {
-              "id": 352101256032,
+              "id": 211668905093,
               "name": "Container",
               "params": {
                 "color": [
@@ -166,7 +175,7 @@
                   "children": [],
                   "components": [
                     {
-                      "id": 889436000764,
+                      "id": 946174244666,
                       "name": "Transform",
                       "params": {
                         "position": [
@@ -187,7 +196,7 @@
                       }
                     },
                     {
-                      "id": 618408343247,
+                      "id": 929423599032,
                       "name": "TextInput",
                       "params": {
                         "maxLength": 40,
@@ -214,7 +223,7 @@
                       }
                     },
                     {
-                      "id": 435973712980,
+                      "id": 723901211569,
                       "name": "Focusable",
                       "params": {
                         "focused": false,
@@ -235,7 +244,7 @@
               ],
               "components": [
                 {
-                  "id": 229981178222,
+                  "id": 245185381891,
                   "name": "Transform",
                   "params": {
                     "position": [
@@ -256,7 +265,7 @@
                   }
                 },
                 {
-                  "id": 639939401287,
+                  "id": 625822184291,
                   "name": "Container",
                   "params": {
                     "color": [
@@ -281,7 +290,7 @@
           ],
           "components": [
             {
-              "id": 277350379031,
+              "id": 365541678564,
               "name": "Transform",
               "params": {
                 "position": [
@@ -302,7 +311,7 @@
               }
             },
             {
-              "id": 426691611582,
+              "id": 538122789985,
               "name": "Container",
               "params": {
                 "color": [
@@ -327,12 +336,12 @@
       ],
       "components": [
         {
-          "id": 415666768198,
+          "id": 809152965473,
           "name": "Transform",
           "params": {
             "position": [
-              -265,
-              -218,
+              -170,
+              -186.5,
               0
             ],
             "scale": [
@@ -348,7 +357,7 @@
           }
         },
         {
-          "id": 755382015294,
+          "id": 521814653487,
           "name": "Container",
           "params": {
             "color": [
@@ -369,7 +378,7 @@
           }
         },
         {
-          "id": 795663578692,
+          "id": 473872148418,
           "name": "Behavior",
           "params": {
             "scriptName": "ChatBox",

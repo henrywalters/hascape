@@ -1,14 +1,14 @@
 {
-  "id": 113745314022,
+  "id": 219357896532,
   "name": "Entity_0",
   "children": [
     {
-      "id": 865073073555,
+      "id": 710199751443,
       "name": "Camera",
       "children": [],
       "components": [
         {
-          "id": 185809814620,
+          "id": 668058640727,
           "name": "Transform",
           "params": {
             "position": [
@@ -29,13 +29,13 @@
           }
         },
         {
-          "id": 902599886975,
+          "id": 676091028052,
           "name": "OrthographicCamera",
           "params": {
-            "left": -565.5,
-            "right": 565.5,
-            "bottom": -274.5,
-            "top": 274.5,
+            "left": -371,
+            "right": 371,
+            "bottom": -294.5,
+            "top": 294.5,
             "near": 0.01,
             "far": 1000,
             "zoom": 1
@@ -44,12 +44,12 @@
       ]
     },
     {
-      "id": 627593570716,
+      "id": 622427208102,
       "name": "Text",
       "children": [],
       "components": [
         {
-          "id": 952220285084,
+          "id": 385952241659,
           "name": "Transform",
           "params": {
             "position": [
@@ -70,12 +70,12 @@
           }
         },
         {
-          "id": 735039679316,
+          "id": 466242438775,
           "name": "TextMesh",
           "params": {
             "text": "Hello World",
             "font": "runescape",
-            "size": 18,
+            "size": 14,
             "depth": 1,
             "color": [
               0.982250550332711,
@@ -86,16 +86,60 @@
           }
         }
       ]
+    },
+    {
+      "id": 303600177664,
+      "name": "ChatText",
+      "children": [],
+      "components": [
+        {
+          "id": 133315860212,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              64,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 145130392382,
+          "name": "TextMesh",
+          "params": {
+            "text": "",
+            "font": "runescape",
+            "size": 20,
+            "depth": 1,
+            "color": [
+              0.9046611743890203,
+              1,
+              0.007499032040460618
+            ],
+            "alignment": "Center"
+          }
+        }
+      ]
     }
   ],
   "components": [
     {
-      "id": 482615559592,
+      "id": 459732157298,
       "name": "Transform",
       "params": {
         "position": [
-          -9.259150886647006,
-          3.2380952729326564,
+          -92.05421406514776,
+          125.3586250510588,
           0
         ],
         "scale": [
@@ -105,23 +149,23 @@
         ],
         "rotation": [
           0,
-          0,
+          180,
           0
         ]
       }
     },
     {
-      "id": 987432625044,
+      "id": 738368059979,
       "name": "Smooth",
       "params": {
         "speed": 1
       }
     },
     {
-      "id": 687604212227,
+      "id": 232618266930,
       "name": "MeshPrimitive",
       "params": {
-        "type": "Cube",
+        "type": "Plane",
         "width": 50,
         "height": 50,
         "depth": 1,
@@ -130,20 +174,56 @@
           0,
           0.006512090790025684,
           0.9215818562755338
+        ],
+        "transparent": true,
+        "opacity": 1,
+        "texture": "warrior_idle",
+        "textureMin": [
+          0.5666666666666667,
+          0.4
+        ],
+        "textureMax": [
+          0.6,
+          0.6
         ]
       }
     },
     {
-      "id": 593863859214,
+      "id": 786485968725,
+      "name": "SpriteSheet",
+      "params": {
+        "spriteSheet": "warrior_idle",
+        "animated": true,
+        "animationSpeed": 1,
+        "timeSinceTick": 0.15126666666816524,
+        "index": 159
+      }
+    },
+    {
+      "id": 425520136974,
       "name": "Behavior",
       "params": {
         "scriptName": "PlayerController"
       }
     },
     {
-      "id": 722222880561,
+      "id": 772904352421,
       "name": "Player",
       "params": {}
+    },
+    {
+      "id": 454045259079,
+      "name": "PlayerAnimations",
+      "params": {
+        "idle": {
+          "animation": "warrior_idle",
+          "animationRate": 1
+        },
+        "walk": {
+          "animation": "warrior_walk",
+          "animationRate": 1
+        }
+      }
     }
   ]
 }
