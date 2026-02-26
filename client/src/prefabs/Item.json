@@ -1,0 +1,53 @@
+{
+  "id": 677118214431,
+  "name": "Entity_2",
+  "children": [],
+  "components": [
+    {
+      "id": 454346258112,
+      "name": "Transform",
+      "params": {
+        "position": [
+          0,
+          172.29500000000002,
+          10
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 770962886219,
+      "name": "Image",
+      "params": {
+        "texture": "creepy_smile",
+        "textureMin": [
+          0,
+          0
+        ],
+        "textureMax": [
+          1,
+          1
+        ],
+        "anchorAlignment": "TopCenter",
+        "anchored": true,
+        "sizeUnit": "Percent",
+        "width": 25,
+        "height": 15,
+        "marginUnit": "Pixel",
+        "margin": [
+          15,
+          15
+        ]
+      }
+    }
+  ]
+}

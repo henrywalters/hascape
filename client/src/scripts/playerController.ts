@@ -1,16 +1,15 @@
 import { Script } from "hagamets/dist/core/script.js";
-import { Player } from "@hascape/common";
-import { Axes } from "hagamets/dist/core/interfaces/input.js";
+import { Character, CharacterAttack, CharacterInteract } from "@hascape/common";
+import { Axes, Buttons } from "hagamets/dist/core/interfaces/input.js";
 import { PlayerMove } from "@hascape/common";
 import { State } from "../state";
-import { EntityEvents } from "hagamets/dist/core/events.js";
-import { PlayerAnimations } from "../components/playerAnimation";
-import { SpriteSheet } from "hagamets/dist/common/components/spriteSheet.js";
 
 export class PlayerController extends Script {
     onUpdate(dt: number) {
-        const player = this.entity.getComponent(Player);
+        const player = this.entity.getComponent(Character);
         if (player && player.sessionId === State.sessionId && !State.isTyping) {
+
+            // console.log(player.entity.position);
 
             const dir = this.input.getAxis(Axes.KeyboardWASD);
             player.direction.set(dir.x, dir.y, 0);
@@ -22,8 +21,26 @@ export class PlayerController extends Script {
             move.dt = dt;
             move.tick = State.tick;
 
+            if (this.input.getButtonPressed(Buttons.KeySpace) && !player.isAttacking) {
+                // player.isAttacking = true;
+                // console.log("Attack");
+                const msg = new CharacterAttack();
+                msg.sessionId = player.sessionId;
+                this.game.client.send(msg);
+            }
+
+            if (this.input.getButtonPressed(Buttons.KeyE)) {
+                const interact = new CharacterInteract();
+                interact.sessionId = State.sessionId;
+                this.game.client.socket.send(this.game.client.clientMessages.write(interact));
+            }
+
             if (!State.isEditing) {
-                this.game.client.socket.send(this.game.client.clientMessages.write(move));
+                try {
+                    this.game.client.socket.send(this.game.client.clientMessages.write(move));
+                } catch (e) {
+
+                }
             }
         }
     }

@@ -1,0 +1,16 @@
+{
+  "name": "warrior_attack",
+  "url": "https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/Soldier-Attack01.png",
+  "cells": {
+    "x": 6,
+    "y": 1
+  },
+  "padding": {
+    "x": 0,
+    "y": 0
+  },
+  "offset": {
+    "x": 0,
+    "y": 0
+  }
+}

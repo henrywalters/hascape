@@ -1,0 +1,476 @@
+{
+  "id": 343293077715,
+  "name": "Strength",
+  "children": [
+    {
+      "id": 908799768298,
+      "name": "CurrentLevel",
+      "children": [],
+      "components": [
+        {
+          "id": 994729012111,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 947774913487,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "Lvl 1",
+            "fontSize": 18,
+            "lineSpacing": 0,
+            "color": [
+              0.982250550332711,
+              1,
+              0
+            ],
+            "alignment": "Left",
+            "anchorAlignment": "TopCenter",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              80
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 185129652090,
+      "name": "Icon",
+      "children": [],
+      "components": [
+        {
+          "id": 772902860789,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              10
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 698730748431,
+          "name": "Image",
+          "params": {
+            "texture": "creepy_smile",
+            "textureMin": [
+              0,
+              0
+            ],
+            "textureMax": [
+              1,
+              1
+            ],
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 75,
+            "height": 75,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 292117569862,
+      "name": "Entity_5",
+      "children": [
+        {
+          "id": 885859501070,
+          "name": "Entity_0",
+          "children": [
+            {
+              "id": 266485196633,
+              "name": "RemovePoint",
+              "children": [],
+              "components": [
+                {
+                  "id": 504179010907,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      -25,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 770898675883,
+                  "name": "Button",
+                  "params": {
+                    "defaultColor": [
+                      0.55201140150344,
+                      0.55201140150344,
+                      0.55201140150344
+                    ],
+                    "hoverColor": [
+                      1,
+                      0.7230551289161951,
+                      0
+                    ],
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 560313126686,
+                  "name": "Text",
+                  "params": {
+                    "font": "runescape",
+                    "text": "-1",
+                    "fontSize": 24,
+                    "lineSpacing": 0,
+                    "color": [
+                      0.55201140150344,
+                      0.55201140150344,
+                      0.55201140150344
+                    ],
+                    "alignment": "Left",
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": 477314325949,
+              "name": "Add Point",
+              "children": [],
+              "components": [
+                {
+                  "id": 535024085734,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      25,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 810101409332,
+                  "name": "Button",
+                  "params": {
+                    "defaultColor": [
+                      0.55201140150344,
+                      0.55201140150344,
+                      0.55201140150344
+                    ],
+                    "hoverColor": [
+                      1,
+                      0.7230551289161951,
+                      0
+                    ],
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 271670443902,
+                  "name": "Text",
+                  "params": {
+                    "font": "runescape",
+                    "text": "+1",
+                    "fontSize": 24,
+                    "lineSpacing": 0,
+                    "color": [
+                      0.55201140150344,
+                      0.55201140150344,
+                      0.55201140150344
+                    ],
+                    "alignment": "Left",
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 659108997746,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 272244429052,
+              "name": "FlexRow",
+              "params": {
+                "anchorAlignment": "Center",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 174824777284,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              -110.28,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 752765839375,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.018500220124016652,
+              0.018500220124016652,
+              0.018500220124016652
+            ],
+            "anchorAlignment": "BottomCenter",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 100,
+            "height": 30,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 687568207487,
+      "name": "Label",
+      "children": [],
+      "components": [
+        {
+          "id": 414005755159,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 209166323272,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "Strength",
+            "fontSize": 22,
+            "lineSpacing": 0,
+            "color": [
+              0.982250550332711,
+              1,
+              0
+            ],
+            "alignment": "Left",
+            "anchorAlignment": "TopCenter",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              15
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 172555053379,
+      "name": "Transform",
+      "params": {
+        "position": [
+          -184.66666666666669,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 380009115477,
+      "name": "Behavior",
+      "params": {
+        "scriptName": "StatDisplay",
+        "level": 908799768298,
+        "addButton": 477314325949,
+        "removeButton": 266485196633
+      }
+    },
+    {
+      "id": 925207856284,
+      "name": "Container",
+      "params": {
+        "color": [
+          0.01764195448412081,
+          0.01764195448412081,
+          0.01764195448412081
+        ],
+        "anchorAlignment": "Center",
+        "anchored": true,
+        "sizeUnit": "Percent",
+        "width": 100,
+        "height": 100,
+        "marginUnit": "Pixel",
+        "margin": [
+          30,
+          30
+        ]
+      }
+    }
+  ]
+}

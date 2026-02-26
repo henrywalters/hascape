@@ -8,10 +8,13 @@ import cors from 'cors';
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { ClientConnect } from "@hascape/common";
 import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
-import { ServerMessages } from "./messages/types";
+import { APIMessages, ServerMessages } from "./messages/types";
 import { PlayerService } from "./services/player";
 import { Vector3 } from "three";
 import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "./messages/player";
+import { NPCService } from "./services/npc";
+import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
+import { NPCsCleared } from "./messages/npc";
 
 dotenv.config({ path: '.env' })
 
@@ -27,6 +30,7 @@ AppDataSource.initialize().then(async () => {
 
     const auth = new AuthService();
     const players = new PlayerService();
+    const npcs = new NPCService();
     const pubsub = new Pubsub(PubsubType.API);
 
     pubsub.onMessage = async (message) => {
@@ -94,6 +98,12 @@ AppDataSource.initialize().then(async () => {
 
             pubsub.send(received);
         }
+
+        if (message.type === ServerMessages.NPCsClear) {
+            await npcs.clear();
+            console.log("Cleared NPCs");
+            pubsub.send(new NPCsCleared());
+        }
     }
 
     app.use(cors());
@@ -147,5 +157,14 @@ AppDataSource.initialize().then(async () => {
     app.listen(4201, () => {
         console.log("Listening on port 4201");
     })
+
+    setInterval(() => {
+        const usage = process.memoryUsage();
+        console.log({
+            heapUsed: `${Math.round(usage.heapUsed / 1024 / 1024)}MB`,
+            heapTotal: `${Math.round(usage.heapTotal / 1024 / 1024)}MB`,
+            rss: `${Math.round(usage.rss / 1024 / 1024)}MB`,
+        });
+    }, 5000);
 
 }).catch(error => console.log(error))

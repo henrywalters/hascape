@@ -31,6 +31,15 @@ import { Manifest } from "./manifest";
         setTimeout(tick, waitFor);
     }
 
+    setInterval(() => {
+        const usage = process.memoryUsage();
+        console.log({
+            heapUsed: `${Math.round(usage.heapUsed / 1024 / 1024)}MB`,
+            heapTotal: `${Math.round(usage.heapTotal / 1024 / 1024)}MB`,
+            rss: `${Math.round(usage.rss / 1024 / 1024)}MB`,
+        });
+    }, 5000);
+
     tick();
 
 })();

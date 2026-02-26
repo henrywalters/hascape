@@ -1,0 +1,61 @@
+{
+  "id": 549655031367,
+  "name": "Entity_0",
+  "children": [],
+  "components": [
+    {
+      "id": 248703788077,
+      "name": "Transform",
+      "params": {
+        "position": [
+          50,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 267648843405,
+      "name": "ItemOnGround",
+      "params": {
+        "amount": 1
+      }
+    },
+    {
+      "id": 259788649393,
+      "name": "MeshPrimitive",
+      "params": {
+        "type": "Plane",
+        "width": 25,
+        "height": 25,
+        "depth": 1,
+        "radius": 1,
+        "color": [
+          1,
+          1,
+          1
+        ],
+        "opacity": 1,
+        "texture": "bones",
+        "textureMin": [
+          0,
+          0
+        ],
+        "textureMax": [
+          1,
+          1
+        ]
+      }
+    }
+  ]
+}

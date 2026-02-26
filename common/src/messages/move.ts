@@ -1,6 +1,6 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { ClientMessages, ServerMessages } from "./types";
-import { Float, Int, Param, String, Types } from "hagamets/dist/core/reflection.js";
+import { Array, Float, Int, Param, String, Types } from "hagamets/dist/core/reflection.js";
 import { Vector3 } from "three";
 
 export class PlayerMove extends NetMessage {
@@ -30,4 +30,11 @@ export class PlayerMoved extends NetMessage {
 
     @String()
     sessionId: string = "";
+}
+
+export class MovementUpdate extends NetMessage {
+    type = ServerMessages.MovementUpdate;
+
+    @Array(Types.Class, PlayerMoved)
+    movements: PlayerMoved[] = []
 }

@@ -36,6 +36,14 @@ export class NPCMove extends NetMessage {
     position: Vector3;
 }
 
+export class NPCsClear extends NetMessage {
+    type = ServerMessages.NPCsClear;
+}
+
+export class NPCsCleared extends NetMessage {
+    type = APIMessages.NPCsCleared;
+}
+
 export class NPCSpawned extends NetMessage {
     type = APIMessages.NPCSpawned;
 

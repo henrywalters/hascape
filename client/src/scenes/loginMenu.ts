@@ -1,11 +1,11 @@
 import { RenderScene } from "hagamets/dist/common/scenes/renderScene.js";
 import type { IGame } from "hagamets/dist/core/interfaces/game.js";
-import { Player, PlayerJoined, ServerMessages } from "@hascape/common";
+import { Character, ItemOnGround, ITEMS, NPCs, Player, PlayerJoined, Prefabs, PrefabTypes, ServerMessages } from "@hascape/common";
 import { State } from "../state";
-import PlayerPrefab from "../assets/prefabs/player.json";
-import OtherPrefab from "../assets/prefabs/otherPlayer.json";
+import ItemOnGroundPrefab from "@hascape/common/itemOnGround";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
-import { TextMesh } from "hagamets/dist/common/components/mesh.js";
+import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
+import { CameraZoom } from "hagamets/dist/common/components/camera.js";
 
 export class LoginMenu extends RenderScene {
     constructor(game: IGame) {
@@ -29,13 +29,21 @@ export class LoginMenu extends RenderScene {
                 State.sessionId = joined.player.sessionId;
 
                 this.game.activateScene('runtime');
-                const entity = this.game.currentScene!.addEntityFromPrefab(PlayerPrefab, joined.player.username);
+                const entity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.Player], joined.player.username);
 
                 entity.transform.position = joined.player.position as any;
 
+                entity.addComponent(CameraZoom);
+
+                const character = entity.getComponent(Character)!;
                 const player = entity.getComponent(Player)!;
-                player.sessionId = joined.player.sessionId;
+
+                character.totalHealth = joined.player.totalHealth;
+                character.health = joined.player.health;
+                character.sessionId = joined.player.sessionId;
                 player.username = joined.player.username;
+
+                console.log(character);
 
                 entity.getComponent(Smooth)!.targetPosition = entity.position;
 
@@ -45,11 +53,18 @@ export class LoginMenu extends RenderScene {
                 
                 entity.transform.position = joined.player.position as any;
 
+                console.log(joined);
+
                 for (const other of joined.otherPlayers) {
-                    const otherEntity = this.game.currentScene!.addEntityFromPrefab(OtherPrefab, other.username)
+                    const otherEntity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], other.username)
+                    const otherCharacter = otherEntity.getComponent(Character)!;
                     const otherPlayer = otherEntity.getComponent(Player)!;
-                    otherPlayer.sessionId = other.sessionId;
+                    otherCharacter.sessionId = other.sessionId;
                     otherPlayer.username = other.username;
+                    otherCharacter.totalHealth = other.totalHealth;
+                    otherCharacter.health = other.health;
+
+                    console.log(otherCharacter);
 
                     otherEntity.transform.position = other.position as any;
                     otherEntity.getComponent(Smooth)!.targetPosition = otherEntity.position;
@@ -57,6 +72,33 @@ export class LoginMenu extends RenderScene {
                     const otherText = otherEntity.getComponentInChildren(TextMesh)!;
                     otherText.text = otherPlayer.username;
                     otherText.notifyUpdate();
+                }
+
+                for (const npc of joined.npcs) {
+                    const npcEntity = this.game.currentScene!.addEntityFromPrefab(NPCs[npc.npcType].prefab);
+                    npcEntity.transform.position = npc.position as any;
+                    npcEntity.transform.position.z = 10;
+
+                    const character = npcEntity.getComponent(Character)!;
+                    character.sessionId = npc.sessionId;
+                    character.health = npc.health;
+                    character.totalHealth = npc.totalHealth;
+                    console.log(character);
+                }
+
+                for (const item of joined.items) {
+                    const itemEntity = this.game.currentScene!.addEntityFromPrefab(ItemOnGroundPrefab);
+                    const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
+                    itemOnGround.amount = item.amount;
+                    itemOnGround.instanceId = item.instanceId;
+                    itemOnGround.item = item.item;
+                    itemEntity.transform.position = item.position as any;
+                    itemEntity.transform.position.z = 9;
+                    const mesh = itemEntity.getComponent(MeshPrimitive)!;
+                    mesh.texture = ITEMS[item.item].texture;
+                    mesh.notifyUpdate();
+
+                    State.items.set(item.instanceId, itemEntity);
                 }
 
                 const size = this.game.getSize();

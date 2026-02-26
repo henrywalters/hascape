@@ -1,0 +1,588 @@
+{
+  "id": 353387000251,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 948978869741,
+      "name": "Entity_1",
+      "children": [
+        {
+          "id": 707343664344,
+          "name": "BottomBar",
+          "children": [
+            {
+              "id": 406079155442,
+              "name": "LevelUpButton",
+              "children": [
+                {
+                  "id": 892097214902,
+                  "name": "ButtonLabel",
+                  "children": [
+                    {
+                      "id": 210315984060,
+                      "name": "Entity_2",
+                      "children": [],
+                      "components": [
+                        {
+                          "id": 273633398404,
+                          "name": "Transform",
+                          "params": {
+                            "position": [
+                              0,
+                              0,
+                              0
+                            ],
+                            "scale": [
+                              1,
+                              1,
+                              1
+                            ],
+                            "rotation": [
+                              0,
+                              0,
+                              0
+                            ]
+                          }
+                        }
+                      ]
+                    }
+                  ],
+                  "components": [
+                    {
+                      "id": 800551129204,
+                      "name": "Transform",
+                      "params": {
+                        "position": [
+                          0,
+                          0,
+                          0
+                        ],
+                        "scale": [
+                          1,
+                          1,
+                          1
+                        ],
+                        "rotation": [
+                          0,
+                          0,
+                          0
+                        ]
+                      }
+                    },
+                    {
+                      "id": 609564428721,
+                      "name": "Text",
+                      "params": {
+                        "font": "runescape",
+                        "text": "Level Up",
+                        "fontSize": 24,
+                        "lineSpacing": 0,
+                        "color": [
+                          1,
+                          0.9559733532482866,
+                          0
+                        ],
+                        "alignment": "Left",
+                        "anchorAlignment": "Center",
+                        "anchored": true,
+                        "sizeUnit": "Percent",
+                        "width": 100,
+                        "height": 100,
+                        "marginUnit": "Pixel",
+                        "margin": [
+                          0,
+                          0
+                        ]
+                      }
+                    }
+                  ]
+                }
+              ],
+              "components": [
+                {
+                  "id": 783483275698,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 103383079266,
+                  "name": "Container",
+                  "params": {
+                    "color": [
+                      0.09084171117479915,
+                      0.09084171117479915,
+                      0.09084171117479915
+                    ],
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Pixel",
+                    "width": 200,
+                    "height": 50,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 241552205705,
+                  "name": "Button",
+                  "params": {
+                    "defaultColor": [
+                      0.09084171117479915,
+                      0.09084171117479915,
+                      0.09084171117479915
+                    ],
+                    "hoverColor": [
+                      0.04231141061442144,
+                      0.04231141061442144,
+                      0.04231141061442144
+                    ],
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 940308899958,
+                  "name": "Focusable",
+                  "params": {
+                    "focused": false,
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 843724136692,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  -187.04000000000002,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 648353267198,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.01764195448412081,
+                  0.01764195448412081,
+                  0.01764195448412081
+                ],
+                "anchorAlignment": "BottomCenter",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 20,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 549039159692,
+          "name": "Center",
+          "children": [
+            {
+              "id": 696432182357,
+              "name": "StatsContainer",
+              "children": [],
+              "components": [
+                {
+                  "id": 361841573128,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 809983104265,
+                  "name": "FlexRow",
+                  "params": {
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 941690023951,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 209737385020,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.09758734713304495,
+                  0.09758734713304495,
+                  0.09758734713304495
+                ],
+                "anchorAlignment": "Center",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 60,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 981184032678,
+          "name": "Top Bar",
+          "children": [
+            {
+              "id": 667018316485,
+              "name": "Label",
+              "children": [],
+              "components": [
+                {
+                  "id": 572106239320,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 963174251532,
+                  "name": "Text",
+                  "params": {
+                    "font": "runescape",
+                    "text": "You've Leveled Up",
+                    "fontSize": 30,
+                    "lineSpacing": 0,
+                    "color": [
+                      0.913098651791473,
+                      1,
+                      0
+                    ],
+                    "alignment": "Left",
+                    "anchorAlignment": "TopCenter",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      33
+                    ]
+                  }
+                }
+              ]
+            },
+            {
+              "id": 727681412863,
+              "name": "PointsLeft",
+              "children": [],
+              "components": [
+                {
+                  "id": 839604641782,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 151285599283,
+                  "name": "Text",
+                  "params": {
+                    "font": "runescape",
+                    "text": "3 Points Left",
+                    "fontSize": 20,
+                    "lineSpacing": 0,
+                    "color": [
+                      0.85499260812105,
+                      1,
+                      0
+                    ],
+                    "alignment": "Left",
+                    "anchorAlignment": "BottomCenter",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      20
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 755951116598,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  187.04000000000002,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 794558509563,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.018500220124016652,
+                  0.018500220124016652,
+                  0.018500220124016652
+                ],
+                "anchorAlignment": "TopCenter",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 20,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 884417087312,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 795950082331,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.036889450395083165,
+              0.036889450395083165,
+              0.036889450395083165
+            ],
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              30,
+              30
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 326008539075,
+      "name": "Transform",
+      "params": {
+        "position": [
+          0,
+          0,
+          10
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 268513247119,
+      "name": "Behavior",
+      "params": {
+        "scriptName": "LevelUpMenu",
+        "pointsLeft": "727681412863",
+        "statsContainer": "696432182357",
+        "levelUpButton": "406079155442"
+      }
+    },
+    {
+      "id": 139661396837,
+      "name": "Container",
+      "params": {
+        "color": [
+          0.17788841597328695,
+          0.07618538147321911,
+          0
+        ],
+        "anchorAlignment": "Center",
+        "anchored": true,
+        "sizeUnit": "Percent",
+        "width": 80,
+        "height": 80,
+        "marginUnit": "Pixel",
+        "margin": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

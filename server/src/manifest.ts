@@ -1,14 +1,43 @@
 import { IManifest } from "hagamets/dist/core/interfaces/manifest.js";
 import { Runtime } from "./runtime";
 import { CLIENT_MESSAGES, SERVER_MESSAGES } from "@hascape/common/messages";
-import { Player, Players } from "@hascape/common";
+import { Smooth } from "hagamets/dist/common/components/smooth.js";
+import { Character, HealthBar, ItemOnGround, NPC, NPCSpawner, Player } from "@hascape/common";
+import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
+import { Animations } from "hagamets/dist/common/components/animation.js";
+import { SpriteSheet } from "hagamets/dist/common/components/spriteSheet.js";
+import { BoxCollider2D } from "hagamets/dist/common/components/collider.js";
+import { NPCHandler } from "./systems/npcHandler";
+import { CharacterMovement } from "./systems/characterMovement";
+import { CombatSystem } from "./systems/combat";
+import { ItemSystem } from "./systems/items";
+import { WizardsAssistant } from "./systems/quests/wizardsAssistant";
+import { InventorySystem } from "./systems/inventory";
+import { InteractionSystem } from "./systems/interactions";
 
 export const Manifest: IManifest = {
     systems: [
-        Players,
+        CharacterMovement,
+        NPCHandler,
+        CombatSystem,
+        ItemSystem,
+        InventorySystem,
+        InteractionSystem,
+        WizardsAssistant,
     ],
     components: [
+        Character,
+        Smooth,
+        MeshPrimitive,
+        Animations,
+        SpriteSheet,
+        TextMesh,
+        BoxCollider2D,
+        NPCSpawner,
+        NPC,
         Player,
+        HealthBar,
+        ItemOnGround,
     ],
     scripts: [],
     scenes: {

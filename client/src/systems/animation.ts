@@ -1,33 +1,53 @@
 import { System } from "hagamets/dist/ecs/system.js";
-import { Player } from "@hascape/common";
-import { PlayerAnimation, PlayerAnimations } from "../components/playerAnimation";
+import { Character } from "@hascape/common";
 import { SpriteSheet } from "hagamets/dist/common/components/spriteSheet.js";
+import { Animations } from "hagamets/dist/common/components/animation.js";
+import { Assets } from "hagamets/dist/core/assets.js";
 
 export class Animation extends System {
     onUpdate(dt: number): void {
-        this.scene.components.forEach(Player, (player) => {
-            const animations = player.entity.getComponent(PlayerAnimations);
-            const spriteSheet = player.entity.getComponent(SpriteSheet);
+        this.scene.components.forEach(Character, (character) => {
+
+            const animations = character.entity.getComponent(Animations);
+            const spriteSheet = character.entity.getComponent(SpriteSheet);
 
             if (animations && spriteSheet) {
 
-            if (player.direction.x < 0 && player.entity.transform.rotation.y === 0) {
-                player.entity.transform.rotation.y = 180;
-            } else if (player.direction.x > 0 && player.entity.transform.rotation.y === 180) {
-                player.entity.transform.rotation.y = 0;
-            }
-
-                let animation: PlayerAnimation;
-                if (player.direction.x !== 0 || player.direction.y !== 0) {
-                    animation = animations.walk;
-                } else {
-                    animation = animations.idle;
+                if (character.direction.x < 0 && character.entity.transform.rotation.y === 0) {
+                    character.entity.transform.rotation.y = 180;
+                } else if (character.direction.x > 0 && character.entity.transform.rotation.y === 180) {
+                    character.entity.transform.rotation.y = 0;
                 }
 
-                spriteSheet.spriteSheet = animation.animation;
-                spriteSheet.animationSpeed = animation.animationRate;
+                const setAnimation = (key: string) => {
+                    if (animations.animation !== key) {
+                        animations.animation = key;
+                        spriteSheet.index = 0;
+                    }
+                }
 
-                spriteSheet.notifyUpdate();
+                if (character.isAttacking) {
+                    setAnimation("attack");
+                } else if (character.direction.x !== 0 || character.direction.y !== 0) {
+                    setAnimation("walk");
+                } else {
+                    setAnimation("idle");
+                }
+
+                const animation = animations.currentAnimation;
+
+                if (animation) {
+                    spriteSheet.spriteSheet = animation.animation;
+                    spriteSheet.animationSpeed = animation.animationRate;
+
+                    if (character.isAttacking && spriteSheet.index >= Assets.spriteSheets.get(spriteSheet.spriteSheet).cells.x - 1) {
+                        character.isAttacking = false;
+                        console.log("Finished Attack");
+                    }
+
+                    spriteSheet.notifyUpdate();
+                }
+
             }
         })
     }

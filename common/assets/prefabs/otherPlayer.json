@@ -1,0 +1,268 @@
+{
+  "id": 288942215113,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 314681271408,
+      "name": "Text",
+      "children": [],
+      "components": [
+        {
+          "id": 969841779956,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              39,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 381304352649,
+          "name": "TextMesh",
+          "params": {
+            "text": "Other",
+            "font": "runescape",
+            "size": 14,
+            "depth": 1,
+            "color": [
+              0.913098651791473,
+              1,
+              0
+            ],
+            "alignment": "Center"
+          }
+        }
+      ]
+    },
+    {
+      "id": 858132097901,
+      "name": "ChatText",
+      "children": [],
+      "components": [
+        {
+          "id": 176885142192,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              60,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 849982450188,
+          "name": "TextMesh",
+          "params": {
+            "text": "",
+            "font": "runescape",
+            "size": 20,
+            "depth": 1,
+            "color": [
+              0.9646862478936612,
+              1,
+              0.013702083043526807
+            ],
+            "alignment": "Center"
+          }
+        }
+      ]
+    },
+    {
+      "id": 979550437105,
+      "name": "HealthBar",
+      "children": [],
+      "components": [
+        {
+          "id": 741151854303,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              28,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 674596210286,
+          "name": "HealthBar",
+          "params": {}
+        },
+        {
+          "id": 252107901912,
+          "name": "MeshPrimitive",
+          "params": {
+            "type": "Cube",
+            "width": 50,
+            "height": 5,
+            "depth": 1,
+            "radius": 1,
+            "color": [
+              1,
+              0.0027317428517647058,
+              0.0027317428517647058
+            ],
+            "opacity": 1,
+            "texture": "",
+            "textureMin": [
+              0,
+              0
+            ],
+            "textureMax": [
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 610858815519,
+      "name": "Transform",
+      "params": {
+        "position": [
+          37.38119518319004,
+          0,
+          7.7877489964979105
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 568826546474,
+      "name": "Character",
+      "params": {}
+    },
+    {
+      "id": 983049612166,
+      "name": "BoxCollider2D",
+      "params": {
+        "min": [
+          -14,
+          -18
+        ],
+        "max": [
+          14,
+          24
+        ]
+      }
+    },
+    {
+      "id": 681609650881,
+      "name": "Animations",
+      "params": {
+        "animation": "idle",
+        "animations": [
+          {
+            "name": "idle",
+            "animation": "warrior_idle",
+            "animationRate": 1
+          },
+          {
+            "name": "walk",
+            "animation": "warrior_walk",
+            "animationRate": 1
+          },
+          {
+            "name": "attack",
+            "animation": "warrior_attack",
+            "animationRate": 0.5
+          }
+        ]
+      }
+    },
+    {
+      "id": 767386698738,
+      "name": "Player",
+      "params": {}
+    },
+    {
+      "id": 486365284037,
+      "name": "Smooth",
+      "params": {
+        "speed": 1
+      }
+    },
+    {
+      "id": 693345883518,
+      "name": "MeshPrimitive",
+      "params": {
+        "type": "Plane",
+        "width": 200,
+        "height": 200,
+        "depth": 1,
+        "radius": 1,
+        "color": [
+          0.061246054224174035,
+          0.05286064701616471,
+          0.06662593863608139
+        ],
+        "opacity": 1,
+        "texture": "warrior_idle",
+        "textureMin": [
+          0.3333333333333333,
+          0
+        ],
+        "textureMax": [
+          0.5,
+          1
+        ]
+      }
+    },
+    {
+      "id": 825920227543,
+      "name": "SpriteSheet",
+      "params": {
+        "spriteSheet": "warrior_idle",
+        "animated": true,
+        "animationSpeed": 1,
+        "timeSinceTick": 0.14976666660441512,
+        "index": 2
+      }
+    }
+  ]
+}

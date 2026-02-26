@@ -6,10 +6,16 @@
     ".": {
       "default": "./dist/index.js"
     },
-    "./messages": "./dist/messages.js"
+    "./messages": "./dist/messages.js",
+    "./map": "./assets/mainMap.json",
+    "./player": "./assets/prefabs/player.json",
+    "./otherPlayer": "./assets/prefabs/otherPlayer.json",
+    "./orc": "./assets/prefabs/orc.json",
+    "./itemOnGround": "./assets/prefabs/itemOnGround.json"
   },
   "dependencies": {
     "hagamets": "file:../../hgts",
+    "hcore": "^1.2.0",
     "three": "^0.182.0"
   },
   "scripts": {

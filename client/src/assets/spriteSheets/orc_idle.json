@@ -1,0 +1,16 @@
+{
+  "name": "orc_idle",
+  "url": "https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/Orc-Idle.png",
+  "cells": {
+    "x": 6,
+    "y": 1
+  },
+  "padding": {
+    "x": 0,
+    "y": 0
+  },
+  "offset": {
+    "x": 0,
+    "y": 0
+  }
+}

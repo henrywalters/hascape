@@ -1,59 +1,6 @@
 {
   "entities": [
     {
-      "id": 153,
-      "name": "Floor",
-      "children": [],
-      "components": [
-        {
-          "id": 902985924562,
-          "name": "Transform",
-          "params": {
-            "position": [
-              0,
-              0,
-              -1
-            ],
-            "scale": [
-              1,
-              1,
-              1
-            ],
-            "rotation": [
-              0,
-              0,
-              0
-            ]
-          }
-        },
-        {
-          "id": 725056447785,
-          "name": "MeshPrimitive",
-          "params": {
-            "type": "Plane",
-            "width": 500,
-            "height": 500,
-            "depth": 1,
-            "radius": 1,
-            "color": [
-              0.035601314869097636,
-              0.174647403645279,
-              0.008023192982520563
-            ],
-            "texture": "",
-            "textureMin": [
-              0,
-              0
-            ],
-            "textureMax": [
-              1,
-              1
-            ]
-          }
-        }
-      ]
-    },
-    {
       "id": 955292798725,
       "name": "ChatBox",
       "children": [
@@ -67,7 +14,7 @@
               "children": [],
               "components": [
                 {
-                  "id": 698716070467,
+                  "id": 982180948974,
                   "name": "Transform",
                   "params": {
                     "position": [
@@ -88,7 +35,7 @@
                   }
                 },
                 {
-                  "id": 259519481643,
+                  "id": 137583942115,
                   "name": "Text",
                   "params": {
                     "font": "runescape",
@@ -118,12 +65,12 @@
           ],
           "components": [
             {
-              "id": 449875266071,
+              "id": 613823615404,
               "name": "Transform",
               "params": {
                 "position": [
                   0,
-                  18.599999999999994,
+                  16.47,
                   1
                 ],
                 "scale": [
@@ -139,7 +86,7 @@
               }
             },
             {
-              "id": 211668905093,
+              "id": 225111632193,
               "name": "Container",
               "params": {
                 "color": [
@@ -175,7 +122,7 @@
                   "children": [],
                   "components": [
                     {
-                      "id": 946174244666,
+                      "id": 696971493993,
                       "name": "Transform",
                       "params": {
                         "position": [
@@ -196,7 +143,7 @@
                       }
                     },
                     {
-                      "id": 929423599032,
+                      "id": 792735503788,
                       "name": "TextInput",
                       "params": {
                         "maxLength": 40,
@@ -223,7 +170,7 @@
                       }
                     },
                     {
-                      "id": 723901211569,
+                      "id": 547263792299,
                       "name": "Focusable",
                       "params": {
                         "focused": false,
@@ -244,7 +191,7 @@
               ],
               "components": [
                 {
-                  "id": 245185381891,
+                  "id": 995115970910,
                   "name": "Transform",
                   "params": {
                     "position": [
@@ -265,7 +212,7 @@
                   }
                 },
                 {
-                  "id": 625822184291,
+                  "id": 301703212331,
                   "name": "Container",
                   "params": {
                     "color": [
@@ -290,12 +237,12 @@
           ],
           "components": [
             {
-              "id": 365541678564,
+              "id": 745510979625,
               "name": "Transform",
               "params": {
                 "position": [
                   0,
-                  -69.75,
+                  -61.7625,
                   0
                 ],
                 "scale": [
@@ -311,7 +258,7 @@
               }
             },
             {
-              "id": 538122789985,
+              "id": 234029365474,
               "name": "Container",
               "params": {
                 "color": [
@@ -336,12 +283,12 @@
       ],
       "components": [
         {
-          "id": 809152965473,
+          "id": 415499870031,
           "name": "Transform",
           "params": {
             "position": [
-              -170,
-              -186.5,
+              -143.5,
+              -192.14999999999998,
               0
             ],
             "scale": [
@@ -357,7 +304,18 @@
           }
         },
         {
-          "id": 521814653487,
+          "id": 752007484024,
+          "name": "Behavior",
+          "params": {
+            "scriptName": "ChatBox",
+            "border": 897783377027,
+            "chatInput": 224696758751,
+            "output": 505678417332,
+            "maxMessages": 5
+          }
+        },
+        {
+          "id": 434990283639,
           "name": "Container",
           "params": {
             "color": [
@@ -367,25 +325,405 @@
             ],
             "anchorAlignment": "BottomLeft",
             "anchored": true,
-            "sizeUnit": "Pixel",
-            "width": 400,
-            "height": 186,
+            "sizeUnit": "Percent",
+            "width": 75,
+            "height": 30,
             "marginUnit": "Pixel",
             "margin": [
               0,
               0
             ]
           }
+        }
+      ]
+    },
+    {
+      "id": 525814932624,
+      "name": "",
+      "children": [],
+      "components": [
+        {
+          "id": 953177038329,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
         },
         {
-          "id": 473872148418,
-          "name": "Behavior",
+          "id": 359655832067,
+          "name": "Tilemap",
           "params": {
-            "scriptName": "ChatBox",
-            "border": 897783377027,
-            "chatInput": 224696758751,
-            "output": 505678417332,
-            "maxMessages": 5
+            "grid": {
+              "size": [
+                4000,
+                4000
+              ],
+              "cells": [
+                80,
+                80
+              ]
+            },
+            "color": [
+              0,
+              0.21586050010324417,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 682132922253,
+      "name": "",
+      "children": [],
+      "components": [
+        {
+          "id": 727265632218,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 975419627937,
+          "name": "Tilemap",
+          "params": {
+            "grid": {
+              "size": [
+                4000,
+                4000
+              ],
+              "cells": [
+                80,
+                80
+              ]
+            },
+            "color": [
+              0.21586050010324417,
+              0.21586050010324417,
+              0.21586050010324417
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 993419219652,
+      "name": "",
+      "children": [],
+      "components": [
+        {
+          "id": 785668209786,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              2
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 943986210622,
+          "name": "Tilemap",
+          "params": {
+            "grid": {
+              "size": [
+                4000,
+                4000
+              ],
+              "cells": [
+                80,
+                80
+              ]
+            },
+            "color": [
+              0,
+              0,
+              1
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 234202106427,
+      "name": "",
+      "children": [],
+      "components": [
+        {
+          "id": 505727109478,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              3
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 896652799153,
+          "name": "Tilemap",
+          "params": {
+            "grid": {
+              "size": [
+                4000,
+                4000
+              ],
+              "cells": [
+                80,
+                80
+              ]
+            },
+            "color": [
+              0.5271151256969157,
+              0.5271151256969157,
+              0.5271151256969157
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 549972412126,
+      "name": "Sidebar",
+      "children": [
+        {
+          "id": 252164322917,
+          "name": "Inventory",
+          "children": [
+            {
+              "id": 250026168674,
+              "name": "InventoryItems",
+              "children": [],
+              "components": [
+                {
+                  "id": 793340738111,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 660235406548,
+                  "name": "FlexGrid",
+                  "params": {
+                    "cols": 3,
+                    "rows": 9,
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 390309007993,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  -82.35,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 923335504587,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.031896033067374104,
+                  0.031896033067374104,
+                  0.031896033067374104
+                ],
+                "anchorAlignment": "BottomCenter",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 70,
+                "marginUnit": "Pixel",
+                "margin": [
+                  30,
+                  30
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 185347037884,
+          "name": "Map",
+          "children": [],
+          "components": [
+            {
+              "id": 931409608272,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  192.14999999999998,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 677337795503,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.038204371589236,
+                  0.038204371589236,
+                  0.038204371589236
+                ],
+                "anchorAlignment": "TopCenter",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 30,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 836928022412,
+          "name": "Transform",
+          "params": {
+            "position": [
+              430.5,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 318933633308,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.158960835050774,
+              0.061246054224174035,
+              0.004776953478513362
+            ],
+            "anchorAlignment": "Right",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 25,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ]
           }
         }
       ]

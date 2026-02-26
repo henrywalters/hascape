@@ -1,0 +1,175 @@
+{
+  "id": 337395499927,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 477029248614,
+      "name": "HealthBar",
+      "children": [],
+      "components": [
+        {
+          "id": 398183907084,
+          "name": "Transform",
+          "params": {
+            "position": [
+              3,
+              22,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 650039165980,
+          "name": "HealthBar",
+          "params": {}
+        },
+        {
+          "id": 501023003364,
+          "name": "MeshPrimitive",
+          "params": {
+            "type": "Cube",
+            "width": 50,
+            "height": 5,
+            "depth": 1,
+            "radius": 1,
+            "color": [
+              1,
+              0.0009105809505882353,
+              0.0009105809505882353
+            ],
+            "opacity": 1,
+            "texture": "",
+            "textureMin": [
+              0,
+              0
+            ],
+            "textureMax": [
+              1,
+              1
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 608797960021,
+      "name": "Transform",
+      "params": {
+        "position": [
+          -28.596853495150672,
+          0,
+          8.410839263279577
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 320821218074,
+      "name": "Character",
+      "params": {}
+    },
+    {
+      "id": 794921777153,
+      "name": "BoxCollider2D",
+      "params": {
+        "min": [
+          -9,
+          -15
+        ],
+        "max": [
+          12,
+          17
+        ]
+      }
+    },
+    {
+      "id": 561248805888,
+      "name": "Animations",
+      "params": {
+        "animation": "idle",
+        "animations": [
+          {
+            "name": "idle",
+            "animation": "orc_idle",
+            "animationRate": 1
+          },
+          {
+            "name": "walk",
+            "animation": "orc_walk",
+            "animationRate": 1
+          }
+        ]
+      }
+    },
+    {
+      "id": 862191600397,
+      "name": "NPC",
+      "params": {}
+    },
+    {
+      "id": 475230762149,
+      "name": "Smooth",
+      "params": {
+        "speed": 1
+      }
+    },
+    {
+      "id": 949738757397,
+      "name": "MeshPrimitive",
+      "params": {
+        "type": "Plane",
+        "width": 200,
+        "height": 200,
+        "depth": 1,
+        "radius": 1,
+        "color": [
+          1,
+          0.01764195448412081,
+          0.01764195448412081
+        ],
+        "opacity": 1,
+        "texture": "orc_idle",
+        "textureMin": [
+          0.6666666666666666,
+          0
+        ],
+        "textureMax": [
+          0.8333333333333334,
+          1
+        ]
+      }
+    },
+    {
+      "id": 366346724657,
+      "name": "SpriteSheet",
+      "params": {
+        "spriteSheet": "orc_idle",
+        "animated": true,
+        "animationSpeed": 1,
+        "timeSinceTick": 0.05813333334528883,
+        "index": 4
+      }
+    }
+  ]
+}

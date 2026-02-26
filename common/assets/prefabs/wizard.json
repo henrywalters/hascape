@@ -1,0 +1,87 @@
+{
+  "id": 852471413773,
+  "name": "Entity_0",
+  "children": [],
+  "components": [
+    {
+      "id": 110229023487,
+      "name": "Transform",
+      "params": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 783776841107,
+      "name": "Character",
+      "params": {}
+    },
+    {
+      "id": 713806842200,
+      "name": "BoxCollider2D",
+      "params": {
+        "min": [
+          -50,
+          -50
+        ],
+        "max": [
+          50,
+          50
+        ]
+      }
+    },
+    {
+      "id": 400561929046,
+      "name": "NPC",
+      "params": {
+        "npcType": "wizard"
+      }
+    },
+    {
+      "id": 897148326747,
+      "name": "Smooth",
+      "params": {
+        "speed": 1
+      }
+    },
+    {
+      "id": 289190128441,
+      "name": "MeshPrimitive",
+      "params": {
+        "type": "Plane",
+        "width": 50,
+        "height": 50,
+        "depth": 1,
+        "radius": 1,
+        "color": [
+          1,
+          1,
+          1
+        ],
+        "opacity": 1,
+        "texture": "wizard",
+        "textureMin": [
+          0,
+          0
+        ],
+        "textureMax": [
+          1,
+          1
+        ]
+      }
+    }
+  ]
+}

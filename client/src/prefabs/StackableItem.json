@@ -1,0 +1,108 @@
+{
+  "id": 911148625364,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 185511430867,
+      "name": "Entity_1",
+      "children": [],
+      "components": [
+        {
+          "id": 502489628393,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 420354431500,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "1",
+            "fontSize": 12,
+            "lineSpacing": 0,
+            "color": [
+              1,
+              0.8307698767709715,
+              0
+            ],
+            "alignment": "Center",
+            "anchorAlignment": "TopRight",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 853132115504,
+      "name": "Transform",
+      "params": {
+        "position": [
+          -96.375,
+          172.29500000000002,
+          10
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 224242362086,
+      "name": "Image",
+      "params": {
+        "texture": "creepy_smile",
+        "textureMin": [
+          0,
+          0
+        ],
+        "textureMax": [
+          1,
+          1
+        ],
+        "anchorAlignment": "TopLeft",
+        "anchored": true,
+        "sizeUnit": "Percent",
+        "width": 25,
+        "height": 15,
+        "marginUnit": "Pixel",
+        "margin": [
+          15,
+          15
+        ]
+      }
+    }
+  ]
+}

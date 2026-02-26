@@ -1,4 +1,5 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { BankItem, InventoryItem } from "./inventory";
 
 @Entity()
 export class User {
@@ -13,4 +14,10 @@ export class User {
 
     @Column('varchar')
     username: string;
+
+    @OneToMany(() => InventoryItem, item => item.user)
+    inventoryItems: InventoryItem[];
+
+    @OneToMany(() => BankItem, item => item.user)
+    bankItems: BankItem[];
 }
