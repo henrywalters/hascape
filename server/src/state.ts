@@ -2,7 +2,8 @@ import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { Grid } from "hagamets/dist/utils/grid.js";
 import { GridMap } from "hagamets/dist/utils/gridMap.js";
 import { Vector2 } from "three";
-import { CELL_SIZE, CELLS, CHUNKS, MapData, TILES, WORLD_SIZE, CHUNK_SIZE, INPCSpawner } from "@hascape/common";
+import { WebSocket } from "ws";
+import { CELL_SIZE, CELLS, CHUNKS, MapData, TILES, WORLD_SIZE, CHUNK_SIZE, INPCSpawner, InventoryItem, Inventory, ItemInstance } from "@hascape/common";
 
 import WorldMap from "@hascape/common/map";
 
@@ -14,6 +15,12 @@ class _State {
     public items: GridMap<IEntity[]> = new GridMap();
     public playerSessions: Map<string, IEntity> = new Map();
     public itemInstances: Map<string, IEntity> = new Map();
+    public playerInventories: Map<string, Inventory> = new Map();
+    public sockets: Map<number, WebSocket> = new Map();
+    public socketIds: Map<WebSocket, number> = new Map();
+
+    public sessionSockets: Map<string, WebSocket> = new Map();
+    public socketSessions: Map<WebSocket, string> = new Map(); 
 
     constructor() {
 
@@ -30,6 +37,26 @@ class _State {
                 }
             }
         }
+    }
+
+    initializeInventory(playerId: string, items: InventoryItem[]) {
+        this.getInventory(playerId).initialize(items);
+    }
+
+    getInventory(playerId: string) {
+        if (!this.playerInventories.has(playerId)) {
+            this.playerInventories.set(playerId, new Inventory());
+        }
+
+        return this.playerInventories.get(playerId)!;
+    }
+
+    addInventoryItem(playerId: string, item: ItemInstance) {
+        return this.getInventory(playerId).addItem(item);
+    }
+
+    removeInventoryItem(playerId: string, itemId: string) {
+        return this.getInventory(playerId).removeItem(itemId);
     }
 }
 

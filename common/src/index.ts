@@ -7,6 +7,8 @@ export * from "./interfaces/stats";
 export * from "./interfaces/npc";
 export * from "./interfaces/item";
 export * from "./interfaces/dropTable";
+export * from "./interfaces/action";
+export * from "./interfaces/inventory";
 
 export * from "./systems/players";
 

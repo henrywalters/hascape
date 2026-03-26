@@ -6,6 +6,7 @@ import ItemOnGroundPrefab from "@hascape/common/itemOnGround";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
 import { CameraZoom } from "hagamets/dist/common/components/camera.js";
+import { InventoryEvents } from "../inventoryEvents";
 
 export class LoginMenu extends RenderScene {
     constructor(game: IGame) {
@@ -22,6 +23,8 @@ export class LoginMenu extends RenderScene {
 
             if (msg.message.type === ServerMessages.PlayerJoined) {
                 const joined = msg.message as PlayerJoined;
+
+                console.log(joined);
                 
                 // If we join, that means we're logged into the server and therefore not editing
                 State.isEditing = false;
@@ -87,9 +90,10 @@ export class LoginMenu extends RenderScene {
                 }
 
                 for (const item of joined.items) {
+                    console.log(item);
                     const itemEntity = this.game.currentScene!.addEntityFromPrefab(ItemOnGroundPrefab);
                     const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
-                    itemOnGround.amount = item.amount;
+                    itemOnGround.quantity = item.quantity;
                     itemOnGround.instanceId = item.instanceId;
                     itemOnGround.item = item.item;
                     itemEntity.transform.position = item.position as any;
@@ -99,6 +103,13 @@ export class LoginMenu extends RenderScene {
                     mesh.notifyUpdate();
 
                     State.items.set(item.instanceId, itemEntity);
+                }
+
+                for (const item of joined.inventory) {
+                    State.inventoryEvents.emit({
+                        type: InventoryEvents.AddItemToInventory,
+                        item,
+                    })
                 }
 
                 const size = this.game.getSize();

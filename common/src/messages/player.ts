@@ -1,8 +1,8 @@
-import { Param, Types, String, Class, Array, Int } from "hagamets/dist/core/reflection.js";
+import { Param, Types, String, Class, Array, Int, Boolean } from "hagamets/dist/core/reflection.js";
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { ClientMessages, ServerMessages } from "./types";
-import { Vector3 } from "three";
-import { ItemInstance } from "../interfaces/item";
+import { Vector2, Vector3 } from "three";
+import { InventoryItem, ItemInstance } from "../interfaces/item";
 import { ItemPickup } from "./items";
 
 export class Test {
@@ -58,6 +58,9 @@ export class PlayerJoined extends NetMessage {
 
     @Array(Types.Class, ItemPickup)
     items: ItemPickup[] = [];
+
+    @Array(Types.Class, InventoryItem)
+    inventory: InventoryItem[] = [];
 }
 
 export class OtherPlayerJoined extends NetMessage {
@@ -104,4 +107,27 @@ export class CharacterInteract extends NetMessage {
 
     @String()
     sessionId: string;
+}
+
+export class CharacterAction extends NetMessage {
+    type = ClientMessages.CharacterAction;
+
+    @Int()
+    action: number;
+
+    @String()
+    sessionId: string;
+
+    @String()
+    subjectId: string = "";
+
+    @Param({type: Types.Vector2})
+    position: Vector2 = new Vector2();
+}
+
+export class ActionReceived extends NetMessage {
+    type = ServerMessages.ActionReceived;
+
+    @Boolean()
+    success: boolean;
 }

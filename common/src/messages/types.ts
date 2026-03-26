@@ -5,6 +5,7 @@ export enum ClientMessages {
     CharacterAttack,
     PickupItem,
     CharacterInteract,
+    CharacterAction,
 }
 
 export enum ServerMessages {
@@ -21,4 +22,6 @@ export enum ServerMessages {
     ItemsSpawned,
     ItemsDespawned,
     PickedUpItem,
+    DroppedItem,
+    ActionReceived,
 }

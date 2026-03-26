@@ -3,18 +3,21 @@
     {
       "id": 955292798725,
       "name": "ChatBox",
+      "active": true,
       "children": [
         {
           "id": 283481485988,
           "name": "ChatOutput",
+          "active": true,
           "children": [
             {
               "id": 505678417332,
               "name": "OutputText",
+              "active": true,
               "children": [],
               "components": [
                 {
-                  "id": 982180948974,
+                  "id": 995675067088,
                   "name": "Transform",
                   "params": {
                     "position": [
@@ -35,7 +38,7 @@
                   }
                 },
                 {
-                  "id": 137583942115,
+                  "id": 935052542789,
                   "name": "Text",
                   "params": {
                     "font": "runescape",
@@ -47,6 +50,7 @@
                       0.775822218312646,
                       0
                     ],
+                    "opacity": 1,
                     "alignment": "Left",
                     "anchorAlignment": "TopLeft",
                     "anchored": true,
@@ -57,6 +61,10 @@
                     "margin": [
                       15,
                       15
+                    ],
+                    "offset": [
+                      0,
+                      0
                     ]
                   }
                 }
@@ -65,12 +73,12 @@
           ],
           "components": [
             {
-              "id": 613823615404,
+              "id": 589115191623,
               "name": "Transform",
               "params": {
                 "position": [
                   0,
-                  16.47,
+                  18.659999999999997,
                   1
                 ],
                 "scale": [
@@ -86,7 +94,7 @@
               }
             },
             {
-              "id": 225111632193,
+              "id": 782030873670,
               "name": "Container",
               "params": {
                 "color": [
@@ -94,6 +102,7 @@
                   0.057805430183792694,
                   0.057805430183792694
                 ],
+                "opacity": 1,
                 "anchorAlignment": "TopCenter",
                 "anchored": true,
                 "sizeUnit": "Percent",
@@ -103,6 +112,10 @@
                 "margin": [
                   15,
                   15
+                ],
+                "offset": [
+                  0,
+                  0
                 ]
               }
             }
@@ -111,18 +124,21 @@
         {
           "id": 897783377027,
           "name": "Border",
+          "active": true,
           "children": [
             {
               "id": 818439657603,
               "name": "ChatInput",
+              "active": true,
               "children": [
                 {
                   "id": 224696758751,
                   "name": "InputText",
+                  "active": true,
                   "children": [],
                   "components": [
                     {
-                      "id": 696971493993,
+                      "id": 769274931594,
                       "name": "Transform",
                       "params": {
                         "position": [
@@ -143,7 +159,7 @@
                       }
                     },
                     {
-                      "id": 792735503788,
+                      "id": 794078518081,
                       "name": "TextInput",
                       "params": {
                         "maxLength": 40,
@@ -156,6 +172,7 @@
                           0.9559733532482866,
                           0
                         ],
+                        "opacity": 1,
                         "alignment": "Left",
                         "anchorAlignment": "Left",
                         "anchored": true,
@@ -166,11 +183,15 @@
                         "margin": [
                           0,
                           0
+                        ],
+                        "offset": [
+                          0,
+                          0
                         ]
                       }
                     },
                     {
-                      "id": 547263792299,
+                      "id": 791670388644,
                       "name": "Focusable",
                       "params": {
                         "focused": false,
@@ -183,6 +204,10 @@
                         "margin": [
                           0,
                           0
+                        ],
+                        "offset": [
+                          0,
+                          0
                         ]
                       }
                     }
@@ -191,12 +216,12 @@
               ],
               "components": [
                 {
-                  "id": 995115970910,
+                  "id": 179402247235,
                   "name": "Transform",
                   "params": {
                     "position": [
                       0,
-                      0,
+                      1.7763568394002505e-15,
                       1
                     ],
                     "scale": [
@@ -212,7 +237,7 @@
                   }
                 },
                 {
-                  "id": 301703212331,
+                  "id": 853740619299,
                   "name": "Container",
                   "params": {
                     "color": [
@@ -220,6 +245,7 @@
                       0.015996293361446288,
                       0.015996293361446288
                     ],
+                    "opacity": 1,
                     "anchorAlignment": "BottomCenter",
                     "anchored": true,
                     "sizeUnit": "Percent",
@@ -229,6 +255,10 @@
                     "margin": [
                       5,
                       5
+                    ],
+                    "offset": [
+                      0,
+                      0
                     ]
                   }
                 }
@@ -237,12 +267,12 @@
           ],
           "components": [
             {
-              "id": 745510979625,
+              "id": 550526810598,
               "name": "Transform",
               "params": {
                 "position": [
                   0,
-                  -61.7625,
+                  -69.975,
                   0
                 ],
                 "scale": [
@@ -258,7 +288,7 @@
               }
             },
             {
-              "id": 234029365474,
+              "id": 110689027750,
               "name": "Container",
               "params": {
                 "color": [
@@ -266,6 +296,7 @@
                   0,
                   0
                 ],
+                "opacity": 1,
                 "anchorAlignment": "BottomCenter",
                 "anchored": true,
                 "sizeUnit": "Percent",
@@ -275,6 +306,10 @@
                 "margin": [
                   15,
                   15
+                ],
+                "offset": [
+                  0,
+                  0
                 ]
               }
             }
@@ -283,12 +318,12 @@
       ],
       "components": [
         {
-          "id": 415499870031,
+          "id": 999105269027,
           "name": "Transform",
           "params": {
             "position": [
               -143.5,
-              -192.14999999999998,
+              -217.7,
               0
             ],
             "scale": [
@@ -304,7 +339,7 @@
           }
         },
         {
-          "id": 752007484024,
+          "id": 718352815530,
           "name": "Behavior",
           "params": {
             "scriptName": "ChatBox",
@@ -315,7 +350,7 @@
           }
         },
         {
-          "id": 434990283639,
+          "id": 441034421150,
           "name": "Container",
           "params": {
             "color": [
@@ -323,6 +358,7 @@
               0.035601314869097636,
               0
             ],
+            "opacity": 1,
             "anchorAlignment": "BottomLeft",
             "anchored": true,
             "sizeUnit": "Percent",
@@ -330,6 +366,10 @@
             "height": 30,
             "marginUnit": "Pixel",
             "margin": [
+              0,
+              0
+            ],
+            "offset": [
               0,
               0
             ]
@@ -340,10 +380,11 @@
     {
       "id": 525814932624,
       "name": "",
+      "active": true,
       "children": [],
       "components": [
         {
-          "id": 953177038329,
+          "id": 558538371687,
           "name": "Transform",
           "params": {
             "position": [
@@ -364,7 +405,7 @@
           }
         },
         {
-          "id": 359655832067,
+          "id": 224599916612,
           "name": "Tilemap",
           "params": {
             "grid": {
@@ -389,10 +430,11 @@
     {
       "id": 682132922253,
       "name": "",
+      "active": true,
       "children": [],
       "components": [
         {
-          "id": 727265632218,
+          "id": 107270575126,
           "name": "Transform",
           "params": {
             "position": [
@@ -413,7 +455,7 @@
           }
         },
         {
-          "id": 975419627937,
+          "id": 792623609354,
           "name": "Tilemap",
           "params": {
             "grid": {
@@ -438,10 +480,11 @@
     {
       "id": 993419219652,
       "name": "",
+      "active": true,
       "children": [],
       "components": [
         {
-          "id": 785668209786,
+          "id": 237766855987,
           "name": "Transform",
           "params": {
             "position": [
@@ -462,7 +505,7 @@
           }
         },
         {
-          "id": 943986210622,
+          "id": 628429237978,
           "name": "Tilemap",
           "params": {
             "grid": {
@@ -487,10 +530,11 @@
     {
       "id": 234202106427,
       "name": "",
+      "active": true,
       "children": [],
       "components": [
         {
-          "id": 505727109478,
+          "id": 518236641968,
           "name": "Transform",
           "params": {
             "position": [
@@ -511,7 +555,7 @@
           }
         },
         {
-          "id": 896652799153,
+          "id": 503605124142,
           "name": "Tilemap",
           "params": {
             "grid": {
@@ -536,18 +580,21 @@
     {
       "id": 549972412126,
       "name": "Sidebar",
+      "active": true,
       "children": [
         {
           "id": 252164322917,
           "name": "Inventory",
+          "active": true,
           "children": [
             {
               "id": 250026168674,
               "name": "InventoryItems",
+              "active": true,
               "children": [],
               "components": [
                 {
-                  "id": 793340738111,
+                  "id": 713235857464,
                   "name": "Transform",
                   "params": {
                     "position": [
@@ -568,7 +615,7 @@
                   }
                 },
                 {
-                  "id": 660235406548,
+                  "id": 396300517500,
                   "name": "FlexGrid",
                   "params": {
                     "cols": 3,
@@ -582,6 +629,10 @@
                     "margin": [
                       0,
                       0
+                    ],
+                    "offset": [
+                      0,
+                      0
                     ]
                   }
                 }
@@ -590,12 +641,12 @@
           ],
           "components": [
             {
-              "id": 390309007993,
+              "id": 113769382700,
               "name": "Transform",
               "params": {
                 "position": [
                   0,
-                  -82.35,
+                  -93.29999999999998,
                   0
                 ],
                 "scale": [
@@ -611,7 +662,15 @@
               }
             },
             {
-              "id": 923335504587,
+              "id": 523334610016,
+              "name": "Behavior",
+              "params": {
+                "scriptName": "Inventory",
+                "items": 250026168674
+              }
+            },
+            {
+              "id": 127191551628,
               "name": "Container",
               "params": {
                 "color": [
@@ -619,6 +678,7 @@
                   0.031896033067374104,
                   0.031896033067374104
                 ],
+                "opacity": 1,
                 "anchorAlignment": "BottomCenter",
                 "anchored": true,
                 "sizeUnit": "Percent",
@@ -628,6 +688,10 @@
                 "margin": [
                   30,
                   30
+                ],
+                "offset": [
+                  0,
+                  0
                 ]
               }
             }
@@ -636,15 +700,16 @@
         {
           "id": 185347037884,
           "name": "Map",
+          "active": true,
           "children": [],
           "components": [
             {
-              "id": 931409608272,
+              "id": 174195151440,
               "name": "Transform",
               "params": {
                 "position": [
                   0,
-                  192.14999999999998,
+                  217.7,
                   0
                 ],
                 "scale": [
@@ -660,7 +725,7 @@
               }
             },
             {
-              "id": 677337795503,
+              "id": 901343378056,
               "name": "Container",
               "params": {
                 "color": [
@@ -668,6 +733,7 @@
                   0.038204371589236,
                   0.038204371589236
                 ],
+                "opacity": 1,
                 "anchorAlignment": "TopCenter",
                 "anchored": true,
                 "sizeUnit": "Percent",
@@ -675,6 +741,10 @@
                 "height": 30,
                 "marginUnit": "Pixel",
                 "margin": [
+                  0,
+                  0
+                ],
+                "offset": [
                   0,
                   0
                 ]
@@ -685,7 +755,7 @@
       ],
       "components": [
         {
-          "id": 836928022412,
+          "id": 126853321835,
           "name": "Transform",
           "params": {
             "position": [
@@ -706,7 +776,7 @@
           }
         },
         {
-          "id": 318933633308,
+          "id": 967163661250,
           "name": "Container",
           "params": {
             "color": [
@@ -714,6 +784,7 @@
               0.061246054224174035,
               0.004776953478513362
             ],
+            "opacity": 1,
             "anchorAlignment": "Right",
             "anchored": true,
             "sizeUnit": "Percent",
@@ -721,6 +792,727 @@
             "height": 100,
             "marginUnit": "Pixel",
             "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 408520665451,
+      "name": "InteractMenu",
+      "active": false,
+      "children": [
+        {
+          "id": 182181831067,
+          "name": "TitleBar",
+          "active": false,
+          "children": [
+            {
+              "id": 878708427864,
+              "name": "Entity_2",
+              "active": false,
+              "children": [],
+              "components": [
+                {
+                  "id": 999434485701,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 457639179553,
+                  "name": "Text",
+                  "params": {
+                    "font": "runescape",
+                    "text": "Choose Option",
+                    "fontSize": 14,
+                    "lineSpacing": 0,
+                    "color": [
+                      0.10946171076915331,
+                      0.08865558627723595,
+                      0.06301001764564068
+                    ],
+                    "opacity": 1,
+                    "alignment": "Left",
+                    "anchorAlignment": "Left",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      5,
+                      0
+                    ],
+                    "offset": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 669016679811,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  15,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 410679071679,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0,
+                  0,
+                  0
+                ],
+                "opacity": 1,
+                "anchorAlignment": "TopCenter",
+                "anchored": true,
+                "sizeUnit": "Pixel",
+                "width": 200,
+                "height": 30,
+                "marginUnit": "Pixel",
+                "margin": [
+                  3,
+                  3
+                ],
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 753540382039,
+          "name": "Options",
+          "active": false,
+          "children": [
+            {
+              "id": 160116832598,
+              "name": "InteractOptions",
+              "active": false,
+              "children": [],
+              "components": [
+                {
+                  "id": 448984143551,
+                  "name": "Transform",
+                  "params": {
+                    "position": [
+                      0,
+                      0,
+                      0
+                    ],
+                    "scale": [
+                      1,
+                      1,
+                      1
+                    ],
+                    "rotation": [
+                      0,
+                      0,
+                      0
+                    ]
+                  }
+                },
+                {
+                  "id": 104227191077,
+                  "name": "FlexColumn",
+                  "params": {
+                    "anchorAlignment": "Center",
+                    "anchored": true,
+                    "sizeUnit": "Percent",
+                    "width": 100,
+                    "height": 100,
+                    "marginUnit": "Pixel",
+                    "margin": [
+                      0,
+                      0
+                    ],
+                    "offset": [
+                      0,
+                      0
+                    ]
+                  }
+                }
+              ]
+            }
+          ],
+          "components": [
+            {
+              "id": 768299474570,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  -15,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 229149724584,
+              "name": "Container",
+              "params": {
+                "color": [
+                  0.10946171076915331,
+                  0.08865558627723595,
+                  0.06301001764564068
+                ],
+                "opacity": 1,
+                "anchorAlignment": "BottomCenter",
+                "anchored": true,
+                "sizeUnit": "Pixel",
+                "width": 200,
+                "height": 30,
+                "marginUnit": "Pixel",
+                "margin": [
+                  3,
+                  3
+                ],
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 541922639595,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 288093626958,
+          "name": "Behavior",
+          "params": {
+            "scriptName": "InteractMenu",
+            "preview": 537821333630,
+            "options": 160116832598,
+            "interact": 345889757922,
+            "padding": 20
+          }
+        },
+        {
+          "id": 260828504683,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.10946171076915331,
+              0.08865558627723595,
+              0.06301001764564068
+            ],
+            "opacity": 1,
+            "anchorAlignment": "Center",
+            "anchored": false,
+            "sizeUnit": "Pixel",
+            "width": 200,
+            "height": 60,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 537821333630,
+      "name": "InteractOption",
+      "active": true,
+      "children": [
+        {
+          "id": 188782713510,
+          "name": "InteractAction",
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "id": 532161052570,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 267911466887,
+              "name": "Text",
+              "params": {
+                "font": "runescape",
+                "text": "",
+                "fontSize": 14,
+                "lineSpacing": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ],
+                "opacity": 1,
+                "alignment": "Left",
+                "anchorAlignment": "Left",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ],
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 178847500672,
+          "name": "InteractSubject",
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "id": 751881175194,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 400517483614,
+              "name": "Text",
+              "params": {
+                "font": "runescape",
+                "text": "",
+                "fontSize": 14,
+                "lineSpacing": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ],
+                "opacity": 1,
+                "alignment": "Left",
+                "anchorAlignment": "Left",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ],
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "id": 837800701689,
+          "name": "Interact Level",
+          "active": true,
+          "children": [],
+          "components": [
+            {
+              "id": 809256508248,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 638169443995,
+              "name": "Text",
+              "params": {
+                "font": "runescape",
+                "text": "",
+                "fontSize": 14,
+                "lineSpacing": 0,
+                "color": [
+                  1,
+                  1,
+                  1
+                ],
+                "opacity": 1,
+                "alignment": "Left",
+                "anchorAlignment": "Left",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ],
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 537494373984,
+          "name": "Transform",
+          "params": {
+            "position": [
+              -314,
+              296,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 765753540442,
+          "name": "Behavior",
+          "params": {
+            "scriptName": "InteractOption",
+            "action": 188782713510,
+            "subject": 178847500672,
+            "level": 837800701689
+          }
+        },
+        {
+          "id": 285735567185,
+          "name": "Container",
+          "params": {
+            "color": [
+              1,
+              1,
+              1
+            ],
+            "opacity": 0,
+            "anchorAlignment": "TopLeft",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 500,
+            "height": 30,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              10,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 345889757922,
+      "name": "Interact",
+      "active": false,
+      "children": [],
+      "components": [
+        {
+          "id": 961823171153,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 647352340953,
+          "name": "SpriteSheet",
+          "params": {
+            "spriteSheet": "Interact",
+            "animated": true,
+            "reverse": true,
+            "animationSpeed": 0.25,
+            "timeSinceTick": 0.016700000023877493,
+            "index": 0
+          }
+        },
+        {
+          "id": 898414718825,
+          "name": "Image",
+          "params": {
+            "texture": "Interact",
+            "textureMin": [
+              0,
+              0
+            ],
+            "textureMax": [
+              1,
+              0.2
+            ],
+            "anchorAlignment": "Center",
+            "anchored": false,
+            "sizeUnit": "Pixel",
+            "width": 25,
+            "height": 25,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 225610644192,
+      "name": "Profiler",
+      "active": false,
+      "children": [
+        {
+          "id": 282092930812,
+          "name": "Profile List",
+          "active": false,
+          "children": [],
+          "components": [
+            {
+              "id": 449953204364,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 485380300698,
+              "name": "FlexColumn",
+              "params": {
+                "anchorAlignment": "Center",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  15,
+                  15
+                ],
+                "offset": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 393020088018,
+          "name": "Transform",
+          "params": {
+            "position": [
+              424,
+              266,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 623902491456,
+          "name": "Behavior",
+          "params": {
+            "scriptName": "Profiler",
+            "profiles": 282092930812
+          }
+        },
+        {
+          "id": 724095907371,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.001214107934117647,
+              0,
+              0.13843161502267545
+            ],
+            "opacity": 0.5,
+            "anchorAlignment": "TopRight",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 300,
+            "height": 90,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
               0,
               0
             ]

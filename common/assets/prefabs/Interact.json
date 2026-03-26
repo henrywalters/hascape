@@ -1,0 +1,70 @@
+{
+  "id": 772975687431,
+  "name": "Interact",
+  "active": true,
+  "children": [],
+  "components": [
+    {
+      "id": 736063119315,
+      "name": "Transform",
+      "params": {
+        "position": [
+          0,
+          0,
+          1
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 382174220395,
+      "name": "SpriteSheet",
+      "params": {
+        "spriteSheet": "Interact",
+        "animated": true,
+        "reverse": true,
+        "animationSpeed": 0.25,
+        "timeSinceTick": 0.0035999999940023453,
+        "index": 3
+      }
+    },
+    {
+      "id": 532090849454,
+      "name": "Image",
+      "params": {
+        "texture": "Interact",
+        "textureMin": [
+          0,
+          0.6
+        ],
+        "textureMax": [
+          1,
+          0.8
+        ],
+        "anchorAlignment": "Center",
+        "anchored": false,
+        "sizeUnit": "Pixel",
+        "width": 25,
+        "height": 25,
+        "marginUnit": "Pixel",
+        "margin": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

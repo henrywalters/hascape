@@ -1,10 +1,10 @@
 import { NetMessages } from "hagamets/dist/net/messages.js";
 import { ClientConnect } from "./messages/connect";
 import { MovementUpdate, PlayerMove, PlayerMoved } from "./messages/move";
-import { CharacterChangeHealth, CharacterDied, CharacterInteract, NPCJoined, OtherPlayerJoined, PlayerJoined, PlayerLeft } from "./messages/player";
+import { ActionReceived, CharacterAction, CharacterChangeHealth, CharacterDied, CharacterInteract, NPCJoined, OtherPlayerJoined, PlayerJoined, PlayerLeft } from "./messages/player";
 import { PlayerMessage, PlayerMessaged } from "./messages/chat";
 import { CharacterAttack, CharacterAttacked } from "./messages/attack";
-import { ItemsDespawned, ItemsSpawned, PickedUpItem, PickupItem } from "./messages/items";
+import { DroppedItem, ItemsDespawned, ItemsSpawned, PickedUpItem, PickupItem } from "./messages/items";
 
 export const CLIENT_MESSAGES = new NetMessages([
     ClientConnect,
@@ -13,6 +13,7 @@ export const CLIENT_MESSAGES = new NetMessages([
     CharacterAttack,
     PickupItem,
     CharacterInteract,
+    CharacterAction,
 ]);
 
 export const SERVER_MESSAGES = new NetMessages([
@@ -29,4 +30,6 @@ export const SERVER_MESSAGES = new NetMessages([
     ItemsSpawned,
     ItemsDespawned,
     PickedUpItem,
+    DroppedItem,
+    ActionReceived,
 ]);

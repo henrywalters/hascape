@@ -10,7 +10,7 @@ export class WizardsAssistant extends BaseSystem {
             for (let j = -1; j <= 1; j++) {
                 items.push({
                     item: new ItemInstance('bones'),
-                    position: this.cellPos(new Vector2(i, j)),
+                    position: this.cellPos(new Vector2(0, 0)),
                     despawnRate: 0,
                 });
             }

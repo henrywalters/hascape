@@ -1,0 +1,332 @@
+{
+  "id": 358618080464,
+  "name": "InteractOption",
+  "active": true,
+  "children": [
+    {
+      "id": 192963059811,
+      "name": "InteractAction",
+      "active": true,
+      "children": [],
+      "components": [
+        {
+          "id": 896917844764,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 354768276642,
+          "name": "Button",
+          "params": {
+            "defaultColor": [
+              1,
+              1,
+              1
+            ],
+            "hoverColor": [
+              0.8,
+              0.8,
+              0.8
+            ],
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 482553663311,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "",
+            "fontSize": 14,
+            "lineSpacing": 0,
+            "color": [
+              1,
+              1,
+              1
+            ],
+            "alignment": "Left",
+            "anchorAlignment": "Left",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 428081206584,
+      "name": "InteractSubject",
+      "active": true,
+      "children": [],
+      "components": [
+        {
+          "id": 569260188478,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 275056424695,
+          "name": "Button",
+          "params": {
+            "defaultColor": [
+              1,
+              1,
+              1
+            ],
+            "hoverColor": [
+              0.8,
+              0.8,
+              0.8
+            ],
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 933757291595,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "",
+            "fontSize": 14,
+            "lineSpacing": 0,
+            "color": [
+              1,
+              1,
+              1
+            ],
+            "alignment": "Left",
+            "anchorAlignment": "Left",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 510360621855,
+      "name": "Interact Level",
+      "active": true,
+      "children": [],
+      "components": [
+        {
+          "id": 547572107300,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 761111953981,
+          "name": "Button",
+          "params": {
+            "defaultColor": [
+              1,
+              1,
+              1
+            ],
+            "hoverColor": [
+              0.8,
+              0.8,
+              0.8
+            ],
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 522206891485,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "",
+            "fontSize": 14,
+            "lineSpacing": 0,
+            "color": [
+              1,
+              1,
+              1
+            ],
+            "alignment": "Left",
+            "anchorAlignment": "Left",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 449843575578,
+      "name": "Transform",
+      "params": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 489624791398,
+      "name": "Behavior",
+      "params": {
+        "scriptName": "InteractOption",
+        "action": 192963059811,
+        "subject": 428081206584,
+        "level": 510360621855
+      }
+    },
+    {
+      "id": 311090192020,
+      "name": "Container",
+      "params": {
+        "color": [
+          0.10946171076915331,
+          0.08865558627723595,
+          0.06301001764564068
+        ],
+        "anchorAlignment": "Center",
+        "anchored": true,
+        "sizeUnit": "Percent",
+        "width": 100,
+        "height": 100,
+        "marginUnit": "Pixel",
+        "margin": [
+          0,
+          0
+        ],
+        "offset": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

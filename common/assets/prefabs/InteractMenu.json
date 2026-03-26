@@ -1,0 +1,256 @@
+{
+  "id": 357388176444,
+  "name": "Entity_0",
+  "children": [
+    {
+      "id": 727559299750,
+      "name": "TitleBar",
+      "children": [
+        {
+          "id": 308919621768,
+          "name": "Entity_2",
+          "children": [],
+          "components": [
+            {
+              "id": 322634446608,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 918695584867,
+              "name": "Text",
+              "params": {
+                "font": "runescape",
+                "text": "Choose Option",
+                "fontSize": 14,
+                "lineSpacing": 0,
+                "color": [
+                  0.028426039499072558,
+                  0.028426039499072558,
+                  0.028426039499072558
+                ],
+                "alignment": "Left",
+                "anchorAlignment": "Left",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  5,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 684299190168,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              35,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 362134472243,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.001214107934117647,
+              0.001214107934117647,
+              0.001214107934117647
+            ],
+            "anchorAlignment": "TopCenter",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 200,
+            "height": 30,
+            "marginUnit": "Pixel",
+            "margin": [
+              7,
+              7
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 869122771642,
+      "name": "Options",
+      "children": [
+        {
+          "id": 565345249801,
+          "name": "InteractOptions",
+          "children": [],
+          "components": [
+            {
+              "id": 578473554511,
+              "name": "Transform",
+              "params": {
+                "position": [
+                  0,
+                  0,
+                  0
+                ],
+                "scale": [
+                  1,
+                  1,
+                  1
+                ],
+                "rotation": [
+                  0,
+                  0,
+                  0
+                ]
+              }
+            },
+            {
+              "id": 194985935896,
+              "name": "FlexColumn",
+              "params": {
+                "anchorAlignment": "Center",
+                "anchored": true,
+                "sizeUnit": "Percent",
+                "width": 100,
+                "height": 100,
+                "marginUnit": "Pixel",
+                "margin": [
+                  0,
+                  0
+                ]
+              }
+            }
+          ]
+        }
+      ],
+      "components": [
+        {
+          "id": 285034133089,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              -12.5,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 803917233333,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.028426039499072558,
+              0.028426039499072558,
+              0.028426039499072558
+            ],
+            "anchorAlignment": "BottomCenter",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 75,
+            "marginUnit": "Pixel",
+            "margin": [
+              7,
+              7
+            ]
+          }
+        }
+      ]
+    }
+  ],
+  "components": [
+    {
+      "id": 288470405818,
+      "name": "Transform",
+      "params": {
+        "position": [
+          0,
+          0,
+          0
+        ],
+        "scale": [
+          1,
+          1,
+          1
+        ],
+        "rotation": [
+          0,
+          0,
+          0
+        ]
+      }
+    },
+    {
+      "id": 572456398250,
+      "name": "Behavior",
+      "params": {
+        "scriptName": "InteractMenu",
+        "options": "565345249801"
+      }
+    },
+    {
+      "id": 161612854456,
+      "name": "Container",
+      "params": {
+        "color": [
+          0.028426039499072558,
+          0.028426039499072558,
+          0.028426039499072558
+        ],
+        "anchorAlignment": "Center",
+        "anchored": false,
+        "sizeUnit": "Pixel",
+        "width": 200,
+        "height": 100,
+        "marginUnit": "Pixel",
+        "margin": [
+          0,
+          0
+        ]
+      }
+    }
+  ]
+}

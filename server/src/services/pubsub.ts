@@ -6,6 +6,7 @@ import { LoggedIn, LoggedOut, Login, Logout } from "../messages/login";
 import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "../messages/player";
 import { NetEvent } from "hagamets/dist/net/interfaces/net.js";
 import { NPCChangeHealth, NPCsClear, NPCsCleared, NPCSpawn, NPCSpawned } from "../messages/npc";
+import { AddedItemToInventory, AddItemToInventory, MovedItemInInventory, MoveItemInInventory, RemovedItemFromInventory, RemoveItemFromInventory } from "../messages/inventory";
 
 const SERVER_MESSAGES: NetMessages = new NetMessages([
     Login,
@@ -15,7 +16,10 @@ const SERVER_MESSAGES: NetMessages = new NetMessages([
     NPCsClear,
     NPCSpawn,
     NPCChangeHealth,
-]);
+    AddItemToInventory,
+    RemoveItemFromInventory,
+    MoveItemInInventory,
+]); 
 
 const API_MESSAGES: NetMessages = new NetMessages([
     LoggedIn,
@@ -23,6 +27,9 @@ const API_MESSAGES: NetMessages = new NetMessages([
     PlayerReceivedMessaged,
     NPCsCleared,
     NPCSpawned,
+    AddedItemToInventory,
+    RemovedItemFromInventory,
+    MovedItemInInventory,
 ]);
 
 const API_PORT = 4301;
@@ -73,7 +80,7 @@ export class Pubsub {
                 port: SERVER_PORT
             }, API_MESSAGES, SERVER_MESSAGES);
             this._server.onMessage = (msg) => {
-                this.onMessage(msg);
+                this.onMessage(msg); 
             }
             this.server.onEvent = (e) => {
                 this.onEvent(e);

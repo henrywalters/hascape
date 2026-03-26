@@ -14,10 +14,11 @@ import {CELL_SIZE, CELLS, Character, CharacterDied, INPC, ItemOnGround, ITEMS, N
 import { Random } from "hcore/dist/random";
 import { BoxCollider2D } from "hagamets/dist/common/components/collider.js";
 import { AABB } from "hagamets/dist/utils/math.js";
-import PF from "pathfinding";
+
 import { clamp } from "three/tsl";
 import { ItemInstance } from "@hascape/common";
 import { BaseSystem } from "./base";
+import { Pathfinding } from "../pathfinding";
 
 interface SpawnerInstance {
     lastSpawned: number | null;
@@ -27,15 +28,7 @@ interface SpawnerInstance {
 export class NPCHandler extends BaseSystem {
 
     private npcs: Map<number, SpawnerInstance> = new Map();
-
-    private grid: PF.Grid;
-    private finder: PF.AStarFinder = new PF.AStarFinder({
-        allowDiagonal: true,
-        dontCrossCorners: true,
-    });
-
-    private minCell: Vector2;
-    private maxCell: Vector2;
+    private pathfinding: Pathfinding = new Pathfinding();
 
     onInit() {
 
@@ -45,67 +38,6 @@ export class NPCHandler extends BaseSystem {
             entity.transform.position = State.grid.getCellPos(new Vector3(data.cell[0], data.cell[1], 0) as any);
             deserializeComponent(this.scene, entity, data.data);
         }
-
-        this.minCell = new Vector2();
-        this.maxCell = new Vector2();
-
-        State.walls.forEach((pos, _, idx) => {
-            if (pos.x < this.minCell.x) this.minCell.setX(pos.x);
-            if (pos.y < this.minCell.y) this.minCell.setY(pos.y);
-            if (pos.x > this.maxCell.x) this.maxCell.setX(pos.x);
-            if (pos.y > this.maxCell.y) this.maxCell.setY(pos.y);
-        });
-
-        this.grid = new PF.Grid(this.maxCell.x - this.minCell.x + 1, this.maxCell.y - this.minCell.y + 1);
-
-        State.walls.forEach((pos, _, idx) => {
-            this.grid.setWalkableAt(pos.x - this.minCell.x, pos.y - this.minCell.y, false);
-        })
-    }
-
-    private getRandomCell(spawnCell: Vector2, maxWander: number) {
-        let canAccess = false;
-        while (!canAccess) {
-            const wander = Math.floor(maxWander / CELL_SIZE);
-            const x = Random.int(-wander, wander) - this.minCell.x;
-            const y = Random.int(-wander, wander) - this.minCell.y;
-            const randomCell = new Vector2(x, y);
-            if (!State.walls.has(new Vector2(randomCell.x + this.minCell.x, randomCell.y + this.minCell.y) as any)) {
-                return randomCell;
-            }
-        }
-        return new Vector2();
-    }
-
-    private getPath(start: Vector3, spawnPoint: Vector3, maxWander: number, targetPosition?: Vector3) {
-        let path: number[][] = [];
-
-        while (path.length === 0) {
-            const spawnCell = State.grid.getCellIndex(spawnPoint as any);
-            const startCell = State.grid.getCellIndex(start as any);
-
-            let cell: Vector2;
-
-            if (targetPosition) {
-                cell = State.grid.getCellIndex(targetPosition as any) as any;
-                cell.x -= this.minCell.x;
-                cell.y -= this.minCell.y;
-            } else {
-                cell = this.getRandomCell(spawnCell as any, maxWander);
-            }
-
-            //console.log(startCell.x - this.minCell.x, startCell.y - this.minCell.y, randomCell.x, randomCell.y);
-
-            path = PF.Util.compressPath(this.finder.findPath(startCell.x - this.minCell.x, startCell.y - this.minCell.y, cell.x, cell.y, this.grid.clone()));
-        }
-
-        const worldPath = [];
-
-        for (const el of path) {
-            worldPath.push(State.grid.getCellPos(new Vector2(el[0] + this.minCell.x, el[1] + this.minCell.y) as any) as any);
-        }
-
-        return worldPath;
     }
 
     onUpdate(dt: number): void {
@@ -207,7 +139,7 @@ export class NPCHandler extends BaseSystem {
 
             if (needsPath) {
                 //console.log("New Path");
-                npc.path = this.getPath(npc.entity.position as any, npc.spawnPoint, npc.maxWanderDistance, npc.attacking ? npc.attacking.position as any: void 0);
+                npc.path = this.pathfinding.getRandomPath(npc.entity.position as any, npc.spawnPoint, npc.maxWanderDistance, npc.attacking ? npc.attacking.position as any: void 0);
                 npc.pathIndex = 0;
             }
 

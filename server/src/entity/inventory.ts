@@ -10,11 +10,17 @@ export class InventoryItem {
     @Column({type: 'varchar'})
     item: string;
 
+    @Column({type: "varchar"})
+    instanceId: string;
+
     @ManyToOne(() => User, user => user.inventoryItems)
     user: User;
 
     @Column({type: "int"})
     quantity: number;
+
+    @Column({type: "int"})
+    position: number;
 }
 
 @Entity()
@@ -31,4 +37,7 @@ export class BankItem {
 
     @Column({type: "int"})
     quantity: number;
+
+    @Column({type: "int"})
+    position: number;
 }

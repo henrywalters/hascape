@@ -36,7 +36,7 @@ export class BaseSystem extends System {
         const entity = this.runtime.addEntity();
         entity.addComponent(Transform);
         const itemOnGround = entity.addComponent(ItemOnGround)
-        itemOnGround.amount = item.amount;
+        itemOnGround.quantity = item.quantity;
         itemOnGround.instanceId = item.instanceId;
         itemOnGround.item = item.item;
         itemOnGround.despawnRate = despawnRate !== void 0 ? despawnRate : ITEMS[item.item].despawnRate;

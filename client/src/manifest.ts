@@ -10,6 +10,7 @@ import WarriorIdle from "./assets/spriteSheets/warrior_idle.json"
 import WarriorAttack from "./assets/spriteSheets/warrior_attack.json"
 import OrcIdle from "./assets/spriteSheets/orc_idle.json";
 import OrcWalk from "./assets/spriteSheets/orc_walk.json";
+import Interact from "./assets/spriteSheets/interact.json";
 
 import { LoginMenu } from "./scenes/loginMenu";
 import { Renderer } from "hagamets/dist/common/systems/renderer.js";
@@ -30,6 +31,10 @@ import { CameraZoom } from "hagamets/dist/common/components/camera.js";
 import { LevelUpMenu } from "./scripts/levelUpMenu";
 import { StatDisplay } from "./scripts/statDisplay";
 import { CameraControllers } from "hagamets/dist/common/systems/cameraControllers.js";
+import { InteractMenu, InteractOption } from "./scripts/interactMenu";
+import { SpriteSheetSystem } from "hagamets/dist/common/systems/spriteSheet.js";
+import { Inventory } from "./scripts/inventory";
+import { Profiler } from "./scripts/profiler";
 
 export const Manifest: IManifest = {
     systems: [
@@ -39,6 +44,7 @@ export const Manifest: IManifest = {
         Animation,
         HealthSystem,
         CameraControllers,
+        SpriteSheetSystem,
     ],
     components: [
         Behavior,
@@ -58,6 +64,10 @@ export const Manifest: IManifest = {
         ChatBox,
         LevelUpMenu,
         StatDisplay,
+        InteractMenu,
+        InteractOption,
+        Inventory,
+        Profiler,
     ],
     scenes: {
         login_menu: {
@@ -100,6 +110,10 @@ export const Manifest: IManifest = {
             {
                 name: 'wizard',
                 url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/wizard.png',
+            },
+            {
+                name: 'interact',
+                url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/interact.png'
             }
         ],
         spriteSheets: [
@@ -108,6 +122,7 @@ export const Manifest: IManifest = {
             WarriorAttack,
             OrcIdle,
             OrcWalk,
+            Interact,
         ]
     },
     startScene: "login_menu",

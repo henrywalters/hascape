@@ -6,7 +6,7 @@ import dotenv from 'dotenv'
 import admin from 'firebase-admin';
 import cors from 'cors';
 import { Pubsub, PubsubType } from "./services/pubsub";
-import { ClientConnect } from "@hascape/common";
+import { ClientConnect, InventoryItem } from "@hascape/common";
 import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
 import { APIMessages, ServerMessages } from "./messages/types";
 import { PlayerService } from "./services/player";
@@ -15,6 +15,8 @@ import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "./
 import { NPCService } from "./services/npc";
 import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { NPCsCleared } from "./messages/npc";
+import { AddedItemToInventory, AddItemToInventory, RemovedItemFromInventory, RemoveItemFromInventory } from "./messages/inventory";
+import { InventoryService } from "./services/inventory";
 
 dotenv.config({ path: '.env' })
 
@@ -31,6 +33,7 @@ AppDataSource.initialize().then(async () => {
     const auth = new AuthService();
     const players = new PlayerService();
     const npcs = new NPCService();
+    const inventory = new InventoryService();
     const pubsub = new Pubsub(PubsubType.API);
 
     pubsub.onMessage = async (message) => {
@@ -50,12 +53,20 @@ AppDataSource.initialize().then(async () => {
                     player = await players.createPlayer(user);
                 }
                 
-                const loggedIn = new LoggedIn();
+                const loggedIn = new LoggedIn(); 
                 loggedIn.socketId = connect.socketId;
                 loggedIn.sessionId = session.sessionId;
                 loggedIn.username = user.username;
                 loggedIn.position = new Vector3(player.x, player.y, 0);
-
+                loggedIn.inventory = (await inventory.getItems(user)).map((item) => {
+                    console.log(item);
+                    const inventoryItem = new InventoryItem();
+                    inventoryItem.instanceId = item.instanceId;
+                    inventoryItem.position = item.position;
+                    inventoryItem.quantity = item.quantity;
+                    inventoryItem.item = item.item;
+                    return inventoryItem;
+                });
                 pubsub.send(loggedIn);
             } catch (e) {
                 console.warn(e);
@@ -104,6 +115,28 @@ AppDataSource.initialize().then(async () => {
             console.log("Cleared NPCs");
             pubsub.send(new NPCsCleared());
         }
+
+        if (message.type === ServerMessages.AddItemToInventory) {
+            const msg = message as AddItemToInventory;
+            const session = await auth.getSession(msg.sessionId);
+            if (!session) return;
+            const item = await inventory.addItem(session.user, msg.item.instanceId, msg.item.item, msg.item.quantity, msg.item.position);
+            const addedItem = new AddedItemToInventory();
+            addedItem.item = msg.item;
+            pubsub.send(addedItem);
+        }
+
+        if (message.type === ServerMessages.RemoveItemFromInventory) {
+            const msg = message as RemoveItemFromInventory;
+            const session = await auth.getSession(msg.sessionId);
+            if (!session) return;
+
+            await inventory.removeItem(session.user, msg.instanceId);
+            const removedItem = new RemovedItemFromInventory();
+            removedItem.instanceId = msg.instanceId;
+            removedItem.sessionId = msg.sessionId;
+            pubsub.send(removedItem);
+        }
     }
 
     app.use(cors());
@@ -142,7 +175,7 @@ AppDataSource.initialize().then(async () => {
     })
 
     app.post('/user', async (req, res) => {
-        console.log(req.body);
+        console.log(req.body); 
         console.log("Create User");
         if (!req.body.username) {
             res.status(400).json({errors: {

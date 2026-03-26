@@ -14,6 +14,7 @@ import { ItemSystem } from "./systems/items";
 import { WizardsAssistant } from "./systems/quests/wizardsAssistant";
 import { InventorySystem } from "./systems/inventory";
 import { InteractionSystem } from "./systems/interactions";
+import { ActionSystem } from "./systems/actions";
 
 export const Manifest: IManifest = {
     systems: [
@@ -24,6 +25,7 @@ export const Manifest: IManifest = {
         InventorySystem,
         InteractionSystem,
         WizardsAssistant,
+        ActionSystem,
     ],
     components: [
         Character,
@@ -48,7 +50,7 @@ export const Manifest: IManifest = {
             ctr: Runtime,
         }
     },
-    assets: {},
+    assets: {}, 
     startScene: "runtime",
     server: {
         address: {
@@ -58,4 +60,4 @@ export const Manifest: IManifest = {
         clientMessages: CLIENT_MESSAGES,
         serverMessages: SERVER_MESSAGES,
     }
-};
+}; 

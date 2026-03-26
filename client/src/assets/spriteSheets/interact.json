@@ -1,0 +1,16 @@
+{
+  "name": "Interact",
+  "url": "https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/interact.png",
+  "cells": {
+    "x": 1,
+    "y": 5
+  },
+  "padding": {
+    "x": 0,
+    "y": 0
+  },
+  "offset": {
+    "x": 0,
+    "y": 0
+  }
+}

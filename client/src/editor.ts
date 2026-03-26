@@ -184,16 +184,9 @@ export class EditorRuntime extends RenderScene {
 
         this.updateCursor();
 
-        const size = this.game.getSize();
-        const mousePos = this.game.input.getAxis(Axes.MousePosition);
-        mousePos.setY(size.y - mousePos.y);
-        mousePos.divide(size).multiplyScalar(2).subScalar(1);
+        console.log(this.game.input.getAxis(Axes.MousePosition));
 
-        const raycaster = new Raycaster();
-        raycaster.setFromCamera(mousePos as any, this.camera.camera as any);
-
-        const worldPos = new Vector3();
-        raycaster.ray.intersectPlane(new Plane(new Vector3(0, 0, 1), 0), worldPos);
+        const worldPos = this.camera.getMousePos();
 
         const cell = this.grid.getCellIndex(worldPos as any);
         const cellPos = this.grid.getCellPos(cell);

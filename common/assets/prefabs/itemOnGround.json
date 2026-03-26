@@ -28,7 +28,7 @@
       "id": 267648843405,
       "name": "ItemOnGround",
       "params": {
-        "amount": 1
+        "quantity": 1
       }
     },
     {

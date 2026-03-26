@@ -31,6 +31,22 @@ export class CharacterMovement extends System {
 
         this.scene.components.forEach(Character, (character) => {
 
+            if (character.path.length === 0) {
+                character.direction.set(0, 0, 0);
+            } else {
+                const target = character.path[character.pathIndex].clone().sub(character.entity.position);
+                if (target.length() < 5) {
+                    character.pathIndex++;
+                    if (character.pathIndex === character.path.length) {
+                        character.onReachDestination(); 
+                        character.path = [];
+                        character.pathIndex = 0;
+                    }
+                } else {
+                    character.direction = target.normalize();
+                }
+            }
+
             if (character.direction.x !== 0 || character.direction.y !== 0 || character.direction.z !== 0) {
                 const delta = character.direction.clone().multiplyScalar(dt * character.speed);
 
@@ -56,17 +72,17 @@ export class CharacterMovement extends System {
                     entity: character.entity,
                     component: character.entity.transform as  Transform,
                 });
-            }
+            } 
 
-            const dirCache = this.dirCache.get(character.sessionId);
+            const dirCache = this.dirCache.get(character.sessionId); 
             const posCache = this.posCache.get(character.sessionId);
 
             if (!dirCache || !dirCache.equals(character.direction) || !posCache || !posCache.equals(character.entity.position)) {
                 runtime.characterMoved(character);
             }
 
-            this.dirCache.set(character.sessionId, character.direction as any);
-            this.posCache.set(character.sessionId, character.entity.position as any);
+            this.dirCache.set(character.sessionId, character.direction.clone() as any);
+            this.posCache.set(character.sessionId, character.entity.position.clone() as any);
 
         });
     }

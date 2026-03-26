@@ -2,12 +2,12 @@ import { Random } from "hcore/dist/random";
 import { ItemInstance } from "./item";
 
 export interface IDropCount {
-    amount: number;
+    quantity: number;
     frequency: number;
 }
 
 export const DEFAULT_DROP: IDropCount = {
-    amount: 1,
+    quantity: 1,
     frequency: 1,
 }
 
@@ -45,7 +45,7 @@ export function dropCount(drop: IDrop): number {
         if (countMax > 1.0) {
             console.warn('Drop table sum frequency exceeds 1.0, they will never be hit');
         } else if (roll >= countMin && roll < countMax) {
-            return count.amount;
+            return count.quantity;
         }
         countMin = countMax;
     }

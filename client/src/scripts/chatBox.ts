@@ -57,8 +57,12 @@ export class ChatBox extends Script {
                 textInput.events.listen((e) => {
                     if (e === TextInputEvents.Enter) {
 
+                        if (textInput.text === '--stats') {
+                            return;
+                        }
+
                         const message = new PlayerMessage();
-                        console.log(State);
+   
                         message.message = textInput.text;
                         message.sessionId = State.sessionId;
 

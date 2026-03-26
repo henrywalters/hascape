@@ -9,13 +9,27 @@ export class ItemInstance {
     instanceId: string;
 
     @Int()
-    amount: number = 1;
+    quantity: number = 1;
 
-    constructor(item: string, amount: number = 1) {
+    constructor(item: string, quantity: number = 1) {
         this.item = item;
-        this.amount = amount;
+        this.quantity = quantity;
         this.instanceId = Random.alphanumeric(6);
     }
+}
+
+export class InventoryItem {
+    @String()
+    item: string;
+
+    @String()
+    instanceId: string;
+
+    @Int()
+    position: number; 
+
+    @Int()
+    quantity: number = 1;
 }
 
 export interface IItem {

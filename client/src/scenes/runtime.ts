@@ -1,6 +1,6 @@
 import { RenderScene } from "hagamets/dist/common/scenes/renderScene.js";
 import { State } from "../state";
-import { CELL_SIZE, MapData, OtherPlayerJoined, Character, PlayerJoined, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, TILES, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes } from "@hascape/common";
+import { CELL_SIZE, MapData, OtherPlayerJoined, Character, PlayerJoined, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, TILES, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem } from "@hascape/common";
 import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
@@ -15,12 +15,16 @@ import { Color, Vector2, Vector3 } from "three";
 import { Debug } from "hagamets/dist/core/debug.js";
 import { BoxCollider2D } from "hagamets/dist/common/components/collider.js";
 import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
+import { InventoryEvents } from "../inventoryEvents";
 
 export class Runtime extends RenderScene {
 
     private textTimeout: any;
 
     onActivate() {
+
+        State.grid.cells = new Vector2(CELLS, CELLS) as any;
+        State.grid.size = new Vector2(CHUNK_SIZE, CHUNK_SIZE) as any;
 
         if (!State.isEditing) {
             let index = 0;
@@ -70,13 +74,32 @@ export class Runtime extends RenderScene {
             })
         }
 
+        State.characterMap.clear();
+        State.itemMap.clear();
+
+        this.components.forEach(Character, (character) => {
+            const cell = State.grid.getCellIndex(character.entity.position);
+            if (!State.characterMap.has(cell)) {
+                State.characterMap.set(cell, []);
+            }
+            State.characterMap.get(cell)!.push(character.entity);
+        });
+
+        this.components.forEach(ItemOnGround, (item) => {
+            const cell = State.grid.getCellIndex(item.entity.position);
+            if (!State.itemMap.has(cell)) {
+                State.itemMap.set(cell, []);
+            }
+            State.itemMap.get(cell)!.push(item.entity);
+        });
+
         this.game.client.flushEvents((e) => {
             console.log(e);
             if (e.type === NetEvents.Disconnected) {
                 this.game.activateScene("login_menu");
                 return;
             }
-        })
+        });
 
         this.game.client.flushMessages((msg) => {
             if (msg.message.type === ServerMessages.OtherPlayerJoined) {
@@ -228,7 +251,7 @@ export class Runtime extends RenderScene {
                 for (const item of message.items) {
                     const itemEntity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.ItemOnGround]);
                     const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
-                    itemOnGround.amount = item.amount;
+                    itemOnGround.quantity = item.quantity;
                     itemOnGround.instanceId = item.instanceId;
                     itemOnGround.item = item.item;
                     itemEntity.transform.position = item.position as any;
@@ -253,6 +276,24 @@ export class Runtime extends RenderScene {
                     }
                 }
             }
-        })
+
+            if (msg.message.type === ServerMessages.PickedUpItem) {
+                const message = msg.message as PickedUpItem;
+                State.inventoryEvents.emit({
+                    type: InventoryEvents.AddItemToInventory,
+                    item: message.item,
+                });
+            }
+
+            if (msg.message.type === ServerMessages.DroppedItem) {
+                const message = msg.message as DroppedItem;
+                const item = new InventoryItem();
+                item.instanceId = message.instanceId;
+                State.inventoryEvents.emit({
+                    type: InventoryEvents.RemoveItemFromInventory,
+                    item,
+                })
+            }
+        });
     }
 }

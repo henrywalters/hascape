@@ -4,6 +4,9 @@ export enum APIMessages {
     PlayerReceiveMessage,
     NPCsCleared,
     NPCSpawned,
+    AddedItemToInventory,
+    RemovedItemFromInventory,
+    MovedItemInInventory,
 }
 
 export enum ServerMessages {
@@ -16,4 +19,7 @@ export enum ServerMessages {
     NPCSpawn,
     NPCMove,
     NPCChangeHealth,
+    AddItemToInventory,
+    RemoveItemFromInventory,
+    MoveItemInInventory,
 }

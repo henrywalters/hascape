@@ -1,33 +1,26 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, INPC, TILES, MapData, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned } from "@hascape/common";
+import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, INPC, TILES, MapData, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
 import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
 import { APIMessages, ServerMessages } from "./messages/types";
-import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { Transform } from "hagamets/dist/common/components/transform.js";
 import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "./messages/player";
 import { EntityEvents } from "hagamets/dist/core/events.js";
 import { GridMap } from "hagamets/dist/utils/gridMap.js";
 import { Vector2, Vector3 } from "three";
-import { NPCs } from "@hascape/common";
-import { NPCSpawn } from "./messages/npc";
 import { State } from "./state";
-import { Behavior } from "hagamets/dist/common/components/behavior.js";
 
 import PlayerPrefab from "@hascape/common/otherPlayer";
+
+import { AddedItemToInventory, AddItemToInventory, RemovedItemFromInventory, RemoveItemFromInventory } from "./messages/inventory";
+import { Random } from "hcore/dist/random";
 
 export class Runtime extends Scene {
 
     public pubsub: Pubsub;
-
-    private sockets: Map<number, WebSocket> = new Map();
-    private socketIds: Map<WebSocket, number> = new Map();
-
-    private sessionSockets: Map<string, WebSocket> = new Map();
-    private socketSessions: Map<WebSocket, string> = new Map();
 
     private characterMoves: GridMap<PlayerMoved[]> = new GridMap();
 
@@ -41,7 +34,7 @@ export class Runtime extends Scene {
         this.pubsub.onMessage = (msg) => {
             switch (msg.type) {
                 case APIMessages.LoggedIn:
-                    this.loggedIn(msg as LoggedIn);
+                    this.loggedIn(msg as LoggedIn);  
                     break;
                 case APIMessages.LoggedOut:
                     this.loggedOut(msg as LoggedOut);
@@ -49,6 +42,8 @@ export class Runtime extends Scene {
                 case APIMessages.PlayerReceiveMessage:
                     this.receiveMessage(msg as PlayerReceivedMessaged);
                     break;
+                case APIMessages.AddedItemToInventory: 
+                    console.log(msg as AddedItemToInventory);
             }
         }
 
@@ -70,38 +65,38 @@ export class Runtime extends Scene {
         this.game.server.flushEvents((event) => {
             if (event.type === NetEvents.Disconnected) {
 
-                if (this.socketSessions.has(event.socket!)) {
+                if (State.socketSessions.has(event.socket!)) {
                     const logout = new Logout();
-                    logout.sessionId = this.socketSessions.get(event.socket!)!;
-                    logout.socketId = this.socketIds.get(event.socket!)!;
+                    logout.sessionId = State.socketSessions.get(event.socket!)!;
+                    logout.socketId = State.socketIds.get(event.socket!)!;
                     this.pubsub.send(logout);
                 }
             } else {
                 const id = this.socketId;
                 this.socketId++;
 
-                this.sockets.set(id, event.socket!);
-                this.socketIds.set(event.socket!, id);
+                State.sockets.set(id, event.socket!);
+                State.socketIds.set(event.socket!, id);
             }
         })
 
         this.game.server.flushMessages((message) => {
             if (message.message.type === ClientMessages.Connect) {
                 const login = new Login();
-                login.socketId = this.socketIds.get(message.socket!)!;
+                login.socketId = State.socketIds.get(message.socket!)!;
                 login.token = (message.message as ClientConnect).token;
                 this.pubsub.send(login);
             }
 
-            if (message.message.type === ClientMessages.PlayerMove) {
-                const move = message.message as PlayerMove;
-                // console.log(message.message);
-                if (State.playerSessions.has(move.sessionId)) {
-                    const entity = State.playerSessions.get(move.sessionId)!;
-                    const player = entity.getComponent(Character)!;
-                    player.direction.copy(move.direction);
-                }
-            }
+            // if (message.message.type === ClientMessages.PlayerMove) {
+            //     const move = message.message as PlayerMove;
+            //     // console.log(message.message);
+            //     if (State.playerSessions.has(move.sessionId)) {
+            //         const entity = State.playerSessions.get(move.sessionId)!;
+            //         const player = entity.getComponent(Character)!;
+            //         player.direction.copy(move.direction);
+            //     }
+            // }
 
             if (message.message.type === ClientMessages.PlayerMessage) {
                 const msg = message.message as PlayerMessage;
@@ -126,7 +121,7 @@ export class Runtime extends Scene {
             }
 
             const character = player.entity.getComponent(Character)!;
-            const socket = this.sessionSockets.get(character.sessionId)!;
+            const socket = State.sessionSockets.get(character.sessionId)!;
             socket.send(this.game.server.serverMessages.write(update));
         });
 
@@ -158,11 +153,14 @@ export class Runtime extends Scene {
 
         const message = new PlayerJoined();
         message.player = newPlayer;
+        message.inventory = loggedIn.inventory;
 
-        const socket = this.sockets.get(loggedIn.socketId)!;
+        State.initializeInventory(message.player.sessionId, message.inventory);
 
-        this.socketSessions.set(socket, message.player.sessionId);
-        this.sessionSockets.set(message.player.sessionId, socket);
+        const socket = State.sockets.get(loggedIn.socketId)!;
+
+        State.socketSessions.set(socket, message.player.sessionId);
+        State.sessionSockets.set(message.player.sessionId, socket);
 
         this.components.forEach(Player, (other) => {
             if (other.id === player.id) return;
@@ -185,7 +183,6 @@ export class Runtime extends Scene {
             instance.npcType = npc.npcType;
             instance.totalHealth = character.totalHealth;
             instance.health = character.health;
-            console.log(npc.entity.position);
             instance.position = npc.entity.position as any;
 
             message.npcs.push(instance);
@@ -194,11 +191,10 @@ export class Runtime extends Scene {
         this.components.forEach(ItemOnGround, (item) => {
             const instance = new ItemPickup();
             instance.item = item.item;
-            instance.amount = item.amount;
-            instance.instanceId = item.instanceId;
+            instance.quantity = item.quantity; 
+            instance.instanceId = item.instanceId; 
             instance.position = item.entity.position as any;
             message.items.push(instance);
-            console.log(instance);
         })
 
         socket.send(this.game.server.serverMessages.write(message));
@@ -210,12 +206,12 @@ export class Runtime extends Scene {
     }
 
     private loggedOut(msg: LoggedOut) {
-        const socket = this.sockets.get(msg.socketId);
+        const socket = State.sockets.get(msg.socketId);
         if (socket) {
 
-            const session = this.socketSessions.get(socket)!;
+            const session = State.socketSessions.get(socket)!;
 
-            if (this.socketSessions.has(socket)) {
+            if (State.socketSessions.has(socket)) {
                 const entity = State.playerSessions.get(session)!;
 
                 const playerLeft = new PlayerLeft();
@@ -225,12 +221,12 @@ export class Runtime extends Scene {
 
                 this.removeEntity(entity.id);
                 State.playerSessions.delete(session);
-                this.socketSessions.delete(socket);
-                this.sessionSockets.delete(playerLeft.sessionId);
+                State.socketSessions.delete(socket);
+                State.sessionSockets.delete(playerLeft.sessionId);
             }
 
-            this.sockets.delete(this.socketIds.get(socket)!);
-            this.socketIds.delete(socket);
+            State.sockets.delete(State.socketIds.get(socket)!);
+            State.socketIds.delete(socket);
         }
     }
 
@@ -271,7 +267,7 @@ export class Runtime extends Scene {
                 const player = entity.getComponent(Player);
                 if (player) {
                     const character = entity.getComponent(Character)!;
-                    const socket = this.sessionSockets.get(character.sessionId)!;
+                    const socket = State.sessionSockets.get(character.sessionId)!;
                     socket.send(msg);
                 }
             }
@@ -319,7 +315,7 @@ export class Runtime extends Scene {
         if (visibleTo) {
             const buffer = this.game.server.serverMessages.write(msg);
             for (const id of visibleTo) {
-                const socket = this.sessionSockets.get(id);
+                const socket = State.sessionSockets.get(id);
                 if (socket) {
                     socket.send(buffer);
                 }
@@ -336,13 +332,12 @@ export class Runtime extends Scene {
         if (visibleTo) {
             const buffer = this.game.server.serverMessages.write(msg);
             for (const id of visibleTo) {
-                const socket = this.sessionSockets.get(id);
+                const socket = State.sessionSockets.get(id);
                 if (socket) {
                     socket.send(buffer);
                 }
             }
         } else {
-            console.log(msg);
             this.game.server.emit(msg);
         }
     }

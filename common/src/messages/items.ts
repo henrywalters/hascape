@@ -1,7 +1,7 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { ClientMessages, ServerMessages } from "./types";
 import { Array, Class, Int, Param, String, Types } from "hagamets/dist/core/reflection.js";
-import { ItemInstance } from "../interfaces/item";
+import { InventoryItem, ItemInstance } from "../interfaces/item";
 import { Vector3 } from "three";
 
 export class ItemPickup {
@@ -13,7 +13,7 @@ export class ItemPickup {
     instanceId: string;
 
     @Int()
-    amount: number = 1;
+    quantity: number = 1;
 
     @Param({type: Types.Vector3})
     position: Vector3;
@@ -42,6 +42,13 @@ export class PickupItem extends NetMessage {
 
 export class PickedUpItem extends NetMessage {
     type = ServerMessages.PickedUpItem;
+
+    @Class(InventoryItem)
+    item: InventoryItem;
+}
+
+export class DroppedItem extends NetMessage {
+    type = ServerMessages.DroppedItem;
 
     @String()
     instanceId: string;

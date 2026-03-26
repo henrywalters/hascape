@@ -10,7 +10,7 @@ export class ItemOnGround extends Component {
     instanceId: string;
 
     @Int()
-    amount: number = 1;
+    quantity: number = 1;
 
     spawnedFor: number = 0;
 

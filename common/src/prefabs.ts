@@ -7,6 +7,9 @@ import OtherPlayer from "./../assets/prefabs/otherPlayer.json";
 import Player from "./../assets/prefabs/player.json";
 import StatDisplay from "./../assets/prefabs/StatDisplay.json";
 import Wizard from "./../assets/prefabs/wizard.json";
+import InteractOption from "./../assets/prefabs/InteractOption.json";
+import InventoryItem from "./../assets/prefabs/InventoryItem.json";
+import StackableInventoryItem from "./../assets/prefabs/StackableInventoryItem.json";
 
 export enum PrefabTypes {
     ItemOnGround,
@@ -16,6 +19,9 @@ export enum PrefabTypes {
     Player,
     StatDisplay,
     Wizard,
+    InteractOption,
+    InventoryItem,
+    StackableInventoryItem,
 }
 
 export const Prefabs: {[key: number]: EntityData} = {
@@ -26,4 +32,7 @@ export const Prefabs: {[key: number]: EntityData} = {
     [PrefabTypes.Player]: Player,
     [PrefabTypes.StatDisplay]: StatDisplay,
     [PrefabTypes.Wizard]: Wizard,
+    [PrefabTypes.InteractOption]: InteractOption,
+    [PrefabTypes.InventoryItem]: InventoryItem,
+    [PrefabTypes.StackableInventoryItem]: StackableInventoryItem,
 }

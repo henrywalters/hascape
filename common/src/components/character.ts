@@ -26,4 +26,10 @@ export class Character extends Component implements IStats {
     charisma: number = 1;
 
     wisdom: number = 1;
+
+    path: Vector3[] = [];
+
+    pathIndex: number = 0;
+
+    onReachDestination: () => void = () => {};
 }
