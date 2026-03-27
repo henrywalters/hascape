@@ -1,3 +1,4 @@
+Copy
 
 # ─── Build ───────────────────────────────────────────────────────────────────
 FROM node:22-alpine AS build
@@ -27,7 +28,6 @@ COPY hascape/server/ ./hascape/server/
  
 WORKDIR /app/hascape
 RUN npm run build --workspace=common
-RUN npm run build --workspace=server
  
 # ─── Runtime ─────────────────────────────────────────────────────────────────
 FROM node:22-alpine
@@ -37,14 +37,16 @@ RUN npm install -g tsx
  
 COPY --from=build /app/hascape/node_modules ./node_modules
 COPY --from=build /app/hascape/package.json ./package.json
+COPY --from=build /app/hascape/tsconfig.base.json ./tsconfig.base.json
 COPY --from=build /app/hascape/common/dist ./common/dist
 COPY --from=build /app/hascape/common/package.json ./common/package.json
-COPY --from=build /app/hascape/server/dist ./server/dist
+COPY --from=build /app/hascape/server/src ./server/src
+COPY --from=build /app/hascape/server/tsconfig.json ./server/tsconfig.json
 COPY --from=build /app/hascape/server/package.json ./server/package.json
  
 # Copy built hgts directly into node_modules
 COPY --from=build /app/hgts/ ./node_modules/hagamets/
  
 EXPOSE 4201
-
-CMD ["npx", "tsx", "server/src/api.ts"]
+ 
+CMD ["tsx", "server/src/api.ts"]
