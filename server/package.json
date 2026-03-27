@@ -16,7 +16,8 @@
       "reflect-metadata": "^0.2.2",
       "three": "^0.182.0",
       "typeorm": "^0.3.28",
-      "ws": "^8.19.0"
+      "ws": "^8.19.0",
+      "hagamets": "file:../../hgts"
    },
    "scripts": {
       "typeorm": "typeorm-ts-node-commonjs",
