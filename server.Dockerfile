@@ -48,4 +48,4 @@ COPY --from=build /app/hgts/ ./node_modules/hagamets/
 EXPOSE 4200
  
 
-CMD ["npx", "tsx", "--tsconfig", "server/tsconfig.json", "server/src/server.ts"]
+CMD ["npx", "tsx", "server/src/server.ts"]
