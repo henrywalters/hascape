@@ -2,31 +2,38 @@
 FROM node:20-alpine AS build
 WORKDIR /app
 
-COPY package*.json ./
-COPY common/package*.json ./common/
-COPY client/package*.json ./client/
-COPY server/package*.json ./server/
+# Copy hagamets (local dependency)
+COPY hgts/ ./hgts/
 
-RUN npm install
+# Copy hascape monorepo
+COPY hascape/package*.json ./hascape/
+COPY hascape/common/package*.json ./hascape/common/
+COPY hascape/client/package*.json ./hascape/client/
+COPY hascape/server/api/package*.json ./hascape/server/api/
 
-COPY . .
+WORKDIR /app/hascape
+RUN npm install --no-package-lock
 
+WORKDIR /app
+COPY hascape/common/ ./hascape/common/
+COPY hascape/server/api/ ./hascape/server/api/
+
+WORKDIR /app/hascape
 RUN npm run build --workspace=common && \
-    npm run build --workspace=server
+    npm run build --workspace=server/api
 
 # ─── Runtime ─────────────────────────────────────────────────────────────────
 FROM node:20-alpine
 WORKDIR /app
 ENV NODE_ENV=production
 
-COPY --from=build /app/package*.json ./
-COPY --from=build /app/node_modules ./node_modules
-COPY --from=build /app/common/dist ./common/dist
-COPY --from=build /app/common/package.json ./common/package.json
-COPY --from=build /app/server/dist ./server/dist
-COPY --from=build /app/server/package.json ./server/package.json
+COPY --from=build /app/hascape/node_modules ./node_modules
+COPY --from=build /app/hascape/package.json ./package.json
+COPY --from=build /app/hascape/common/dist ./common/dist
+COPY --from=build /app/hascape/common/package.json ./common/package.json
+COPY --from=build /app/hascape/server/api/dist ./server/api/dist
+COPY --from=build /app/hascape/server/api/package.json ./server/api/package.json
 
-EXPOSE 3000
+EXPOSE 4201
 
-# Adjust to your compiled entrypoint
 CMD ["node", "server/dist/api.js"]

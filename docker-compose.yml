@@ -21,8 +21,8 @@ services:
 
   hascape-api:
     build:
-      context: .
-      dockerfile: api.Dockerfile
+      context: ..
+      dockerfile: hascape/api.Dockerfile
     container_name: hascape_api
     restart: always
     environment:
@@ -38,8 +38,8 @@ services:
 
   hascape-game:
     build:
-      context: .
-      dockerfile: server.Dockerfile
+      context: ..
+      dockerfile: hascape/server.Dockerfile
     container_name: hascape_game
     restart: always
     environment:
