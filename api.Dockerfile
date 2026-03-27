@@ -6,6 +6,8 @@ WORKDIR /app
 COPY hgts/ ./hgts/
 WORKDIR /app/hgts
 RUN npm install --no-package-lock && npm run build
+
+WORKDIR /app
  
 # Copy hascape monorepo package files + tsconfig
 COPY hascape/package*.json ./hascape/
