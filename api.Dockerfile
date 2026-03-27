@@ -37,4 +37,4 @@ RUN npm install -g tsx
 
 EXPOSE 4201
 
-CMD ["node_modules/.bin/tsx", "server/api.ts"]
+CMD ["npx", "tsx", "server/api.ts"]
