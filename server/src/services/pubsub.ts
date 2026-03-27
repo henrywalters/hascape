@@ -65,8 +65,11 @@ export class Pubsub {
 
         if (type === PubsubType.API) {
             this._client = new Client({
-                host: "localhost",
-                port: SERVER_PORT,
+                socketAddress: {
+                    host: "localhost",
+                    port: SERVER_PORT,
+                },
+                secure: false,
             }, API_MESSAGES, SERVER_MESSAGES, true);
             this._client.onMessage = (msg) => {
                 this.onMessage(msg);
@@ -76,8 +79,11 @@ export class Pubsub {
             }
         } else {
             this._server = new Server({
-                host: "localhost",
-                port: SERVER_PORT
+                socketAddress: {
+                    host: "localhost",
+                    port: SERVER_PORT
+                },
+                secure: false,
             }, API_MESSAGES, SERVER_MESSAGES);
             this._server.onMessage = (msg) => {
                 this.onMessage(msg); 

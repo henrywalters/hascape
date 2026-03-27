@@ -54,8 +54,11 @@ export const Manifest: IManifest = {
     startScene: "runtime",
     server: {
         address: {
-            host: "127.0.0.1",
-            port: 4200
+            secure: false,
+            socketAddress: {
+                host: "127.0.0.1",
+                port: 4200
+            }
         },
         clientMessages: CLIENT_MESSAGES,
         serverMessages: SERVER_MESSAGES,

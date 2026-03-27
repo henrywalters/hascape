@@ -75,8 +75,6 @@ export class EditorRuntime extends RenderScene {
 
     onActivate() {
 
-        console.log("Activated");
-
         let index = 1;
 
         this.grid = new Grid();
@@ -131,7 +129,6 @@ export class EditorRuntime extends RenderScene {
         const gridEntity = this.addEntity();
         gridEntity.addComponent(Transform);
         gridEntity.transform.position.z = index++;
-        console.log(gridEntity.position);
         this.cellGrid = gridEntity.addComponent(GridDisplay);
         this.cellGrid.grid.size.set(CHUNK_SIZE, CHUNK_SIZE);
         this.cellGrid.grid.cells.set(CELLS, CELLS);
@@ -171,7 +168,6 @@ export class EditorRuntime extends RenderScene {
         mesh.notifyUpdate();
 
         if (data) {
-            console.log(data);
             deserializeComponent(this, spawnerEntity, data);
         } else {
             spawnerEntity.addComponent(NPCSpawner);
@@ -183,8 +179,6 @@ export class EditorRuntime extends RenderScene {
     onUpdate(dt: number) {
 
         this.updateCursor();
-
-        console.log(this.game.input.getAxis(Axes.MousePosition));
 
         const worldPos = this.camera.getMousePos();
 
@@ -264,7 +258,6 @@ export class EditorRuntime extends RenderScene {
                     for (const [key, param] of Reflection.getParams(spawner)) {
                         this.npcSpawnUI.appendChild(makeInput(this, spawner, key, param, (value) => {
                             spawner.notifyUpdate();
-                            console.log(value);
                         }));
                     }
                     this.sidebar.style.display = "block";
@@ -334,7 +327,6 @@ export class EditorRuntime extends RenderScene {
         for (const spawner of data.npc_spawners) {
             const cell = new Vector2(spawner.cell[0], spawner.cell[1]);
             const pos = this.grid.getCellPos(cell as any);
-            console.log(pos);
             this.npcSpawns.set(cell as any, this.addSpawner(pos as any, spawner.data));
         }
     }
@@ -416,8 +408,6 @@ export class EditorRuntime extends RenderScene {
         for (const [, gridTiles] of this.tiles) {
             if (gridTiles.gridMap.has(startCell as any)) return;
         }
-
-        console.log(startCell);
 
         const visited = new GridMap<void>();
         const queue: Vector2[] = [startCell];

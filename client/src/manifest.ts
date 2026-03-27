@@ -128,8 +128,8 @@ export const Manifest: IManifest = {
     startScene: "login_menu",
     client: {
         address: {
-            host: "127.0.0.1",
-            port: 4200
+            url: "localhost:4200",
+            secure: false,
         },
         clientMessages: CLIENT_MESSAGES,
         serverMessages: SERVER_MESSAGES,
