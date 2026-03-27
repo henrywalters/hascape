@@ -35,4 +35,4 @@ COPY --from=build /app/hascape/server/ ./server/
 
 EXPOSE 4200
 
-CMD ["npx", "tsx", "server/server.ts"]
+CMD ["npx", "tsx", "server/src/server.ts"]
