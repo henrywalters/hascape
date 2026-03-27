@@ -19,6 +19,9 @@ COPY hascape/common/ ./hascape/common/
 COPY hascape/server/ ./hascape/server/
 COPY hascape/tsconfig.base.json ./hascape/tsconfig.base.json
 
+WORKDIR /app/hascape/server
+RUN npm install --no-package-lock
+
 WORKDIR /app/hascape
 RUN npm run build --workspace=common
 
