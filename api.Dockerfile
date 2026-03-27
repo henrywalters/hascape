@@ -35,6 +35,7 @@ COPY --from=build /app/hgts/ ./hgts/
 COPY --from=build /app/hascape/node_modules ./node_modules
 COPY --from=build /app/hascape/package.json ./package.json
 COPY --from=build /app/hascape/common/dist ./common/dist
+COPY --from=build /app/hascape/common/assets ./common/assets
 COPY --from=build /app/hascape/common/package.json ./common/package.json
 COPY --from=build /app/hascape/server/ ./server/
 
