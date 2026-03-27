@@ -2,8 +2,10 @@
 FROM node:20-alpine AS build
 WORKDIR /app
  
-# Copy hagamets first
+# Build hagamets first
 COPY hgts/ ./hgts/
+WORKDIR /app/hgts
+RUN npm install --no-package-lock && npm run build
  
 # Copy hascape monorepo package files + tsconfig
 COPY hascape/package*.json ./hascape/
