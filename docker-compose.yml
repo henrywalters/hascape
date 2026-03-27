@@ -16,38 +16,48 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - internal
 
-  server:
-    build:
-      context: .
-      dockerfile: server.Dockerfile
-    container_name: hascape_server
-    restart: always
-    environment:
-      NODE_ENV: production
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      PORT: 3000
-    ports:
-      - "3000:3000"
-    depends_on:
-      postgres:
-        condition: service_healthy
-
-  api:
+  hascape-api:
     build:
       context: .
       dockerfile: api.Dockerfile
-    container_name: hascape_server
+    container_name: hascape_api
     restart: always
     environment:
       NODE_ENV: production
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
-      PORT: 3000
-    ports:
-      - "3000:3000"
+      PORT: 4201
     depends_on:
       postgres:
         condition: service_healthy
+    networks:
+      - internal
+      - web
+
+  hascape-game:
+    build:
+      context: .
+      dockerfile: server.Dockerfile
+    container_name: hascape_game
+    restart: always
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      PORT: 4200
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - internal
+      - web
 
 volumes:
   postgres_data:
+
+networks:
+  internal:
+    name: hascape_internal
+  web:
+    external: true
