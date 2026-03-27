@@ -3,6 +3,7 @@ import { Vector2, Vector3 } from "three";
 import { State } from "./state";
 import { Random } from "hcore/dist/random";
 import { CELL_SIZE } from "@hascape/common";
+import { bresenham } from "hagamets/dist/utils/math.js";
 
 export class Pathfinding {
     private grid: PF.Grid;
@@ -98,5 +99,40 @@ export class Pathfinding {
         } catch (e) {
             return null;
         }
+    }
+
+    // In the case where the end destination is not reachable, try and find the furthest path towards it.
+    public getBestLegalPath(start: Vector2, end: Vector2): Vector3[] | null {
+
+        const points = bresenham(start as any, end as any);
+
+        for (let i = points.length - 1; i >= 0; i--) {
+            const path = this.getPath(start, points[i] as any);
+            if (path) return path;
+        }
+
+        return null;
+
+        // let path = this.getPath(start, end);
+
+        // if (path) return path;
+
+        // const points = bresenham(start as any, end as any);
+
+        // if (points.length < 1) return null;
+
+        // // Can't even make it this far, bail out.
+        // path = this.getPath(start, points[1] as any);
+
+        // if (!path) return null;
+
+        // let left = 1;
+        // let right = points.length - 1;
+
+        // while (left <= right) {
+        //     let mid = Math.floor((left + right) / 2);
+
+
+        // }
     }
 }

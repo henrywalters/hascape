@@ -108,7 +108,7 @@ export class ActionSystem extends BaseSystem {
 
     private setPath(character: Character, dest: Vector2): boolean {
         const pos = State.grid.getCellIndex(character.entity.position);
-        const path = this.pathfinding.getPath(pos as any, dest as any);
+        const path = this.pathfinding.getBestLegalPath(pos as any, dest as any);
         if (path) {
             character.path = path;
             character.pathIndex = 0;
