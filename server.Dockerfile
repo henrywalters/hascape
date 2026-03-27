@@ -37,6 +37,8 @@ COPY --from=build /app/hascape/package.json ./package.json
 COPY --from=build /app/hascape/common/dist ./common/dist
 COPY --from=build /app/hascape/common/package.json ./common/package.json
 COPY --from=build /app/hascape/server/ ./server/
+
+COPY --from=build /app/hgts/ ./node_modules/hagamets/
  
 EXPOSE 4200
 
