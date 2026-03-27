@@ -1,4 +1,3 @@
-
 # ─── Build ───────────────────────────────────────────────────────────────────
 FROM node:20-alpine AS build
 WORKDIR /app
@@ -6,8 +5,9 @@ WORKDIR /app
 # Copy hagamets first
 COPY hgts/ ./hgts/
  
-# Copy hascape monorepo
+# Copy hascape monorepo package files + tsconfig
 COPY hascape/package*.json ./hascape/
+COPY hascape/tsconfig.base.json ./hascape/tsconfig.base.json
 COPY hascape/common/package*.json ./hascape/common/
 COPY hascape/client/package*.json ./hascape/client/
 COPY hascape/server/package*.json ./hascape/server/
@@ -18,8 +18,8 @@ RUN sed -i 's|file:../../hgts|file:/app/hgts|g' /app/hascape/server/package.json
 WORKDIR /app/hascape
 RUN npm install --no-package-lock
  
+# Copy all source after install
 WORKDIR /app
-COPY hascape/tsconfig.base.json ./hascape/tsconfig.base.json
 COPY hascape/common/ ./hascape/common/
 COPY hascape/server/ ./hascape/server/
  
