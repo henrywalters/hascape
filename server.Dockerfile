@@ -18,6 +18,7 @@ WORKDIR /app/hascape
 RUN npm install --no-package-lock
  
 WORKDIR /app
+COPY hascape/tsconfig.base.json ./hascape/tsconfig.base.json
 COPY hascape/common/ ./hascape/common/
 COPY hascape/server/ ./hascape/server/
  
