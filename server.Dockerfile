@@ -33,6 +33,8 @@ COPY --from=build /app/hascape/common/dist ./common/dist
 COPY --from=build /app/hascape/common/package.json ./common/package.json
 COPY --from=build /app/hascape/server/ ./server/
 
+RUN npm install -g tsx
+
 EXPOSE 4200
 
 CMD ["node_modules/.bin/tsx", "server/server.ts"]
