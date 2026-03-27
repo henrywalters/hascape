@@ -9,18 +9,17 @@ COPY hgts/ ./hgts/
 COPY hascape/package*.json ./hascape/
 COPY hascape/common/package*.json ./hascape/common/
 COPY hascape/client/package*.json ./hascape/client/
-COPY hascape/server/api/package*.json ./hascape/server/api/
+COPY hascape/server/package*.json ./hascape/server/
 
 WORKDIR /app/hascape
 RUN npm install --no-package-lock
 
 WORKDIR /app
 COPY hascape/common/ ./hascape/common/
-COPY hascape/server/api/ ./hascape/server/api/
+COPY hascape/server/ ./hascape/server/
 
 WORKDIR /app/hascape
-RUN npm run build --workspace=common && \
-    npm run build --workspace=server/api
+RUN npm run build --workspace=common
 
 # ─── Runtime ─────────────────────────────────────────────────────────────────
 FROM node:20-alpine
@@ -31,9 +30,8 @@ COPY --from=build /app/hascape/node_modules ./node_modules
 COPY --from=build /app/hascape/package.json ./package.json
 COPY --from=build /app/hascape/common/dist ./common/dist
 COPY --from=build /app/hascape/common/package.json ./common/package.json
-COPY --from=build /app/hascape/server/api/dist ./server/api/dist
-COPY --from=build /app/hascape/server/api/package.json ./server/api/package.json
+COPY --from=build /app/hascape/server/ ./server/
 
 EXPOSE 4201
 
-CMD ["node", "server/dist/api.js"]
+CMD ["node_modules/.bin/tsx", "server/api.ts"]
