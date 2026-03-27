@@ -21,6 +21,7 @@ COPY hascape/tsconfig.base.json ./hascape/tsconfig.base.json
 
 WORKDIR /app/hascape
 RUN npm run build --workspace=common
+RUN npm install -g npx
 
 # ─── Runtime ─────────────────────────────────────────────────────────────────
 FROM node:20-alpine
@@ -32,8 +33,6 @@ COPY --from=build /app/hascape/package.json ./package.json
 COPY --from=build /app/hascape/common/dist ./common/dist
 COPY --from=build /app/hascape/common/package.json ./common/package.json
 COPY --from=build /app/hascape/server/ ./server/
-
-RUN npm install -g tsx
 
 EXPOSE 4201
 
