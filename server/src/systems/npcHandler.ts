@@ -10,7 +10,7 @@ import { Vector2, Vector3 } from "three";
 import { Transform } from "hagamets/dist/common/components/transform.js";
 import { Runtime } from "../runtime";
 import { APIMessages, ServerMessages } from "../messages/types";
-import {CELL_SIZE, CELLS, Character, CharacterDied, INPC, ItemOnGround, ITEMS, NPC, NPCs, NPCSpawner, getDrops, ItemPickup} from "@hascape/common";
+import {CELL_SIZE, CELLS, Character, CharacterDied, INPC, ItemOnGround, ITEMS, NPC, NPCs, NPCSpawner, getDrops, ItemPickup, MapData} from "@hascape/common";
 import { Random } from "hcore/dist/random";
 import { BoxCollider2D } from "hagamets/dist/common/components/collider.js";
 import { AABB } from "hagamets/dist/utils/math.js";
@@ -32,7 +32,7 @@ export class NPCHandler extends BaseSystem {
 
     onInit() {
 
-        for (const data of WorldMap.npc_spawners) {
+        for (const data of (WorldMap as MapData).npc_spawners) {
             const entity = this.scene.addEntity();
             entity.addComponent(Transform);
             entity.transform.position = State.grid.getCellPos(new Vector3(data.cell[0], data.cell[1], 0) as any);

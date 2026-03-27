@@ -20,6 +20,7 @@
       "hagamets": "file:../../hgts"
    },
    "scripts": {
+      "build": "tsc -p tsconfig.json",
       "typeorm": "typeorm-ts-node-commonjs",
       "migration:generate": "npm run typeorm migration:generate -- -d src/data-source.ts",
       "migration:run": "npm run typeorm migration:run -- -d src/data-source.ts",
