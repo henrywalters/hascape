@@ -55,6 +55,8 @@ services:
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       PORT: 4200
       GAME_SERVER_HOST: hascape-game
+      SERVER_HOST: 0.0.0.0
+      SERVER_PORT: 4200
     depends_on:
       postgres:
         condition: service_healthy
