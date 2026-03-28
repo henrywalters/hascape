@@ -66,7 +66,7 @@ export class Pubsub {
         if (type === PubsubType.API) {
             this._client = new Client({
                 socketAddress: {
-                    host: "localhost",
+                    host: process.env.GAME_SERVER_HOST || "localhost",
                     port: SERVER_PORT,
                 },
                 secure: false,
@@ -80,7 +80,7 @@ export class Pubsub {
         } else {
             this._server = new Server({
                 socketAddress: {
-                    host: "localhost",
+                    host: process.env.GAME_SERVER_HOST || "localhost",
                     port: SERVER_PORT
                 },
                 secure: false,

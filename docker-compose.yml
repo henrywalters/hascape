@@ -35,6 +35,7 @@ services:
       DB_USER: ${POSTGRES_USER}
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_NAME: ${POSTGRES_DB}
+      GAME_SERVER_URL: hascape-game
       PORT: 4201
     depends_on:
       postgres:
@@ -53,6 +54,7 @@ services:
       NODE_ENV: production
       DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
       PORT: 4200
+      GAME_SERVER_URL: hascape-game
     depends_on:
       postgres:
         condition: service_healthy
