@@ -184,7 +184,8 @@ AppDataSource.initialize().then(async () => {
             return;
         }
 
-        return await auth.createUser(req.headers.user_id as string, req.body.username);
+        const user = await auth.createUser(req.headers.user_id as string, req.body.username);
+        res.json(user);
     })
 
     app.listen(4201, () => {
