@@ -25,7 +25,10 @@ services:
       dockerfile: hascape/api.Dockerfile
     container_name: hascape_api
     restart: always
+    volumes:
+      - /root/firebase.json:/app/firebase.json:ro
     environment:
+      FIREBASE_SERVICE_ACCOUNT_PATH: /firebase.json
       NODE_ENV: production
       DB_HOST: postgres
       DB_PORT: 5432
