@@ -38,6 +38,7 @@ COPY --from=build /app/hascape/package.json ./package.json
 COPY --from=build /app/hascape/tsconfig.base.json ./tsconfig.base.json
 COPY --from=build /app/hascape/common/dist ./common/dist
 COPY --from=build /app/hascape/common/package.json ./common/package.json
+COPY --from=build /app/hascape/common/assets ./common/assets
 COPY --from=build /app/hascape/server/src ./server/src
 COPY --from=build /app/hascape/server/tsconfig.json ./server/tsconfig.json
 COPY --from=build /app/hascape/server/package.json ./server/package.json
