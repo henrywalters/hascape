@@ -47,5 +47,7 @@ COPY --from=build /app/hascape/server/package.json ./server/package.json
 COPY --from=build /app/hgts/ ./node_modules/hagamets/
  
 EXPOSE 4201
+
+WORKDIR /app/server
  
-CMD ["tsx", "server/src/api.ts"]
+CMD ["tsx", "src/api.ts"]
