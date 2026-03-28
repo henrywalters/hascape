@@ -15,7 +15,7 @@ export class NPCService {
     }
 
     async clear() {
-        await this.npcs.deleteAll();
+        await this.npcs.clear();
     }
 
     async createNPC(type: string, position: Vector3) {
