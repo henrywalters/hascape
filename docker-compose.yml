@@ -26,7 +26,7 @@ services:
     container_name: hascape_api
     restart: always
     volumes:
-      - /root/firebase.json:/app/firebase.json:ro
+      - /root/firebase.json:/firebase.json:ro
     environment:
       FIREBASE_SERVICE_ACCOUNT_PATH: /firebase.json
       NODE_ENV: production
