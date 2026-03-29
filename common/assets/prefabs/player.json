@@ -223,7 +223,9 @@
     {
       "id": 826368891083,
       "name": "Character",
-      "params": {}
+      "params": {
+        "speed": "500"
+      }
     },
     {
       "id": 945306162404,
@@ -281,7 +283,7 @@
       "id": 190049440501,
       "name": "Smooth",
       "params": {
-        "speed": 1
+        "speed": 10
       }
     },
     {

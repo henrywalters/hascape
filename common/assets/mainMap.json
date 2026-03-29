@@ -3770,5 +3770,24 @@
     125,
     10
   ],
-  "npc_spawners": []
+  "npc_spawners": [
+    {
+      "cell": [
+        -3,
+        0
+      ],
+      "data": {
+        "id": 452024542233,
+        "name": "NPCSpawner",
+        "params": {
+          "npcName": "orc",
+          "maxSpawn": 10,
+          "minRadius": 0,
+          "maxRadius": 500,
+          "minDelay": 0,
+          "maxDelay": 0
+        }
+      }
+    }
+  ]
 }

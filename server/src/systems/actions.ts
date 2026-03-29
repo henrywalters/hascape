@@ -110,6 +110,7 @@ export class ActionSystem extends BaseSystem {
         const pos = State.grid.getCellIndex(character.entity.position);
         const path = this.pathfinding.getBestLegalPath(pos as any, dest as any);
         if (path) {
+            path[0] = character.entity.position.clone() as any;
             character.path = path;
             character.pathIndex = 0;
             return true;

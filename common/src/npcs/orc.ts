@@ -10,7 +10,7 @@ export const Orc: INPC = {
     prefab: OrcData,
     health: 10,
     speed: 100,
-    maxWanderDistance: 100,
+    maxWanderDistance: 500,
     stats: {
         strength: 3,
         dexterity: 1,

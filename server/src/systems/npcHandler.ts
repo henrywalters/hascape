@@ -66,7 +66,7 @@ export class NPCHandler extends BaseSystem {
                 while (!validPos) {
                     const pos = new Vector2(Random.float(-1, 1), Random.float(-1, 1));
                     pos.normalize();
-                    pos.multiplyScalar(spawner.maxRadius);
+                    pos.multiplyScalar(Random.float(spawner.minRadius, spawner.maxRadius));
                     pos.add(spawnerPos as any);
 
                     const collider = entity.getComponent(BoxCollider2D)!;
@@ -128,35 +128,35 @@ export class NPCHandler extends BaseSystem {
             }
 
             let needsPath = false;
-            if (npc.path.length === 0) {
+            if (character.path.length === 0) {
                 // Regenerate Path
                 needsPath = true;
             } else if (npc.attacking) {
                 needsPath = true;  
-            } else if (npc.pathIndex === npc.path.length) {
+            } else if (character.pathIndex === character.path.length) {
                 needsPath = true;
             }
 
             if (needsPath) {
                 //console.log("New Path");
-                npc.path = this.pathfinding.getRandomPath(npc.entity.position as any, npc.spawnPoint, npc.maxWanderDistance, npc.attacking ? npc.attacking.position as any: void 0);
-                npc.pathIndex = 0;
+                character.path = this.pathfinding.getRandomPath(npc.entity.position as any, npc.spawnPoint, npc.maxWanderDistance, npc.attacking ? npc.attacking.position as any: void 0);
+                character.pathIndex = 0;
             }
 
-            if (npc.path.length > 0) {
-                const distance = npc.entity.position.sub(npc.path[npc.pathIndex]).length();
-                if (distance <= 11) {
-                    npc.pathIndex++;
-                    if (npc.pathIndex >= npc.path.length - 1) {
-                        return;
-                    }
-                }
+            // if (character.path.length > 0) {
+            //     const distance = npc.entity.position.sub(character.path[character.pathIndex]).length();
+            //     if (distance <= 11) {
+            //         character.pathIndex++;
+            //         if (character.pathIndex >= character.path.length - 1) {
+            //             return;
+            //         }
+            //     }
 
-                character.direction = npc.path[npc.pathIndex].clone().sub(npc.entity.position);
-                character.direction.z = 0;
-                character.direction.normalize();
+            //     character.direction = character.path[character.pathIndex].clone().sub(npc.entity.position);
+            //     character.direction.z = 0;
+            //     character.direction.normalize();
 
-            }
+            // }
 
 
         })

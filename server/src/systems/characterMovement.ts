@@ -35,6 +35,7 @@ export class CharacterMovement extends System {
                 character.direction.set(0, 0, 0);
             } else {
                 const target = character.path[character.pathIndex].clone().sub(character.entity.position);
+                target.z = 0;
                 if (target.length() < 5) {
                     character.pathIndex++;
                     if (character.pathIndex === character.path.length) {

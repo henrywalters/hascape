@@ -13,9 +13,9 @@ export class NPC extends Component {
 
     maxWanderDistance: number;
 
-    path: Vector3[] = [];
+    // path: Vector3[] = [];
 
-    pathIndex: number = 0;
+    // pathIndex: number = 0;
 
     attackedBy: IEntity[] = [];
 

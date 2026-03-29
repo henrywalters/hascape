@@ -4,7 +4,7 @@ import { Manifest } from "./manifest";
 
 (() => {
 
-    const tickRate = 16;
+    const tickRate = 32;
 
     let manifest = Manifest;
     
@@ -12,11 +12,15 @@ import { Manifest } from "./manifest";
 
     const clock = new Clock();
 
+    let lastTick: number = 0;
+
     const tick = () => {
 
         const start = clock.getElapsedTime();
 
-        game.tick(true);
+        lastTick = start;
+
+        game.tick(start * 1000, true);
 
         const end = clock.getElapsedTime();
 

@@ -67,8 +67,6 @@ export class LoginMenu extends RenderScene {
                     otherCharacter.totalHealth = other.totalHealth;
                     otherCharacter.health = other.health;
 
-                    console.log(otherCharacter);
-
                     otherEntity.transform.position = other.position as any;
                     otherEntity.getComponent(Smooth)!.targetPosition = otherEntity.position;
 
@@ -86,7 +84,6 @@ export class LoginMenu extends RenderScene {
                     character.sessionId = npc.sessionId;
                     character.health = npc.health;
                     character.totalHealth = npc.totalHealth;
-                    console.log(character);
                 }
 
                 for (const item of joined.items) {

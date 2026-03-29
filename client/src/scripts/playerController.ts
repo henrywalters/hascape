@@ -15,7 +15,6 @@ export class PlayerController extends Script {
         State.interactionEvents.listen((e) => {
             if (State.isEditing) return;
             if (e.type === InteractEvents.ItemSelected) {
-                console.log(e);
                 const event = e as ItemSelected;
                 const msg = new CharacterAction();
                 msg.sessionId = State.sessionId;

@@ -11,7 +11,7 @@ import { State } from "../state";
 interface IProfile {
     entity: IEntity;
     label: string;
-    getValue: () => string;
+    getValue: (dt: number) => string;
 }
 
 export class Profiler extends Script {
@@ -23,7 +23,9 @@ export class Profiler extends Script {
 
     initialized = false;
 
-    private addItem(label: string, getValue: () => string): IProfile {
+    private dtQueue: number[] = [];
+
+    private addItem(label: string, getValue: (dt: number) => string): IProfile {
         const item = this.scene.addEntityFromPrefab(ProfileItem);
         this.scene.changeEntityOwner(item.id, this.profiles);
 
@@ -47,8 +49,22 @@ export class Profiler extends Script {
             if (!this.initialized) {
                 this.profileItems.push(this.addItem(
                     "DT",
-                    () => {
-                        return (this.game.clock.getDelta() * 1000).toFixed(2) + "ms";
+                    (dt: number) => {
+                        this.dtQueue.push(dt);
+
+                        if (this.dtQueue.length > 50) {
+                            this.dtQueue.splice(0, 1);
+                        };
+
+                        let sum = 0;
+
+                        for (const el of this.dtQueue) {
+                            sum += el;
+                        }
+
+                        sum /= this.dtQueue.length;
+
+                        return (sum * 1000).toFixed(2) + "ms";
                     }
                 ));
                 this.profileItems.push(this.addItem(
@@ -69,7 +85,7 @@ export class Profiler extends Script {
 
             for (const item of this.profileItems) {
                 const text = item.entity.getComponent(Text)!;
-                text.text = `${item.label}: ${item.getValue()}`;
+                text.text = `${item.label}: ${item.getValue(dt)}`;
                 text.notifyUpdate();
             }
         }
