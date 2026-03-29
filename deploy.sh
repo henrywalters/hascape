@@ -1,10 +1,10 @@
 #!/bin/bash
 
 cd /root/hascape
-docker compose build
+docker-compose build
 
 cd /root/hagameonline
-docker compose build
+docker-compose build
 
 cd /root/hascape
 docker-compose down --remove-orphans
