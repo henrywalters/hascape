@@ -1,22 +1,31 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
 import { User } from "./user";
-import { IStats } from "@hascape/common";
+import {IStats } from "@hascape/common";
+import { BankItem, InventoryItem } from "./inventory";
 
 @Entity()
 export class Player implements IStats {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @OneToOne(() => User)
-    @JoinColumn()
+    @ManyToOne(() => User, user => user.players)
     user: User;
+
+    @Column('varchar')
+    username: string;
+
+    @OneToMany(() => InventoryItem, item => item.player)
+    inventoryItems: InventoryItem[];
+
+    @OneToMany(() => BankItem, item => item.player)
+    bankItems: BankItem[];
 
     @Column({type: "float"})
     x: number;
 
     @Column({type: "float"})
     y: number;
-
+ 
     @Column({type: "int"})
     health: number = 10;
 

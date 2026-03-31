@@ -8,6 +8,21 @@ export class ClientConnect extends NetMessage {
     @String()
     token: string = "";
 
-    @Array(Types.Float)
-    test = [1, 2, 3, 4, 5];
+    @String()
+    playerId: string = "";
+}
+
+export class ClientConnectFailed extends NetMessage {
+    type = ServerMessages.ConnectFailed;
+
+    @String()
+    error: string = "";
+}
+
+export class Ping extends NetMessage {
+    type = ClientMessages.Ping;
+}
+
+export class Pong extends NetMessage {
+    type = ServerMessages.Pong;
 }

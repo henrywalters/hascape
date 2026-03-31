@@ -1,4 +1,5 @@
 export enum ClientMessages {
+    Ping,
     Connect,
     PlayerMove,
     PlayerMessage,
@@ -9,7 +10,9 @@ export enum ClientMessages {
 }
 
 export enum ServerMessages {
+    Pong,
     PlayerJoined,
+    ConnectFailed,
     OtherPlayerJoined,
     PlayerLeft,
     PlayerMoved,

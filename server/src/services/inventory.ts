@@ -4,6 +4,7 @@ import { AppDataSource } from "../data-source";
 import { User } from "../entity/user";
 import { ITEMS } from "@hascape/common";
 import { Random } from "hcore/dist/random";
+import { Player } from "../entity/player";
 
 export class InventoryService {
     
@@ -13,33 +14,33 @@ export class InventoryService {
         this.items = AppDataSource.getRepository(InventoryItem);
     }
 
-    public async getItems(user: User) {
+    public async getItems(player: Player) {
         return this.items.find({
             where: {
-                user: {
-                    id: user.id,
+                player: {
+                    id: player.id,
                 }
             }
         });
     }
 
-    public async getItem(user: User, item: string) {
+    public async getItem(player: Player, item: string) {
         return this.items.findOne({
             where: {
                 item,
-                user: {
-                    id: user.id,
+                player: {
+                    id: player.id,
                 }
             }
         })
     }
 
-    public async addItem(user: User, instanceId: string, item: string, quantity: number, position: number) {
+    public async addItem(player: Player, instanceId: string, item: string, quantity: number, position: number) {
 
         const newItem = new InventoryItem();
         newItem.instanceId = instanceId;
         newItem.item = item;
-        newItem.user = user;
+        newItem.player = player;
         newItem.quantity = quantity;
         newItem.position = position;
 
@@ -48,12 +49,12 @@ export class InventoryService {
         return newItem;
     }
 
-    public async removeItem(user: User, instanceId: string) {
+    public async removeItem(player: Player, instanceId: string) {
         const item = await this.items.findOne({
             where: {
                 instanceId,
-                user: {
-                    id: user.id,
+                player: {
+                    id: player.id,
                 }
             }
         });

@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./user";
+import { Player } from "./player";
 
 @Entity()
 export class Message {
@@ -9,11 +9,11 @@ export class Message {
     @CreateDateColumn()
     createdOn: Date;
 
-    @ManyToOne(() => User)
-    user: User;
+    @ManyToOne(() => Player)
+    player: Player;
 
-    @ManyToOne(() => User, {nullable: true})
-    sentTo?: User;
+    @ManyToOne(() => Player, {nullable: true})
+    sentTo?: Player;
 
     @Column({type: 'varchar'})
     message: string;

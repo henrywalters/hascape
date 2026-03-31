@@ -1,9 +1,9 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, INPC, TILES, MapData, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem } from "@hascape/common";
+import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, INPC, TILES, MapData, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
-import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
+import { LoggedIn, LoggedOut, Login, LoginFailed, Logout } from "./messages/login";
 import { APIMessages, ServerMessages } from "./messages/types";
 import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { Transform } from "hagamets/dist/common/components/transform.js";
@@ -44,6 +44,8 @@ export class Runtime extends Scene {
                     break;
                 case APIMessages.AddedItemToInventory: 
                     console.log(msg as AddedItemToInventory);
+                case APIMessages.LoginFailed:
+                    this.connectFailed(msg as LoginFailed);
             }
         }
 
@@ -83,8 +85,10 @@ export class Runtime extends Scene {
         this.game.server.flushMessages((message) => {
             if (message.message.type === ClientMessages.Connect) {
                 const login = new Login();
+                const msg = message.message as ClientConnect;
                 login.socketId = State.socketIds.get(message.socket!)!;
-                login.token = (message.message as ClientConnect).token;
+                login.token = msg.token;
+                login.playerId = msg.playerId;
                 this.pubsub.send(login);
             }
 
@@ -129,7 +133,12 @@ export class Runtime extends Scene {
     }
 
     private loggedIn(loggedIn: LoggedIn) {
-        if (State.playerSessions.has(loggedIn.sessionId)) return;
+        if (State.playerSessions.has(loggedIn.sessionId)) {
+            const connectFailed = new ClientConnectFailed();
+            connectFailed.error = "Player already logged in";
+            State.sockets.get(loggedIn.socketId)!.send(this.game.server.serverMessages.write(connectFailed));
+            return;
+        }
 
         // const entity = this.addEntity();
         // entity.addComponent(Transform);
@@ -339,6 +348,15 @@ export class Runtime extends Scene {
             }
         } else {
             this.game.server.emit(msg);
+        }
+    }
+
+    public connectFailed(msg: LoginFailed) {
+        const output = new ClientConnectFailed();
+        output.error = msg.error;
+        const socket = State.sockets.get(msg.socketId);
+        if (socket) {
+            socket.send(this.game.server.serverMessages.write(output));
         }
     }
 }

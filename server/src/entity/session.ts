@@ -1,5 +1,5 @@
 import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn } from "typeorm";
-import { User } from "./user";
+import { Player } from "./player";
 
 @Entity()
 export class Session {
@@ -7,8 +7,8 @@ export class Session {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
-    @ManyToOne(() => User)
-    user: User;
+    @ManyToOne(() => Player)
+    player: Player;
 
     @Column('varchar')
     sessionId: string;

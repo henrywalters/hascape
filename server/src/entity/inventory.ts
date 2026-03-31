@@ -1,5 +1,6 @@
 import { Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 import { User } from "./user";
+import { Player } from "./player";
 
 @Entity()
 export class InventoryItem {
@@ -13,8 +14,8 @@ export class InventoryItem {
     @Column({type: "varchar"})
     instanceId: string;
 
-    @ManyToOne(() => User, user => user.inventoryItems)
-    user: User;
+    @ManyToOne(() => Player, player => player.inventoryItems)
+    player: Player;
 
     @Column({type: "int"})
     quantity: number;
@@ -27,13 +28,13 @@ export class InventoryItem {
 export class BankItem {
 
     @PrimaryGeneratedColumn("uuid")
-    id: string;
+    id: string; 
 
     @Column({type: 'varchar'})
     item: string;
 
-    @ManyToOne(() => User, user => user.bankItems)
-    user: User;
+    @ManyToOne(() => Player, player => player.bankItems)
+    player: Player;
 
     @Column({type: "int"})
     quantity: number;

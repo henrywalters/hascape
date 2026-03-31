@@ -12,10 +12,13 @@ import { InteractOption } from "./interactMenu";
 export class PlayerController extends Script {
 
     onInit() {
+        console.log("Start");
         State.interactionEvents.listen((e) => {
             if (State.isEditing) return;
             if (e.type === InteractEvents.ItemSelected) {
+                console.log(e);
                 const event = e as ItemSelected;
+                console.log(event);
                 const msg = new CharacterAction();
                 msg.sessionId = State.sessionId;
                 msg.action = event.selected.action;
@@ -25,6 +28,7 @@ export class PlayerController extends Script {
                 if (event.selected.subject) {
                     msg.subjectId = event.selected.subject.instanceId;
                 }
+                console.log(msg);
                 this.game.client.send(msg);
             }
         })

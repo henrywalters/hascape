@@ -7,7 +7,7 @@ import admin from 'firebase-admin';
 import cors from 'cors';
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { ClientConnect, InventoryItem } from "@hascape/common";
-import { LoggedIn, LoggedOut, Login, Logout } from "./messages/login";
+import { LoggedIn, LoggedOut, Login, LoginFailed, Logout } from "./messages/login";
 import { APIMessages, ServerMessages } from "./messages/types";
 import { PlayerService } from "./services/player";
 import { Vector3 } from "three";
@@ -17,6 +17,9 @@ import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { NPCsCleared } from "./messages/npc";
 import { AddedItemToInventory, AddItemToInventory, RemovedItemFromInventory, RemoveItemFromInventory } from "./messages/inventory";
 import { InventoryService } from "./services/inventory";
+import { AuthLevel } from "./entity/user";
+import { UserController } from "./controllers/userController";
+import { PlayerController } from "./controllers/playerController";
 
 dotenv.config({ path: '.env' })
 
@@ -28,7 +31,7 @@ AppDataSource.initialize().then(async () => {
         credential: admin.credential.cert(serviceAccount),
     })
     
-    const app = express();
+    const app = express(); 
 
     const auth = new AuthService();
     const players = new PlayerService();
@@ -38,27 +41,51 @@ AppDataSource.initialize().then(async () => {
 
     pubsub.onMessage = async (message) => {
         if (message.type === ServerMessages.Login) {
+
+            let connect = message as Login;
+
+            const sendError = (error: string) => {
+                console.log(error);
+                const failed = new LoginFailed();
+                failed.error = error;
+                failed.socketId = connect.socketId;
+                pubsub.send(failed);
+            }
+
             try {
-                let connect = message as Login;
+
                 const verified = await firebase.auth().verifyIdToken(connect.token);
-                if (!verified) return;
-                const user = await auth.getUser(verified.user_id);
-                if (!user) return;
-                let session = await auth.getUserSession(user);
-                if (!session) {
-                    session = await auth.createSession(user);
+                if (!verified) {
+                    sendError("Unauthorized");
+                    return;
                 }
-                let player = await players.getPlayer(user);
+                const user = await auth.getUser(verified.user_id);
+                if (!user) {
+                    sendError("User does not exist");
+                    return;
+                }
+                const player = await players.getPlayer(user, connect.playerId);
                 if (!player) {
-                    player = await players.createPlayer(user);
+                    sendError("Player does not exist");
+                    return;
+                }
+                let session = await players.getPlayerSession(player);
+
+                // if (!session) {
+                //     sendError("Player already logged in");
+                //     return;
+                // }
+
+                if (!session) {
+                    session = await players.createSession(player);
                 }
                 
                 const loggedIn = new LoggedIn(); 
                 loggedIn.socketId = connect.socketId;
                 loggedIn.sessionId = session.sessionId;
-                loggedIn.username = user.username;
+                loggedIn.username = player.username;
                 loggedIn.position = new Vector3(player.x, player.y, 0);
-                loggedIn.inventory = (await inventory.getItems(user)).map((item) => {
+                loggedIn.inventory = (await inventory.getItems(player)).map((item) => {
                     console.log(item);
                     const inventoryItem = new InventoryItem();
                     inventoryItem.instanceId = item.instanceId;
@@ -68,16 +95,17 @@ AppDataSource.initialize().then(async () => {
                     return inventoryItem;
                 });
                 pubsub.send(loggedIn);
-            } catch (e) {
+            } catch (e: any) {
                 console.warn(e);
+                sendError(e.toString());
             }
         }
 
         if (message.type === ServerMessages.Logout) {
             let logout = message as Logout;
-            const session = await auth.getSession(logout.sessionId);
+            const session = await players.getSession(logout.sessionId);
             if (session) {
-                await auth.endSession(session);
+                await players.endSession(session);
                 const loggedOut = new LoggedOut();
                 loggedOut.sessionId = session.sessionId;
                 loggedOut.socketId = logout.socketId;
@@ -87,23 +115,21 @@ AppDataSource.initialize().then(async () => {
 
         if (message.type === ServerMessages.PlayerSetPosition) {
             const setPos = message as PlayerSetPosition;
-            const session = await auth.getSession(setPos.sessionId);
+            const session = await players.getSession(setPos.sessionId);
             if (!session) return;
-            const player = await players.getPlayer(session.user);
-            if (!player) return;
-            await players.setPlayerPosition(player, setPos.position);
+            await players.setPlayerPosition(session.player, setPos.position);
         }
 
         if (message.type === ServerMessages.PlayerSendMessage) {
             const msg = message as PlayerSendMessage;
-            const session = await auth.getSession(msg.sessionId);
+            const session = await players.getSession(msg.sessionId);
             if (!session) return;
-            const to = await auth.getSession(msg.sentTo);
-            players.sendMessage(session.user, msg.message, to?.user);
+            const to = await players.getSession(msg.sentTo);
+            players.sendMessage(session.player, msg.message, to?.player);
 
             const received = new PlayerReceivedMessaged;
             received.message = msg.message;
-            received.username = session.user.username;
+            received.username = session.player.username;
             received.sentTo = msg.sentTo;
             received.sessionId = msg.sessionId;
 
@@ -118,9 +144,9 @@ AppDataSource.initialize().then(async () => {
 
         if (message.type === ServerMessages.AddItemToInventory) {
             const msg = message as AddItemToInventory;
-            const session = await auth.getSession(msg.sessionId);
+            const session = await players.getSession(msg.sessionId);
             if (!session) return;
-            const item = await inventory.addItem(session.user, msg.item.instanceId, msg.item.item, msg.item.quantity, msg.item.position);
+            const item = await inventory.addItem(session.player, msg.item.instanceId, msg.item.item, msg.item.quantity, msg.item.position);
             const addedItem = new AddedItemToInventory();
             addedItem.item = msg.item;
             pubsub.send(addedItem);
@@ -128,10 +154,10 @@ AppDataSource.initialize().then(async () => {
 
         if (message.type === ServerMessages.RemoveItemFromInventory) {
             const msg = message as RemoveItemFromInventory;
-            const session = await auth.getSession(msg.sessionId);
+            const session = await players.getSession(msg.sessionId);
             if (!session) return;
 
-            await inventory.removeItem(session.user, msg.instanceId);
+            await inventory.removeItem(session.player, msg.instanceId);
             const removedItem = new RemovedItemFromInventory();
             removedItem.instanceId = msg.instanceId;
             removedItem.sessionId = msg.sessionId;
@@ -154,8 +180,18 @@ AppDataSource.initialize().then(async () => {
             return;
         }
         req.headers.user_id = verified.user_id;
+
+        let user = await auth.createUser(verified.user_id, verified.email!);
+
+        if (verified.email && verified.email === 'henrywalters20@gmail.com' && user.authLevel !== AuthLevel.SuperAdmin) {
+            await auth.setAuthLevel(user, AuthLevel.SuperAdmin);
+        }
+
         next();
     });
+
+    const userController = new UserController(app);
+    const playerController = new PlayerController(app);
 
     app.use(async (error: any, req: Request, resolve: Response, next: NextFunction) => {
         console.log(error);
@@ -165,28 +201,33 @@ AppDataSource.initialize().then(async () => {
         res.json({message: "HaScape"})
     });
 
-    app.get('/user', async (req, res) => {
-        const user = await auth.getUser(req.headers.user_id as string);
-        if (!user) {
-            res.status(404).json({message: "User Does Not Exist"});
-        } else {
-            res.json(user);
-        }
-    })
+    // app.get('/user', async (req, res) => {
+    //     const user = await auth.getUser(req.headers.user_id as string);
+    //     if (!user) {
+    //         res.status(404).json({message: "User Does Not Exist"});
+    //     } else {
+    //         res.json(user);
+    //     }
+    // })
 
-    app.post('/user', async (req, res) => {
-        console.log(req.body); 
-        console.log("Create User");
-        if (!req.body.username) {
-            res.status(400).json({errors: {
-                username: 'Username is required',
-            }});
-            return;
-        }
+    // // app.get('/players', async (req, res) => {
+    // //     const user = await auth.getUser(req.headers.user_id as string);
+    // //     if (user.authLevel ===)
+    // // })
 
-        const user = await auth.createUser(req.headers.user_id as string, req.body.username);
-        res.json(user);
-    })
+    // app.post('/user', async (req, res) => {
+    //     console.log(req.body); 
+    //     console.log("Create User");
+    //     if (!req.body.username) {
+    //         res.status(400).json({errors: {
+    //             username: 'Username is required',
+    //         }});
+    //         return;
+    //     }
+
+    //     // const user = await auth.createUser(req.headers.user_id as string, req.body.username);
+    //     // res.json(user);
+    // })
 
     app.listen(4201, () => {
         console.log("Listening on port 4201");

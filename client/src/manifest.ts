@@ -35,6 +35,7 @@ import { InteractMenu, InteractOption } from "./scripts/interactMenu";
 import { SpriteSheetSystem } from "hagamets/dist/common/systems/spriteSheet.js";
 import { Inventory } from "./scripts/inventory";
 import { Profiler } from "./scripts/profiler";
+import { Disconnected } from "./scripts/disconnected";
 
 export const Manifest: IManifest = {
     systems: [
@@ -68,6 +69,7 @@ export const Manifest: IManifest = {
         InteractOption,
         Inventory,
         Profiler,
+        Disconnected,
     ],
     scenes: {
         login_menu: {

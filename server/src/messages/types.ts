@@ -1,5 +1,6 @@
 export enum APIMessages {
     LoggedIn,
+    LoginFailed,
     LoggedOut,
     PlayerReceiveMessage,
     NPCsCleared,

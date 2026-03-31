@@ -52,7 +52,7 @@ export class Profiler extends Script {
                     (dt: number) => {
                         this.dtQueue.push(dt);
 
-                        if (this.dtQueue.length > 50) {
+                        if (this.dtQueue.length > 1) {
                             this.dtQueue.splice(0, 1);
                         };
 

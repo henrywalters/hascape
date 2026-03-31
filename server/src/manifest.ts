@@ -15,6 +15,7 @@ import { WizardsAssistant } from "./systems/quests/wizardsAssistant";
 import { InventorySystem } from "./systems/inventory";
 import { InteractionSystem } from "./systems/interactions";
 import { ActionSystem } from "./systems/actions";
+import { Behavior } from "hagamets/dist/common/components/behavior.js";
 
 export const Manifest: IManifest = {
     systems: [
@@ -40,6 +41,7 @@ export const Manifest: IManifest = {
         Player,
         HealthBar,
         ItemOnGround,
+        Behavior,
     ],
     scripts: [],
     scenes: {

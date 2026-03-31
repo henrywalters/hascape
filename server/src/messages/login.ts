@@ -1,7 +1,7 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { APIMessages, ServerMessages } from "./types";
 import { InventoryItem } from "@hascape/common";
-import { Array, Param, Types } from "hagamets/dist/core/reflection.js";
+import { Array, Param, String, Types } from "hagamets/dist/core/reflection.js";
 import { Vector3 } from "three";
 
 export class Login extends NetMessage {
@@ -10,8 +10,21 @@ export class Login extends NetMessage {
     @Param({type: Types.Int})
     socketId: number;
 
+    @String()
+    playerId: string;
+
     @Param({type: Types.String})
     token: string;
+}
+
+export class LoginFailed extends NetMessage {
+    type = APIMessages.LoginFailed;
+
+    @String()
+    error: string;
+
+    @Param({type: Types.Int})
+    socketId: number;
 }
 
 export class LoggedIn extends NetMessage {

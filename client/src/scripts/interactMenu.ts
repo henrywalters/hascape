@@ -291,6 +291,7 @@ export class InteractMenu extends Script {
                 this.closeMenu();
             }
         } else if (this.game.input.getButtonPressed(Buttons.MouseLeft) && this.option) {
+            console.log(this.option);
             State.interactionEvents.emit(new ItemSelected(this.option));
         }
 

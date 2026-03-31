@@ -93,14 +93,6 @@ export class Runtime extends RenderScene {
             State.itemMap.get(cell)!.push(item.entity);
         });
 
-        this.game.client.flushEvents((e) => {
-            console.log(e);
-            if (e.type === NetEvents.Disconnected) {
-                this.game.activateScene("login_menu");
-                return;
-            }
-        });
-
         this.game.client.flushMessages((msg) => {
             if (msg.message.type === ServerMessages.OtherPlayerJoined) {
                 const joined = msg.message as OtherPlayerJoined;

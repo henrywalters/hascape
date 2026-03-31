@@ -9,6 +9,7 @@ export * from "./interfaces/item";
 export * from "./interfaces/dropTable";
 export * from "./interfaces/action";
 export * from "./interfaces/inventory";
+export * from "./interfaces/player";
 
 export * from "./systems/players";
 

@@ -23,16 +23,16 @@ export class LoginMenu extends RenderScene {
 
             if (msg.message.type === ServerMessages.PlayerJoined) {
                 const joined = msg.message as PlayerJoined;
-
-                console.log(joined);
                 
                 // If we join, that means we're logged into the server and therefore not editing
                 State.isEditing = false;
 
                 State.sessionId = joined.player.sessionId;
 
+                const scene = this.game.getScene('runtime');
+
                 this.game.activateScene('runtime');
-                const entity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.Player], joined.player.username);
+                const entity = scene.addEntityFromPrefab(Prefabs[PrefabTypes.Player], joined.player.username);
 
                 entity.transform.position = joined.player.position as any;
 
@@ -46,8 +46,6 @@ export class LoginMenu extends RenderScene {
                 character.sessionId = joined.player.sessionId;
                 player.username = joined.player.username;
 
-                console.log(character);
-
                 entity.getComponent(Smooth)!.targetPosition = entity.position;
 
                 const text = entity.getComponentInChildren(TextMesh)!;
@@ -56,10 +54,8 @@ export class LoginMenu extends RenderScene {
                 
                 entity.transform.position = joined.player.position as any;
 
-                console.log(joined);
-
                 for (const other of joined.otherPlayers) {
-                    const otherEntity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], other.username)
+                    const otherEntity = scene.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], other.username)
                     const otherCharacter = otherEntity.getComponent(Character)!;
                     const otherPlayer = otherEntity.getComponent(Player)!;
                     otherCharacter.sessionId = other.sessionId;
@@ -76,7 +72,7 @@ export class LoginMenu extends RenderScene {
                 }
 
                 for (const npc of joined.npcs) {
-                    const npcEntity = this.game.currentScene!.addEntityFromPrefab(NPCs[npc.npcType].prefab);
+                    const npcEntity = scene.addEntityFromPrefab(NPCs[npc.npcType].prefab);
                     npcEntity.transform.position = npc.position as any;
                     npcEntity.transform.position.z = 10;
 
@@ -88,7 +84,7 @@ export class LoginMenu extends RenderScene {
 
                 for (const item of joined.items) {
                     console.log(item);
-                    const itemEntity = this.game.currentScene!.addEntityFromPrefab(ItemOnGroundPrefab);
+                    const itemEntity = scene.addEntityFromPrefab(ItemOnGroundPrefab);
                     const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
                     itemOnGround.quantity = item.quantity;
                     itemOnGround.instanceId = item.instanceId;
@@ -108,6 +104,8 @@ export class LoginMenu extends RenderScene {
                         item,
                     })
                 }
+
+                this.game.activateScene('runtime');
 
                 const size = this.game.getSize();
                 this.game.resize(size.x, size.y);

@@ -2,7 +2,7 @@ import { INetMessage, QueuedMessage } from "hagamets/dist/net/interfaces/message
 import { NetMessages } from "hagamets/dist/net/messages.js";
 import { Server } from "hagamets/dist/net/server.js";
 import { Client } from "hagamets/dist/net/client.js";
-import { LoggedIn, LoggedOut, Login, Logout } from "../messages/login";
+import { LoggedIn, LoggedOut, Login, LoginFailed, Logout } from "../messages/login";
 import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "../messages/player";
 import { NetEvent } from "hagamets/dist/net/interfaces/net.js";
 import { NPCChangeHealth, NPCsClear, NPCsCleared, NPCSpawn, NPCSpawned } from "../messages/npc";
@@ -23,6 +23,7 @@ const SERVER_MESSAGES: NetMessages = new NetMessages([
 
 const API_MESSAGES: NetMessages = new NetMessages([
     LoggedIn,
+    LoginFailed,
     LoggedOut,
     PlayerReceivedMessaged,
     NPCsCleared,

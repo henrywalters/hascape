@@ -1,5 +1,12 @@
-import { Column, CreateDateColumn, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import { BankItem, InventoryItem } from "./inventory";
+import { Player } from "./player";
+
+export enum AuthLevel {
+    Default = 'default',
+    Admin = 'admin',
+    SuperAdmin = 'super_admin',
+}
 
 @Entity()
 export class User {
@@ -9,15 +16,15 @@ export class User {
     @Column('varchar')
     userId: string;
 
+    @Column('varchar')
+    email: string; 
+
     @CreateDateColumn()
     createdOn: Date;
 
-    @Column('varchar')
-    username: string;
+    @OneToMany(() => Player, player => player.user)
+    players: Player[];
 
-    @OneToMany(() => InventoryItem, item => item.user)
-    inventoryItems: InventoryItem[];
-
-    @OneToMany(() => BankItem, item => item.user)
-    bankItems: BankItem[];
+    @Column({type: 'enum', enum: AuthLevel, default: AuthLevel.Default})
+    authLevel: AuthLevel;
 }
