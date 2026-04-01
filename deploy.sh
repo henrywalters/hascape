@@ -5,11 +5,11 @@ git pull
 
 cd /root/hascape
 git pull
-docker-compose build
+docker-compose build --no-cache
 
 cd /root/hagameonline
 git pull
-docker-compose build
+docker-compose build --no-cache
 
 cd /root/hascape
 git pull
