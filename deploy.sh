@@ -1,5 +1,7 @@
 #!/bin/bash
 
+docker system prune -y
+
 cd /root/hgts
 git pull
 
