@@ -4,10 +4,12 @@
    "version": "0.0.1",
    "description": "Awesome project developed with TypeORM.",
    "dependencies": {
+      "@aws-sdk/client-s3": "^3.1021.0",
       "cors": "^2.8.5",
       "dotenv": "^17.2.3",
       "express": "^5.2.1",
       "firebase-admin": "^13.6.0",
+      "hagamets": "file:../../hgts",
       "hcore": "^1.2.0",
       "pathfinding": "^0.4.18",
       "pg": "^8.16.3",
@@ -15,8 +17,7 @@
       "reflect-metadata": "^0.2.2",
       "three": "^0.182.0",
       "typeorm": "0.3.20",
-      "ws": "^8.19.0",
-      "hagamets": "file:../../hgts"
+      "ws": "^8.19.0"
    },
    "scripts": {
       "build": "tsc -p tsconfig.json",

@@ -1,5 +1,8 @@
 #!/bin/bash
 
+cd /root/hgts
+git pull
+
 cd /root/hascape
 git pull
 docker-compose build

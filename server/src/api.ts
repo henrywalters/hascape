@@ -20,6 +20,7 @@ import { InventoryService } from "./services/inventory";
 import { AuthLevel } from "./entity/user";
 import { UserController } from "./controllers/userController";
 import { PlayerController } from "./controllers/playerController";
+import { StorageService } from "./services/storage";
 
 dotenv.config({ path: '.env' })
 
@@ -38,6 +39,7 @@ AppDataSource.initialize().then(async () => {
     const npcs = new NPCService();
     const inventory = new InventoryService();
     const pubsub = new Pubsub(PubsubType.API);
+    const storage = new StorageService();
 
     pubsub.onMessage = async (message) => {
         if (message.type === ServerMessages.Login) {
