@@ -92,7 +92,9 @@ export class ActionSystem extends BaseSystem {
 
                 const pickup = new ItemInstance(item.item, item.quantity);
 
-                this.spawnItem(character.map, pickup, character.entity.position as any, ITEM_DROP_DESPAWN_RATE);
+                const pos = State.grid.getCellPos(State.grid.getCellIndex(character.entity.position as any));
+
+                this.spawnItem(character.map, pickup, pos as any, ITEM_DROP_DESPAWN_RATE);
                 success = true;
             }
         }

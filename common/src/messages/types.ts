@@ -27,4 +27,5 @@ export enum ServerMessages {
     PickedUpItem,
     DroppedItem,
     ActionReceived,
+    CommandResponse,
 }

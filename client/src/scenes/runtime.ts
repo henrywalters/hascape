@@ -1,6 +1,6 @@
 import { RenderScene } from "hagamets/dist/common/scenes/renderScene.js";
 import { State } from "../state";
-import { CELL_SIZE, OtherPlayerJoined, Character, PlayerJoined, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem, IMap } from "@hascape/common";
+import { CELL_SIZE, OtherPlayerJoined, Character, PlayerJoined, CommandResponse, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem, IMap } from "@hascape/common";
 import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
@@ -46,7 +46,11 @@ export class Runtime extends RenderScene {
             const tiles = tileEntity.addComponent(Tilemap);
             tiles.grid.size.set(WORLD_SIZE, WORLD_SIZE);
             tiles.grid.cells.set(WORLD_SIZE / CELL_SIZE, WORLD_SIZE / CELL_SIZE);
-            tiles.color = tile.color as any;
+            if (tile.texture) {
+                tiles.texture = tile.texture.name;
+            } else if (tile.color) {
+                tiles.color = new Color(tile.color) as any;
+            }
             this.tilemaps.set(tile.name, tiles);
         }
     }

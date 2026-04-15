@@ -6,9 +6,7 @@ import { Color } from "three";
 import { State } from "../state";
 import { TextInput, TextInputEvents } from "hagamets/dist/common/components/ui/textInput.js";
 import { Text } from "hagamets/dist/common/components/ui/text.js";
-import { PlayerMessage } from "@hascape/common";
-import { TextMesh } from "hagamets/dist/common/components/mesh.js";
-import { Runtime } from "../scenes/runtime";
+import { CommandResponse, PlayerMessage, ServerMessages } from "@hascape/common";
 
 export class ChatBox extends Script {
     @Param({type: Types.Entity})
@@ -21,13 +19,21 @@ export class ChatBox extends Script {
     output: number;
 
     @Param({type: Types.Int})
-    maxMessages: number = 5;
+    maxMessages: number = 6;
 
     private messages: string[] = [];
 
     listening = false;
 
-    public addMessage(msg: string) {
+    onInit() {
+        this.scene.game.client.installFilter([ServerMessages.CommandResponse], (msg) => {
+            for (const res of (msg.message as CommandResponse).responses) {
+                this.addMessage(res.message);
+            }
+        })
+    }
+
+    public addMessage(msg: string,) {
         const output = this.scene.getEntity(this.output);
         if (!output) return;
 

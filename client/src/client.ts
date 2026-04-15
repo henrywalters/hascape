@@ -2,6 +2,7 @@ import { IMap, IPlayer } from "@hascape/common";
 import { Game } from "hagamets/dist/core/game.js";
 import { IManifest } from "hagamets/dist/core/interfaces/manifest.js";
 import { State } from "./state";
+import { Assets } from "hagamets/dist/core/assets.js";
 
 export class Client extends Game {
     
@@ -20,5 +21,17 @@ export class Client extends Game {
         this._apiUrl = apiUrl;
         this._token = token;
         this.onExit = onExit;
+    }
+
+    async initialize() {
+        for (const texture of this.manifest.assets.textures!) {
+            if (texture.name === 'hg_studio') {
+                await Assets.loadTexture(texture);
+            }
+        }
+
+        for (const font of this.manifest.assets.fonts!) {
+            await Assets.loadFont(font);
+        }
     }
 }

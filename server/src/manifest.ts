@@ -15,6 +15,7 @@ import { WizardsAssistant } from "./systems/quests/wizardsAssistant";
 import { InventorySystem } from "./systems/inventory";
 import { ActionSystem } from "./systems/actions";
 import { Behavior } from "hagamets/dist/common/components/behavior.js";
+import { MessageSystem } from "./systems/messages";
 
 export const Manifest: IManifest = {
     systems: [
@@ -25,6 +26,7 @@ export const Manifest: IManifest = {
         InventorySystem,
         WizardsAssistant,
         ActionSystem,
+        MessageSystem,
     ],
     components: [
         Character,

@@ -26,6 +26,9 @@ export class PlayerInstance {
     @Param({type: Types.Vector3})
     position: Vector3;
 
+    @Boolean()
+    isAdmin: boolean;
+
     @String()
     map: string;
 }

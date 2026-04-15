@@ -7,4 +7,5 @@ import { IStats } from "../interfaces/stats";
 
 export class Player extends Component {
     username: string;
+    isAdmin: boolean;
 }

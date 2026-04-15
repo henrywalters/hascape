@@ -1,6 +1,6 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed, IMap } from "@hascape/common";
+import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed, IMap, IResponseMessage, CommandResponse, ResponseMessage } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
 import { LoggedIn, LoggedOut, Login, LoginFailed, Logout } from "./messages/login";
@@ -113,15 +113,6 @@ export class Runtime extends Scene {
                     player.direction.copy(move.direction);
                 }
             }
-
-            if (message.message.type === ClientMessages.PlayerMessage) {
-                const msg = message.message as PlayerMessage;
-                let send = new PlayerSendMessage();
-                send.message = msg.message;
-                send.sentTo = msg.sentTo;
-                send.sessionId = msg.sessionId;
-                this.pubsub.send(send);
-            }
         })
 
         this.components.forEach(Player, (player) => {
@@ -164,6 +155,7 @@ export class Runtime extends Scene {
         const player = entity.getComponent(Player)!;
 
         player.username = loggedIn.username;
+        player.isAdmin = loggedIn.isAdmin;
         
         player.entity.transform.position.copy(loggedIn.position);
 
@@ -175,6 +167,7 @@ export class Runtime extends Scene {
         newPlayer.position = loggedIn.position;
         newPlayer.health = character.health;
         newPlayer.totalHealth = character.totalHealth;
+        newPlayer.isAdmin = loggedIn.isAdmin;
         newPlayer.map = loggedIn.map;
 
         const message = new PlayerJoined();
@@ -383,5 +376,17 @@ export class Runtime extends Scene {
         if (socket) {
             socket.send(this.game.server.serverMessages.write(output));
         }
+    }
+
+    public sendResponse(player: Character, messages: IResponseMessage[]) {
+        const msg = new CommandResponse();
+        msg.responses = messages.map((msg) => {
+            const res = new ResponseMessage();
+            res.message = msg.message;
+            res.responseType = msg.responseType;
+            return res;
+        })
+        const buffer = this.game.server.serverMessages.write(msg);
+        State.sessionSockets.get(player.sessionId)!.send(buffer);
     }
 }

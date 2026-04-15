@@ -13,7 +13,6 @@ export function AuthorizeFor(levels: AuthLevel[]) {
         
         descriptor.value = async function(req: Request, res: Response) {
             const user = await users.getUser(req.headers.user_id as string);
-            console.log(user.authLevel, levels);
             if (levels.indexOf(user.authLevel) === -1) {
                 return new ErrorResult({
                     status: 403,

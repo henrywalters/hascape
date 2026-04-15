@@ -39,16 +39,6 @@ export class Loading extends RenderScene {
     }
 
     async initialize() {
-        for (const texture of this.game.manifest.assets.textures!) {
-            if (texture.name === 'hg_studio') {
-                await Assets.loadTexture(texture);
-            }
-        }
-
-        for (const font of this.game.manifest.assets.fonts!) {
-            await Assets.loadFont(font);
-        }
-
         this.getEntityByName("Loading")!.getComponent(Text)!.notifyUpdate();
         this.getEntityByName("Logo")!.getComponent(Image)!.notifyUpdate();
     }

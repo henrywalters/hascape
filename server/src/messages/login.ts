@@ -1,7 +1,7 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { APIMessages, ServerMessages } from "./types";
 import { InventoryItem } from "@hascape/common";
-import { Array, Param, String, Types } from "hagamets/dist/core/reflection.js";
+import { Array, Boolean, Param, String, Types } from "hagamets/dist/core/reflection.js";
 import { Vector3 } from "three";
 
 export class Login extends NetMessage {
@@ -44,6 +44,9 @@ export class LoggedIn extends NetMessage {
 
     @Param({type: Types.Vector3})
     position: Vector3;
+
+    @Boolean()
+    isAdmin: boolean;
 
     @Array(Types.Class, InventoryItem)
     inventory: InventoryItem[];

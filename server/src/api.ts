@@ -101,6 +101,7 @@ AppDataSource.initialize().then(async () => {
                 loggedIn.username = player.username;
                 loggedIn.position = new Vector3(player.x, player.y, 0);
                 loggedIn.map = player.map;
+                loggedIn.isAdmin = player.user.authLevel === AuthLevel.Admin || player.user.authLevel === AuthLevel.SuperAdmin;
                 loggedIn.inventory = (await inventory.getItems(player)).map((item) => {
                     console.log(item);
                     const inventoryItem = new InventoryItem();

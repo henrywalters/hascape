@@ -5,6 +5,7 @@ import { ActionReceived, CharacterAction, CharacterChangeHealth, CharacterDied, 
 import { PlayerMessage, PlayerMessaged } from "./messages/chat";
 import { CharacterAttack, CharacterAttacked } from "./messages/attack";
 import { DroppedItem, ItemsDespawned, ItemsSpawned, PickedUpItem, PickupItem } from "./messages/items";
+import { CommandResponse } from "./messages/command";
 
 export const CLIENT_MESSAGES = new NetMessages([
     Ping,
@@ -35,4 +36,5 @@ export const SERVER_MESSAGES = new NetMessages([
     PickedUpItem,
     DroppedItem,
     ActionReceived,
+    CommandResponse,
 ]);
