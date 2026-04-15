@@ -32,13 +32,14 @@ export class BaseSystem extends System {
         return State.grid.getCellIndex(pos as any) as any;
     }
 
-    private createItemEntity(item: ItemInstance, pos: Vector3, despawnRate?: number) {
+    private createItemEntity(mapName: string, item: ItemInstance, pos: Vector3, despawnRate?: number) {
         const entity = this.runtime.addEntity();
         entity.addComponent(Transform);
         const itemOnGround = entity.addComponent(ItemOnGround)
         itemOnGround.quantity = item.quantity;
         itemOnGround.instanceId = item.instanceId;
         itemOnGround.item = item.item;
+        itemOnGround.map = mapName;
         itemOnGround.despawnRate = despawnRate !== void 0 ? despawnRate : ITEMS[item.item].despawnRate;
         entity.transform.position = pos as any;
 
@@ -46,40 +47,44 @@ export class BaseSystem extends System {
         pickup.instanceId = itemOnGround.instanceId;
         pickup.item = itemOnGround.item;
         pickup.position = entity.position as any;
+        pickup.map = itemOnGround.map;
 
         State.itemInstances.set(itemOnGround.instanceId, entity);
 
         const cell = State.grid.getCellIndex(pos as any);
+
+        const map = State.getMap(mapName);
         
-        if (!State.items.has(cell)) {
-            State.items.set(cell, []);
+        if (!map.items.has(cell)) {
+            map.items.set(cell, []);
         }
 
-        State.items.get(cell)!.push(entity);
+        map.items.get(cell)!.push(entity);
 
         return pickup;
     }
 
-    protected spawnItem(item: ItemInstance, pos: Vector3, despawnRate?: number) {
-        this.runtime.spawnItems([this.createItemEntity(item, pos, despawnRate)]);
+    protected spawnItem(mapName: string, item: ItemInstance, pos: Vector3, despawnRate?: number) {
+        this.runtime.spawnItems([this.createItemEntity(mapName, item, pos, despawnRate)]);
     }
 
-    protected spawnItems(items: BulkItemSpawn[]) {
+    protected spawnItems(mapName: string, items: BulkItemSpawn[]) {
         const pickups = [];
 
         for (const item of items) {
-            pickups.push(this.createItemEntity(item.item, item.position, item.despawnRate));
+            pickups.push(this.createItemEntity(mapName, item.item, item.position, item.despawnRate));
         }
 
         this.runtime.spawnItems(pickups);
     }
 
-    protected despawnItems(itemIds: string[]) {
+    protected despawnItems(mapName: string, itemIds: string[]) {
+        const map = State.getMap(mapName);
         for (const id of itemIds) {
             const entity = State.itemInstances.get(id);
             if (!entity) continue;
             State.itemInstances.delete(id);
-            const itemList = State.items.get(State.grid.getCellIndex(entity.position))!;
+            const itemList = map.items.get(State.grid.getCellIndex(entity.position))!;
             const index = itemList.findIndex((item) => item.getComponent(ItemOnGround)!.instanceId === id);
             itemList.splice(index, 1);
             this.scene.removeEntity(entity.id);

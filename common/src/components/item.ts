@@ -12,6 +12,9 @@ export class ItemOnGround extends Component {
     @Int()
     quantity: number = 1;
 
+    @String()
+    map: string = '';
+
     spawnedFor: number = 0;
 
     despawnRate: number = 0;

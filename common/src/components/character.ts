@@ -31,5 +31,7 @@ export class Character extends Component implements IStats {
 
     pathIndex: number = 0;
 
+    map: string = '';
+
     onReachDestination: () => void = () => {};
 }

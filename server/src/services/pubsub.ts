@@ -7,6 +7,7 @@ import { PlayerReceivedMessaged, PlayerSendMessage, PlayerSetPosition } from "..
 import { NetEvent } from "hagamets/dist/net/interfaces/net.js";
 import { NPCChangeHealth, NPCsClear, NPCsCleared, NPCSpawn, NPCSpawned } from "../messages/npc";
 import { AddedItemToInventory, AddItemToInventory, MovedItemInInventory, MoveItemInInventory, RemovedItemFromInventory, RemoveItemFromInventory } from "../messages/inventory";
+import { MapChange } from "../messages/map";
 
 const SERVER_MESSAGES: NetMessages = new NetMessages([
     Login,
@@ -31,6 +32,7 @@ const API_MESSAGES: NetMessages = new NetMessages([
     AddedItemToInventory,
     RemovedItemFromInventory,
     MovedItemInInventory,
+    MapChange,
 ]);
 
 const API_PORT = 4301;

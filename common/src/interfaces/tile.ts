@@ -1,16 +1,9 @@
-import { Boolean, Param } from "hagamets/dist/core/reflection.js";
-import { Color } from "three";
-
-export enum TileTypes {
-    Grass = 'Grass',
-    Water = 'Water',
-    Tile = 'Tile',
-    Wall = 'Wall',
-}
+import { IAsset } from "./asset";
 
 export interface ITile {
-    type: TileTypes;
+    id: string;
+    name: string;
     isWall: boolean;
-    color?: Color;
-    texture?: string;
+    color?: string;
+    texture?: IAsset;
 }

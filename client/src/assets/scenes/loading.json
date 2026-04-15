@@ -1,0 +1,177 @@
+{
+  "entities": [
+    {
+      "id": 832905324909,
+      "name": "Logo",
+      "active": true,
+      "children": [],
+      "components": [
+        {
+          "id": 698368970540,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              1
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 359486934197,
+          "name": "Image",
+          "params": {
+            "texture": "hg_studio",
+            "textureMin": [
+              0,
+              0
+            ],
+            "textureMax": [
+              1,
+              1
+            ],
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Pixel",
+            "width": 512,
+            "height": 128,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 153274345547,
+      "name": "Loading",
+      "active": true,
+      "children": [],
+      "components": [
+        {
+          "id": 322613141040,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 547854880706,
+          "name": "Text",
+          "params": {
+            "font": "runescape",
+            "text": "Loading...",
+            "fontSize": 24,
+            "lineSpacing": 0,
+            "color": [
+              0.913098651791473,
+              1,
+              0
+            ],
+            "opacity": 1,
+            "alignment": "Left",
+            "anchorAlignment": "BottomLeft",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              15,
+              15
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": 551648000021,
+      "name": "Entity_0",
+      "active": true,
+      "children": [],
+      "components": [
+        {
+          "id": 967443856598,
+          "name": "Transform",
+          "params": {
+            "position": [
+              0,
+              0,
+              0
+            ],
+            "scale": [
+              1,
+              1,
+              1
+            ],
+            "rotation": [
+              0,
+              0,
+              0
+            ]
+          }
+        },
+        {
+          "id": 140932707881,
+          "name": "Container",
+          "params": {
+            "color": [
+              0.033104766565152086,
+              0.033104766565152086,
+              0.033104766565152086
+            ],
+            "opacity": 1,
+            "anchorAlignment": "Center",
+            "anchored": true,
+            "sizeUnit": "Percent",
+            "width": 100,
+            "height": 100,
+            "marginUnit": "Pixel",
+            "margin": [
+              0,
+              0
+            ],
+            "offset": [
+              0,
+              0
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

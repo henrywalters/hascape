@@ -22,6 +22,9 @@ export class NPCSpawner extends Component implements INPCSpawner {
 
     @Float()
     maxDelay: number = 0;
+
+    @String()
+    map: string = '';
 }
 
 export const NPCs: {[key: string]: INPC} = {

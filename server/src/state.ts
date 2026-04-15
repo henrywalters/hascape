@@ -3,16 +3,43 @@ import { Grid } from "hagamets/dist/utils/grid.js";
 import { GridMap } from "hagamets/dist/utils/gridMap.js";
 import { Vector2 } from "three";
 import { WebSocket } from "ws";
-import { CELL_SIZE, CELLS, CHUNKS, MapData, TILES, WORLD_SIZE, CHUNK_SIZE, INPCSpawner, InventoryItem, Inventory, ItemInstance } from "@hascape/common";
+import { CELL_SIZE, CELLS, CHUNKS, WORLD_SIZE, CHUNK_SIZE, INPCSpawner, InventoryItem, Inventory, ItemInstance, IMap, ITile } from "@hascape/common";
 
-import WorldMap from "@hascape/common/map";
+import { Pubsub } from "./services/pubsub";
+import { Pathfinding } from "./pathfinding";
 
-class _State {
-    public grid: Grid = new Grid();
-    public chunks: Grid = new Grid();
+class MapState {
+    public tiles: Map<string, ITile> = new Map();
     public walls: GridMap<void> = new GridMap();
     public players: GridMap<IEntity[]> = new GridMap();
     public items: GridMap<IEntity[]> = new GridMap();
+    public pathfinding: Pathfinding;
+
+    constructor(map: IMap, tiles: ITile[]) {
+        for (const tile of tiles) {
+            this.tiles.set(tile.name, tile);
+        }
+        this.update(map);
+    }
+
+    update(map: IMap) {
+        this.walls.clear();
+        for (const tile of map.tiles) {
+            if (this.tiles.get(tile.tileType)?.isWall) {
+                this.walls.set(new Vector2(tile.x, tile.y) as any);
+            }
+        }
+        this.pathfinding = new Pathfinding(this.walls);
+    }
+}
+
+class _State {
+
+    public pubsub: Pubsub | null = null;
+
+    public grid: Grid = new Grid();
+    public chunks: Grid = new Grid();
+
     public playerSessions: Map<string, IEntity> = new Map();
     public itemInstances: Map<string, IEntity> = new Map();
     public playerInventories: Map<string, Inventory> = new Map();
@@ -20,23 +47,38 @@ class _State {
     public socketIds: Map<WebSocket, number> = new Map();
 
     public sessionSockets: Map<string, WebSocket> = new Map();
-    public socketSessions: Map<WebSocket, string> = new Map(); 
+    public socketSessions: Map<WebSocket, string> = new Map();
+
+    public maps: Map<string, MapState> = new Map();
 
     constructor() {
-
         this.grid.size = new Vector2(CHUNK_SIZE, CHUNK_SIZE) as any;
         this.grid.cells = new Vector2(CELLS, CELLS) as any;
 
         this.chunks.size = new Vector2(WORLD_SIZE, WORLD_SIZE) as any;
         this.chunks.cells = new Vector2(CHUNKS, CHUNKS) as any;
+    }
 
-        for (const tile of TILES) {
-            if (tile.isWall) {
-                for (const cell of (WorldMap as MapData).tiles[tile.type]) {
-                    this.walls.set(new Vector2(cell[0], cell[1]) as any);
-                }
-            }
+    updateMap(map: IMap, tiles: ITile[]) {
+        if (!this.maps.has(map.name)) {
+            this.maps.set(map.name, new MapState(map, tiles));
+        } else {
+            this.maps.get(map.name)!.update(map);
         }
+    }
+
+    updateMaps(maps: IMap[], tiles: ITile[]) {
+        for (const map of maps) {
+            this.updateMap(map, tiles);
+        }
+    }
+
+    getMap(name: string): MapState {
+        if (!this.maps.has(name)) {
+            throw new Error("Map not loaded");
+        }
+
+        return this.maps.get(name)!;
     }
 
     initializeInventory(playerId: string, items: InventoryItem[]) {

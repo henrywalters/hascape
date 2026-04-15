@@ -1,13 +1,11 @@
 import { Script } from "hagamets/dist/core/script.js";
-import { Actions, Character, CharacterAction, CharacterAttack, CharacterInteract, ItemOnGround, ITEMS } from "@hascape/common";
+import { Actions, Character, CharacterAction, ItemOnGround, ITEMS } from "@hascape/common";
 import { Axes, Buttons } from "hagamets/dist/core/interfaces/input.js";
 import { PlayerMove } from "@hascape/common";
 import { State } from "../state";
 import { Color, Vector3 } from "three";
 import { OrthographicCamera } from "hagamets/dist/common/components/camera.js";
 import { IInteractOption, InteractEvents, ItemSelected, OpenMenu, PreviewItem } from "../interactionEvents";
-import { Entity } from "hagamets/dist/core/reflection.js";
-import { InteractOption } from "./interactMenu";
 
 export class PlayerController extends Script {
 
@@ -16,9 +14,7 @@ export class PlayerController extends Script {
         State.interactionEvents.listen((e) => {
             if (State.isEditing) return;
             if (e.type === InteractEvents.ItemSelected) {
-                console.log(e);
                 const event = e as ItemSelected;
-                console.log(event);
                 const msg = new CharacterAction();
                 msg.sessionId = State.sessionId;
                 msg.action = event.selected.action;
@@ -28,7 +24,6 @@ export class PlayerController extends Script {
                 if (event.selected.subject) {
                     msg.subjectId = event.selected.subject.instanceId;
                 }
-                console.log(msg);
                 this.game.client.send(msg);
             }
         })
@@ -78,6 +73,8 @@ export class PlayerController extends Script {
                         State.interactionEvents.emit(new OpenMenu(new Vector3(mousePos.x, mousePos.y, 0), options));
                     }
                 }
+            } else {
+                State.interactionEvents.emit(new PreviewItem([]));
             }
 
             // if (!State.isEditing) {
@@ -103,8 +100,13 @@ export class PlayerController extends Script {
 
         const cell = State.grid.getCellIndex(mousePos as any);
 
-        if (State.itemMap.has(cell)) {
-            for (const itemEntity of State.itemMap.get(cell as any)!) {
+        const player = this.entity.getComponent(Character);
+        const map = State.getMap(player!.map);
+
+        // console.log(map.itemMap);
+
+        if (map.itemMap.has(cell)) {
+            for (const itemEntity of map.itemMap.get(cell as any)!) {
                 const item = itemEntity.getComponent(ItemOnGround);
                 if (!item) continue;
                 options.push({

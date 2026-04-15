@@ -14,15 +14,20 @@ export class CharacterMovement extends System {
     private posCache: Map<string, Vector3> = new Map();
 
     onBeforeUpdate(): void {
-        State.players.clear();
 
-        this.scene.components.forEach(Character, (character) => {
-            const chunk = State.chunks.getCellIndex(character.entity.position);
-            if (!State.players.has(chunk)) {
-                State.players.set(chunk, []);
-            }
-            State.players.get(chunk)!.push(character.entity);
-        });
+        for (const [name, map] of State.maps) {
+            map.players.clear();
+
+            this.scene.components.forEach(Character, (character) => {
+                const chunk = State.chunks.getCellIndex(character.entity.position);
+                if (!map.players.has(chunk)) {
+                    map.players.set(chunk, []);
+                }
+                map.players.get(chunk)!.push(character.entity);
+            });
+        }
+
+
     }
 
     onUpdate(dt: number): void {
@@ -30,6 +35,8 @@ export class CharacterMovement extends System {
         const runtime = this.scene as Runtime;
 
         this.scene.components.forEach(Character, (character) => {
+
+            const map = State.getMap(character.map);
 
             if (character.path.length === 0) {
                 character.direction.set(0, 0, 0);
@@ -60,7 +67,7 @@ export class CharacterMovement extends System {
                         new Vector2(newPos.x + collider.min.x, newPos.y + collider.min.y) as any, 
                         new Vector2(newPos.x + collider.max.x, newPos.y + collider.max.y) as any);
 
-                    if (!State.walls.isColliding(aabb, State.grid)) {
+                    if (!map.walls.isColliding(aabb, State.grid)) {
                         character.entity.transform.position.add(delta);
                     }
                 }

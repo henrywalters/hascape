@@ -77,6 +77,12 @@ export class PlayerService {
         return player;
     }
 
+    async setPlayerMap(player: Player, map: string) {
+        player.map = map;
+        await this.players.save(player);
+        return player;
+    }
+
     async setPlayerPosition(player: Player, position: Vector3) {
         player.x = position.x;
         player.y = position.y;

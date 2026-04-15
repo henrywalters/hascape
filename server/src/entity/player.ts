@@ -1,10 +1,10 @@
-import { Column, Entity, JoinColumn, OneToOne, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
+import { Column, Entity, PrimaryGeneratedColumn, OneToMany, ManyToOne } from "typeorm";
 import { User } from "./user";
-import {IStats } from "@hascape/common";
+import {IPlayer, IStats } from "@hascape/common";
 import { BankItem, InventoryItem } from "./inventory";
 
 @Entity()
-export class Player implements IStats {
+export class Player implements IPlayer {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 
@@ -46,4 +46,7 @@ export class Player implements IStats {
 
     @Column({type: "int"})
     intelligence: number = 1;
+
+    @Column('varchar', {default: ''})
+    map: string;
 }

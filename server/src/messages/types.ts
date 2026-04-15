@@ -8,6 +8,7 @@ export enum APIMessages {
     AddedItemToInventory,
     RemovedItemFromInventory,
     MovedItemInInventory,
+    MapChange,
 }
 
 export enum ServerMessages {

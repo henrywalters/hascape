@@ -25,6 +25,9 @@ export class PlayerInstance {
 
     @Param({type: Types.Vector3})
     position: Vector3;
+
+    @String()
+    map: string;
 }
 
 export class NPCInstance {
@@ -42,6 +45,9 @@ export class NPCInstance {
 
     @Param({type: Types.Vector3})
     position: Vector3;
+
+    @String()
+    map: string;
 }
 
 export class PlayerJoined extends NetMessage {

@@ -7,6 +7,9 @@ export class NPC extends Component {
     @String()
     npcType: string;
 
+    @String()
+    map: string;
+
     spawner: number;
 
     spawnPoint: Vector3;

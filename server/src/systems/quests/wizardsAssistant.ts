@@ -2,6 +2,7 @@ import { Vector2 } from "three";
 import { BaseSystem, BulkItemSpawn } from "../base";
 
 import { ItemInstance } from "@hascape/common";
+import { State } from "../../state";
 
 export class WizardsAssistant extends BaseSystem {
     onInit(): void {
@@ -16,6 +17,6 @@ export class WizardsAssistant extends BaseSystem {
             }
         }
 
-        this.spawnItems(items); 
+        this.spawnItems('Overworld', items); 
     }
 }

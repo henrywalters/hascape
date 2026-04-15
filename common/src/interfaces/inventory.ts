@@ -40,7 +40,6 @@ export class Inventory {
     }
 
     canAdd(): boolean {
-        console.log(this.count, INVENTORY_SLOTS);
         return this.count < INVENTORY_SLOTS;
     }
 
@@ -75,8 +74,6 @@ export class Inventory {
         invItem.item = item.item;
         invItem.quantity = item.quantity;
         invItem.position = openSlot;
-
-        console.log("Set Item", invItem.instanceId);
 
         this.items.set(invItem.instanceId, invItem);
         this.slots[invItem.position] = invItem;

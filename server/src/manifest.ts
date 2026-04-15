@@ -13,7 +13,6 @@ import { CombatSystem } from "./systems/combat";
 import { ItemSystem } from "./systems/items";
 import { WizardsAssistant } from "./systems/quests/wizardsAssistant";
 import { InventorySystem } from "./systems/inventory";
-import { InteractionSystem } from "./systems/interactions";
 import { ActionSystem } from "./systems/actions";
 import { Behavior } from "hagamets/dist/common/components/behavior.js";
 
@@ -24,7 +23,6 @@ export const Manifest: IManifest = {
         CombatSystem,
         ItemSystem,
         InventorySystem,
-        InteractionSystem,
         WizardsAssistant,
         ActionSystem,
     ],
@@ -52,7 +50,9 @@ export const Manifest: IManifest = {
             ctr: Runtime,
         }
     },
-    assets: {}, 
+    assets: {
+        autoload: true,
+    }, 
     startScene: "runtime",
     server: {
         address: {

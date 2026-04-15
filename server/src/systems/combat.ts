@@ -35,12 +35,13 @@ export class CombatSystem extends System {
             if (canAttack) {
                 this.lastAttacks.set(attack.sessionId, this.time);
                 const thisCharacter = character.getComponent(Character)!;
+                const map = State.getMap(thisCharacter.map);
                 runtime.characterAttacked(thisCharacter);
 
                 const chunk = State.chunks.getCellIndex(character.position);
 
                 for (const neighbor of State.chunks.getNeighborhood(chunk)) {
-                    const others = State.players.get(neighbor);
+                    const others = map.players.get(neighbor);
 
                     if (others) {
                         for (const other of others) {

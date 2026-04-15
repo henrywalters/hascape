@@ -1,25 +1,26 @@
 import { RenderScene } from "hagamets/dist/common/scenes/renderScene.js";
 import { State } from "../state";
-import { CELL_SIZE, MapData, OtherPlayerJoined, Character, PlayerJoined, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, TILES, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem } from "@hascape/common";
+import { CELL_SIZE, OtherPlayerJoined, Character, PlayerJoined, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem, IMap } from "@hascape/common";
 import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
 import { Behavior } from "hagamets/dist/common/components/behavior.js";
 import { ChatBox } from "../scripts/chatBox";
 import { ScriptRegistry } from "hagamets/dist/core/script.js";
-import { Transform } from "hagamets/dist/common/components/transform.js";
-import { Tilemap } from "hagamets/dist/common/components/tilemap.js";
 
-import Map from "@hascape/common/map";
 import { Color, Vector2, Vector3 } from "three";
 import { Debug } from "hagamets/dist/core/debug.js";
 import { BoxCollider2D } from "hagamets/dist/common/components/collider.js";
 import { NetEvents } from "hagamets/dist/net/interfaces/net.js";
 import { InventoryEvents } from "../inventoryEvents";
+import { Transform } from "hagamets/dist/common/components/transform.js";
+import { Tilemap } from "hagamets/dist/common/components/tilemap.js";
 
 export class Runtime extends RenderScene {
 
     private textTimeout: any;
+
+    private tilemaps: Map<string, Tilemap> = new Map();
 
     onActivate() {
 
@@ -27,26 +28,37 @@ export class Runtime extends RenderScene {
         State.grid.size = new Vector2(CHUNK_SIZE, CHUNK_SIZE) as any;
 
         if (!State.isEditing) {
-            let index = 0;
-            for (const tile of TILES) {
-                const tileEntity = this.addEntity();
-                tileEntity.name = tile.type;
-                tileEntity.addComponent(Transform);
-                tileEntity.transform.position.z = 0;
-                index++;
-                const tiles = tileEntity.addComponent(Tilemap);
-                tiles.grid.size.set(WORLD_SIZE, WORLD_SIZE);
-                tiles.grid.cells.set(WORLD_SIZE / CELL_SIZE, WORLD_SIZE / CELL_SIZE);
-                tiles.color = tile.color as any;
-
-                for (const cell of (Map as MapData).tiles[tile.type]) {
-                    tiles.gridMap.set(new Vector2(cell[0], cell[1]) as any);
-                }
-
-                tiles.notifyUpdate();
-            }
+            this.loadTiles();
+            const player = this.getPlayer(State.sessionId)!;
+            const character = player.getComponent(Character)!;
+            this.setMap(State.getMap(character.map).map);
         }
+    }
 
+    loadTiles() {
+        let index = 0;
+        for (const tile of State.tiles) {
+            const tileEntity = this.addEntity();
+            tileEntity.name = tile.name;
+            tileEntity.addComponent(Transform);
+            tileEntity.transform.position.z = 0;
+            index++;
+            const tiles = tileEntity.addComponent(Tilemap);
+            tiles.grid.size.set(WORLD_SIZE, WORLD_SIZE);
+            tiles.grid.cells.set(WORLD_SIZE / CELL_SIZE, WORLD_SIZE / CELL_SIZE);
+            tiles.color = tile.color as any;
+            this.tilemaps.set(tile.name, tiles);
+        }
+    }
+
+    setMap(map: IMap) {
+        let index = 0;
+        for (const tile of map.tiles) {
+            this.tilemaps.get(tile.tileType)!.gridMap.set(new Vector2(tile.x, tile.y) as any);
+        }
+        for (const [name, tilemap] of this.tilemaps) {
+            tilemap.notifyUpdate();
+        }
     }
 
     getPlayer(sessionId: string): IEntity | null {
@@ -74,26 +86,38 @@ export class Runtime extends RenderScene {
             })
         }
 
-        State.characterMap.clear();
-        State.itemMap.clear();
+        const thisPlayer = this.getPlayer(State.sessionId)!;
+        const thisCharacter = thisPlayer.getComponent(Character)!;
+
+        const map = State.getMap(thisCharacter.map);
+
+        map.characterMap.clear();
+        map.itemMap.clear();
 
         this.components.forEach(Character, (character) => {
+            const map = State.getMap(character.map);
             const cell = State.grid.getCellIndex(character.entity.position);
-            if (!State.characterMap.has(cell)) {
-                State.characterMap.set(cell, []);
+            if (!map.characterMap.has(cell)) {
+                map.characterMap.set(cell, []);
             }
-            State.characterMap.get(cell)!.push(character.entity);
+            map.characterMap.get(cell)!.push(character.entity);
         });
 
         this.components.forEach(ItemOnGround, (item) => {
+            const map = State.getMap(item.map);
             const cell = State.grid.getCellIndex(item.entity.position);
-            if (!State.itemMap.has(cell)) {
-                State.itemMap.set(cell, []);
+            if (!map.itemMap.has(cell)) {
+                map.itemMap.set(cell, []);
             }
-            State.itemMap.get(cell)!.push(item.entity);
+            map.itemMap.get(cell)!.push(item.entity);
         });
 
         this.game.client.flushMessages((msg) => {
+
+            if (msg.message.type === ServerMessages.ActionReceived) {
+                console.log(msg.message);
+            }
+
             if (msg.message.type === ServerMessages.OtherPlayerJoined) {
                 const joined = msg.message as OtherPlayerJoined;
                 console.log(joined);
@@ -105,6 +129,7 @@ export class Runtime extends RenderScene {
                 character.sessionId = joined.player.sessionId;
                 character.health = joined.player.health;
                 character.totalHealth = joined.player.totalHealth;
+                character.map = joined.player.map;
                 player.username = joined.player.username;
 
                 entity.transform.position = joined.player.position as any;
@@ -234,6 +259,7 @@ export class Runtime extends RenderScene {
                 character.sessionId = message.npc.sessionId;
                 character.health = message.npc.health;
                 character.totalHealth = message.npc.totalHealth;
+                character.map = message.npc.map;
             }
 
             if (msg.message.type === ServerMessages.ItemsSpawned) {
@@ -246,20 +272,21 @@ export class Runtime extends RenderScene {
                     itemOnGround.quantity = item.quantity;
                     itemOnGround.instanceId = item.instanceId;
                     itemOnGround.item = item.item;
+                    itemOnGround.map = item.map;
                     itemEntity.transform.position = item.position as any;
                     itemEntity.transform.position.z = 9;
                     const mesh = itemEntity.getComponent(MeshPrimitive)!;
                     mesh.texture = ITEMS[item.item].texture;
                     mesh.notifyUpdate();
 
-                    State.items.set(item.instanceId, itemEntity);
+                    State.addItem(item.map, item.instanceId, itemEntity);
+
+                    //State.items.set(item.instanceId, itemEntity);
                 }
             }
 
             if (msg.message.type === ServerMessages.ItemsDespawned) {
                 const message = msg.message as ItemsDespawned;
-
-                console.log(message);
 
                 for (const item of message.instanceIds) {
                     const entity = State.items.get(item);

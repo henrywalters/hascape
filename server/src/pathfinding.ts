@@ -4,6 +4,7 @@ import { State } from "./state";
 import { Random } from "hcore/dist/random";
 import { CELL_SIZE } from "@hascape/common";
 import { bresenham } from "hagamets/dist/utils/math.js";
+import { GridMap } from "hagamets/dist/utils/gridMap.js";
 
 export class Pathfinding {
     private grid: PF.Grid;
@@ -14,13 +15,16 @@ export class Pathfinding {
 
     private minCell: Vector2;
     private maxCell: Vector2;
+    private walls: GridMap<void>;
 
-    constructor() {
+    constructor(walls: GridMap<void>) {
+
+        this.walls = walls;
 
         this.minCell = new Vector2();
         this.maxCell = new Vector2();
 
-        State.walls.forEach((pos, _, idx) => {
+        walls.forEach((pos, _, idx) => {
             if (pos.x < this.minCell.x) this.minCell.setX(pos.x);
             if (pos.y < this.minCell.y) this.minCell.setY(pos.y);
             if (pos.x > this.maxCell.x) this.maxCell.setX(pos.x);
@@ -29,7 +33,7 @@ export class Pathfinding {
 
         this.grid = new PF.Grid(this.maxCell.x - this.minCell.x + 1, this.maxCell.y - this.minCell.y + 1);
 
-        State.walls.forEach((pos, _, idx) => {
+        walls.forEach((pos, _, idx) => {
             this.grid.setWalkableAt(pos.x - this.minCell.x, pos.y - this.minCell.y, false);
         })
     }
@@ -41,7 +45,7 @@ export class Pathfinding {
             const x = Random.int(-wander, wander) - this.minCell.x;
             const y = Random.int(-wander, wander) - this.minCell.y;
             const randomCell = new Vector2(x, y);
-            if (!State.walls.has(new Vector2(randomCell.x + this.minCell.x, randomCell.y + this.minCell.y) as any)) {
+            if (!this.walls.has(new Vector2(randomCell.x + this.minCell.x, randomCell.y + this.minCell.y) as any)) {
                 return randomCell;
             }
         }
@@ -49,6 +53,9 @@ export class Pathfinding {
     }
 
     public getRandomPath(start: Vector3, spawnPoint: Vector3, maxWander: number, targetPosition?: Vector3) {
+
+        if (this.minCell.equals(this.maxCell)) return [];
+
         let path: number[][] = [];
 
         while (path.length === 0) {
@@ -64,8 +71,6 @@ export class Pathfinding {
             } else {
                 cell = this.getRandomCell(spawnCell as any, maxWander);
             }
-
-            //console.log(startCell.x - this.minCell.x, startCell.y - this.minCell.y, randomCell.x, randomCell.y);
 
             path = PF.Util.compressPath(this.finder.findPath(startCell.x - this.minCell.x, startCell.y - this.minCell.y, cell.x, cell.y, this.grid.clone()));
         }

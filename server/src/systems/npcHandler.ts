@@ -10,7 +10,7 @@ import { Vector2, Vector3 } from "three";
 import { Transform } from "hagamets/dist/common/components/transform.js";
 import { Runtime } from "../runtime";
 import { APIMessages, ServerMessages } from "../messages/types";
-import {CELL_SIZE, CELLS, Character, CharacterDied, INPC, ItemOnGround, ITEMS, NPC, NPCs, NPCSpawner, getDrops, ItemPickup, MapData} from "@hascape/common";
+import {CELL_SIZE, CELLS, Character, CharacterDied, INPC, ItemOnGround, ITEMS, NPC, NPCs, NPCSpawner, getDrops, ItemPickup } from "@hascape/common";
 import { Random } from "hcore/dist/random";
 import { BoxCollider2D } from "hagamets/dist/common/components/collider.js";
 import { AABB } from "hagamets/dist/utils/math.js";
@@ -28,16 +28,14 @@ interface SpawnerInstance {
 export class NPCHandler extends BaseSystem {
 
     private npcs: Map<number, SpawnerInstance> = new Map();
-    private pathfinding: Pathfinding = new Pathfinding();
 
     onInit() {
-
-        for (const data of (WorldMap as MapData).npc_spawners) {
-            const entity = this.scene.addEntity();
-            entity.addComponent(Transform);
-            entity.transform.position = State.grid.getCellPos(new Vector3(data.cell[0], data.cell[1], 0) as any);
-            deserializeComponent(this.scene, entity, data.data);
-        }
+        // for (const data of (WorldMap as MapData).npc_spawners) {
+        //     const entity = this.scene.addEntity();
+        //     entity.addComponent(Transform);
+        //     entity.transform.position = State.grid.getCellPos(new Vector3(data.cell[0], data.cell[1], 0) as any);
+        //     deserializeComponent(this.scene, entity, data.data);
+        // }
     }
 
     onUpdate(dt: number): void {
@@ -45,6 +43,9 @@ export class NPCHandler extends BaseSystem {
         const runtime = this.scene as Runtime;
 
         this.scene.components.forEach(NPCSpawner, (spawner) => {
+
+            const map = State.getMap(spawner.map);
+
             if (!this.npcs.has(spawner.id)) {
                 this.npcs.set(spawner.id, {
                     lastSpawned: null,
@@ -74,7 +75,7 @@ export class NPCHandler extends BaseSystem {
                         new Vector2(pos.x + collider.min.x, pos.y + collider.min.y) as any, 
                         new Vector2(pos.x + collider.max.x, pos.y + collider.max.y) as any);
 
-                    if (!State.walls.isColliding(aabb, State.grid)) {
+                    if (!map.walls.isColliding(aabb, State.grid)) {
                         validPos = true;
                         entity.transform.position.x = pos.x;
                         entity.transform.position.y = pos.y;
@@ -115,7 +116,7 @@ export class NPCHandler extends BaseSystem {
 
                 const items = getDrops(NPCs[npc.npcType].dropTable);
 
-                this.spawnItems(items.map(item => {
+                this.spawnItems(character.map, items.map(item => {
                     return {
                         item,
                         position: npc.entity.position as any,
@@ -138,8 +139,9 @@ export class NPCHandler extends BaseSystem {
             }
 
             if (needsPath) {
+                const map = State.getMap(character.map);
                 //console.log("New Path");
-                character.path = this.pathfinding.getRandomPath(npc.entity.position as any, npc.spawnPoint, npc.maxWanderDistance, npc.attacking ? npc.attacking.position as any: void 0);
+                character.path = map.pathfinding.getRandomPath(npc.entity.position as any, npc.spawnPoint, npc.maxWanderDistance, npc.attacking ? npc.attacking.position as any: void 0);
                 character.pathIndex = 0;
             }
 

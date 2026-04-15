@@ -1,6 +1,7 @@
 import { IManifest } from "hagamets/dist/core/interfaces/manifest.js";
 import { Character, CLIENT_MESSAGES, HealthBar, ItemOnGround, ItemPickup, NPC, Player, SERVER_MESSAGES } from "@hascape/common";
 
+import LoadingMenuData from "./assets/scenes/loading.json";
 import LoginMenuData from "./assets/scenes/client_menu.json";
 import RuntimeData from "./assets/scenes/runtime.json";
 import RunescapeFont from "./assets/fonts/RuneScape_Regular.json";
@@ -36,6 +37,7 @@ import { SpriteSheetSystem } from "hagamets/dist/common/systems/spriteSheet.js";
 import { Inventory } from "./scripts/inventory";
 import { Profiler } from "./scripts/profiler";
 import { Disconnected } from "./scripts/disconnected";
+import { Loading } from "./scenes/loading";
 
 export const Manifest: IManifest = {
     systems: [
@@ -72,6 +74,10 @@ export const Manifest: IManifest = {
         Disconnected,
     ],
     scenes: {
+        loading: {
+            data: LoadingMenuData,
+            ctr: Loading,
+        },
         login_menu: {
             data: LoginMenuData,
             ctr: LoginMenu,
@@ -79,9 +85,10 @@ export const Manifest: IManifest = {
         runtime: {
             data: RuntimeData,
             ctr: Runtime
-        }
+        },
     },
     assets: {
+        autoload: false,
         fonts: [
             {       
                 name: 'runescape',
@@ -91,7 +98,7 @@ export const Manifest: IManifest = {
         textures: [
             {
                 name: 'creepy_smile',
-                url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/creepy_smile.png?v=2'
+                url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/creepy_smile.png?v=2',
             },
             {
                 name: 'bones',
@@ -116,6 +123,10 @@ export const Manifest: IManifest = {
             {
                 name: 'interact',
                 url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/interact.png'
+            },
+            {
+                name: 'hg_studio',
+                url: 'https://hascape.sfo3.cdn.digitaloceanspaces.com/textures/hg_studio.png'
             }
         ],
         spriteSheets: [
@@ -127,7 +138,7 @@ export const Manifest: IManifest = {
             Interact,
         ]
     },
-    startScene: "login_menu",
+    startScene: "loading",
     client: {
         address: {
             url: "localhost:4200",

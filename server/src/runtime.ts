@@ -1,6 +1,6 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, INPC, TILES, MapData, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed } from "@hascape/common";
+import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed, IMap } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
 import { LoggedIn, LoggedOut, Login, LoginFailed, Logout } from "./messages/login";
@@ -15,8 +15,11 @@ import { State } from "./state";
 
 import PlayerPrefab from "@hascape/common/otherPlayer";
 
-import { AddedItemToInventory, AddItemToInventory, RemovedItemFromInventory, RemoveItemFromInventory } from "./messages/inventory";
-import { Random } from "hcore/dist/random";
+import { AddedItemToInventory } from "./messages/inventory";
+import { MapService } from "./services/map";
+import { AppDataSource } from "./data-source";
+import { MapChange, MapChangeType } from "./messages/map";
+import { TileService } from "./services/tile";
 
 export class Runtime extends Scene {
 
@@ -29,9 +32,15 @@ export class Runtime extends Scene {
     constructor(game: IGame) {
         super(game);
 
+        const updateMaps = async () => {
+            const maps = new MapService();
+            const tiles = new TileService();
+            State.updateMaps(await maps.getAll(), await tiles.getAll());
+        }
+
         this.pubsub = new Pubsub(PubsubType.Server);
 
-        this.pubsub.onMessage = (msg) => {
+        this.pubsub.onMessage = async (msg) => {
             switch (msg.type) {
                 case APIMessages.LoggedIn:
                     this.loggedIn(msg as LoggedIn);  
@@ -46,6 +55,9 @@ export class Runtime extends Scene {
                     console.log(msg as AddedItemToInventory);
                 case APIMessages.LoginFailed:
                     this.connectFailed(msg as LoginFailed);
+                case APIMessages.MapChange:
+                    const change = msg as MapChange;
+                    await updateMaps();
             }
         }
 
@@ -92,15 +104,15 @@ export class Runtime extends Scene {
                 this.pubsub.send(login);
             }
 
-            // if (message.message.type === ClientMessages.PlayerMove) {
-            //     const move = message.message as PlayerMove;
-            //     // console.log(message.message);
-            //     if (State.playerSessions.has(move.sessionId)) {
-            //         const entity = State.playerSessions.get(move.sessionId)!;
-            //         const player = entity.getComponent(Character)!;
-            //         player.direction.copy(move.direction);
-            //     }
-            // }
+            if (message.message.type === ClientMessages.PlayerMove) {
+                const move = message.message as PlayerMove;
+                // console.log(message.message);
+                if (State.playerSessions.has(move.sessionId)) {
+                    const entity = State.playerSessions.get(move.sessionId)!;
+                    const player = entity.getComponent(Character)!;
+                    player.direction.copy(move.direction);
+                }
+            }
 
             if (message.message.type === ClientMessages.PlayerMessage) {
                 const msg = message.message as PlayerMessage;
@@ -145,8 +157,12 @@ export class Runtime extends Scene {
         // const player = entity.addComponent(Character);
         const entity = this.addEntityFromPrefab(PlayerPrefab, loggedIn.username);
         const character = entity.getComponent(Character)!;
-        const player = entity.getComponent(Player)!;
+
+        character.map = loggedIn.map;
         character.sessionId = loggedIn.sessionId;
+
+        const player = entity.getComponent(Player)!;
+
         player.username = loggedIn.username;
         
         player.entity.transform.position.copy(loggedIn.position);
@@ -159,6 +175,7 @@ export class Runtime extends Scene {
         newPlayer.position = loggedIn.position;
         newPlayer.health = character.health;
         newPlayer.totalHealth = character.totalHealth;
+        newPlayer.map = loggedIn.map;
 
         const message = new PlayerJoined();
         message.player = newPlayer;
@@ -173,36 +190,43 @@ export class Runtime extends Scene {
 
         this.components.forEach(Player, (other) => {
             if (other.id === player.id) return;
-            console.log(`Sending existence of ${other.username} to player ${player.username}`)
+            const otherCharacter = other.entity.getComponent(Character)!;
+
+            if (character.map !== otherCharacter.map) return;
+
             const existing = new PlayerInstance();
-            const character = other.entity.getComponent(Character)!;
-            existing.sessionId = character.sessionId;
-            existing.health = character.health;
-            existing.totalHealth = character.totalHealth;
+            existing.sessionId = otherCharacter.sessionId;
+            existing.health = otherCharacter.health;
+            existing.totalHealth = otherCharacter.totalHealth;
             existing.username = other.username;
             existing.position = other.entity.position as any;
+            existing.map = otherCharacter.map;
             
             message.otherPlayers.push(existing);
         })
 
         this.components.forEach(NPC, (npc) => {
+            if (npc.map !== character.map) return;
             const instance = new NPCInstance();
-            const character = npc.entity.getComponent(Character)!;
-            instance.sessionId = character.sessionId;
+            const otherCharacter = npc.entity.getComponent(Character)!;
+            instance.sessionId = otherCharacter.sessionId;
             instance.npcType = npc.npcType;
-            instance.totalHealth = character.totalHealth;
-            instance.health = character.health;
+            instance.totalHealth = otherCharacter.totalHealth;
+            instance.health = otherCharacter.health;
             instance.position = npc.entity.position as any;
+            instance.map = npc.map;
 
             message.npcs.push(instance);
         })
 
         this.components.forEach(ItemOnGround, (item) => {
+            if (item.map !== character.map) return;
             const instance = new ItemPickup();
             instance.item = item.item;
             instance.quantity = item.quantity; 
             instance.instanceId = item.instanceId; 
             instance.position = item.entity.position as any;
+            instance.map = item.map;
             message.items.push(instance);
         })
 
@@ -268,9 +292,10 @@ export class Runtime extends Scene {
         this.characterMoves.get(chunk)!.push(moved);
     }
 
-    private sendMessage(msg: ArrayBuffer, chunk: Vector2) {
+    private sendMessage(mapName: string, msg: ArrayBuffer, chunk: Vector2) {
+        const map = State.getMap(mapName);
         for (const neighbor of State.chunks.getNeighborhood(chunk as any)) {
-            const others = State.players.get(neighbor);
+            const others = map.players.get(neighbor);
             if (!others) continue;
             for (const entity of others) {
                 const player = entity.getComponent(Player);
@@ -290,7 +315,7 @@ export class Runtime extends Scene {
         msg.sessionId = character.sessionId;
         const buffer = this.game.server.serverMessages.write(msg);
 
-        this.sendMessage(buffer, chunk as any);
+        this.sendMessage(character.map, buffer, chunk as any);
     }
 
     public characterChangeHealth(character: Character) {
@@ -301,7 +326,7 @@ export class Runtime extends Scene {
         msg.health = character.health;
         const buffer = this.game.server.serverMessages.write(msg);
 
-        this.sendMessage(buffer, chunk as any);
+        this.sendMessage(character.map, buffer, chunk as any);
     }
 
     public npcJoined(npc: NPC) {

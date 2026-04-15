@@ -1,5 +1,6 @@
 import { Entity } from "hagamets/dist/core/reflection.js";
 import { Script } from "hagamets/dist/core/script.js";
+import { State } from "../state";
 
 const TIMEOUT = 1;
 
@@ -32,7 +33,7 @@ export class Disconnected extends Script {
 
         if (this.disconnectedAt) {
             const lostConnectionFor = this.game.clock.getElapsedTime() - this.disconnectedAt;
-            if (lostConnectionFor > TIMEOUT) {
+            if (lostConnectionFor > TIMEOUT && !State.isEditing) {
                 this.disconnectedAt = null;
                 this.game.currentScene!.clear();
                 this.game.activateScene('login_menu');

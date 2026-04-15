@@ -17,6 +17,9 @@ export class ItemPickup {
 
     @Param({type: Types.Vector3})
     position: Vector3;
+
+    @String()
+    map: string = '';
 }
 
 export class ItemsSpawned extends NetMessage {

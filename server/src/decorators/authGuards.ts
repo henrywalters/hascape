@@ -26,3 +26,7 @@ export function AuthorizeFor(levels: AuthLevel[]) {
         return descriptor;
     }
 }
+
+export function AuthorizeForAdmin() {
+    return AuthorizeFor([AuthLevel.Admin, AuthLevel.SuperAdmin]);
+}

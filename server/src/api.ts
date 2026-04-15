@@ -21,6 +21,11 @@ import { AuthLevel } from "./entity/user";
 import { UserController } from "./controllers/userController";
 import { PlayerController } from "./controllers/playerController";
 import { StorageService } from "./services/storage";
+import { TileController } from "./controllers/tileController";
+import { PrefabController } from "./controllers/prefabController";
+import { MapController } from "./controllers/mapController";
+import { State } from "./state";
+import { MapService } from "./services/map";
 
 dotenv.config({ path: '.env' })
 
@@ -37,9 +42,12 @@ AppDataSource.initialize().then(async () => {
     const auth = new AuthService();
     const players = new PlayerService();
     const npcs = new NPCService();
+    const maps = new MapService();
     const inventory = new InventoryService();
     const pubsub = new Pubsub(PubsubType.API);
     const storage = new StorageService();
+
+    State.pubsub = pubsub;
 
     pubsub.onMessage = async (message) => {
         if (message.type === ServerMessages.Login) {
@@ -66,11 +74,16 @@ AppDataSource.initialize().then(async () => {
                     sendError("User does not exist");
                     return;
                 }
-                const player = await players.getPlayer(user, connect.playerId);
+                let player = await players.getPlayer(user, connect.playerId);
                 if (!player) {
                     sendError("Player does not exist");
                     return;
                 }
+
+                if (player.map === '' || !await maps.getByName(player.map)) {
+                    player = await players.setPlayerMap(player, (await maps.getDefaultMap()).name);
+                }
+
                 let session = await players.getPlayerSession(player);
 
                 // if (!session) {
@@ -87,6 +100,7 @@ AppDataSource.initialize().then(async () => {
                 loggedIn.sessionId = session.sessionId;
                 loggedIn.username = player.username;
                 loggedIn.position = new Vector3(player.x, player.y, 0);
+                loggedIn.map = player.map;
                 loggedIn.inventory = (await inventory.getItems(player)).map((item) => {
                     console.log(item);
                     const inventoryItem = new InventoryItem();
@@ -194,6 +208,9 @@ AppDataSource.initialize().then(async () => {
 
     const userController = new UserController(app);
     const playerController = new PlayerController(app);
+    const tileController = new TileController(app);
+    const prefabController = new PrefabController(app);
+    const mapController = new MapController(app);
 
     app.use(async (error: any, req: Request, resolve: Response, next: NextFunction) => {
         console.log(error);
@@ -203,45 +220,17 @@ AppDataSource.initialize().then(async () => {
         res.json({message: "HaScape"})
     });
 
-    // app.get('/user', async (req, res) => {
-    //     const user = await auth.getUser(req.headers.user_id as string);
-    //     if (!user) {
-    //         res.status(404).json({message: "User Does Not Exist"});
-    //     } else {
-    //         res.json(user);
-    //     }
-    // })
-
-    // // app.get('/players', async (req, res) => {
-    // //     const user = await auth.getUser(req.headers.user_id as string);
-    // //     if (user.authLevel ===)
-    // // })
-
-    // app.post('/user', async (req, res) => {
-    //     console.log(req.body); 
-    //     console.log("Create User");
-    //     if (!req.body.username) {
-    //         res.status(400).json({errors: {
-    //             username: 'Username is required',
-    //         }});
-    //         return;
-    //     }
-
-    //     // const user = await auth.createUser(req.headers.user_id as string, req.body.username);
-    //     // res.json(user);
-    // })
-
     app.listen(4201, () => {
         console.log("Listening on port 4201");
     })
 
-    setInterval(() => {
-        const usage = process.memoryUsage();
-        console.log({
-            heapUsed: `${Math.round(usage.heapUsed / 1024 / 1024)}MB`,
-            heapTotal: `${Math.round(usage.heapTotal / 1024 / 1024)}MB`,
-            rss: `${Math.round(usage.rss / 1024 / 1024)}MB`,
-        });
-    }, 5000);
+    // setInterval(() => {
+    //     const usage = process.memoryUsage();
+    //     console.log({
+    //         heapUsed: `${Math.round(usage.heapUsed / 1024 / 1024)}MB`,
+    //         heapTotal: `${Math.round(usage.heapTotal / 1024 / 1024)}MB`,
+    //         rss: `${Math.round(usage.rss / 1024 / 1024)}MB`,
+    //     });
+    // }, 5000);
 
 }).catch(error => console.log(error))

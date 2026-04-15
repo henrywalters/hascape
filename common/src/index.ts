@@ -10,6 +10,8 @@ export * from "./interfaces/dropTable";
 export * from "./interfaces/action";
 export * from "./interfaces/inventory";
 export * from "./interfaces/player";
+export * from "./interfaces/asset";
+export * from "./interfaces/prefab";
 
 export * from "./systems/players";
 
@@ -22,7 +24,6 @@ export * from "./components/npc";
 export * from "./components/healthBar";
 export * from "./components/item";
 
-export * from "./tiles";
 export * from "./constants";
 export * from "./stats";
 export * from "./messages";

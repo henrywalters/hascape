@@ -23,6 +23,8 @@ export class LoginMenu extends RenderScene {
 
             if (msg.message.type === ServerMessages.PlayerJoined) {
                 const joined = msg.message as PlayerJoined;
+
+                console.log(joined);
                 
                 // If we join, that means we're logged into the server and therefore not editing
                 State.isEditing = false;
@@ -31,7 +33,6 @@ export class LoginMenu extends RenderScene {
 
                 const scene = this.game.getScene('runtime');
 
-                this.game.activateScene('runtime');
                 const entity = scene.addEntityFromPrefab(Prefabs[PrefabTypes.Player], joined.player.username);
 
                 entity.transform.position = joined.player.position as any;
@@ -44,6 +45,10 @@ export class LoginMenu extends RenderScene {
                 character.totalHealth = joined.player.totalHealth;
                 character.health = joined.player.health;
                 character.sessionId = joined.player.sessionId;
+                character.map = joined.player.map;
+
+                console.log(character);
+
                 player.username = joined.player.username;
 
                 entity.getComponent(Smooth)!.targetPosition = entity.position;
@@ -62,6 +67,7 @@ export class LoginMenu extends RenderScene {
                     otherPlayer.username = other.username;
                     otherCharacter.totalHealth = other.totalHealth;
                     otherCharacter.health = other.health;
+                    otherCharacter.map = other.map;
 
                     otherEntity.transform.position = other.position as any;
                     otherEntity.getComponent(Smooth)!.targetPosition = otherEntity.position;
@@ -80,6 +86,7 @@ export class LoginMenu extends RenderScene {
                     character.sessionId = npc.sessionId;
                     character.health = npc.health;
                     character.totalHealth = npc.totalHealth;
+                    character.map = npc.map;
                 }
 
                 for (const item of joined.items) {
@@ -89,13 +96,16 @@ export class LoginMenu extends RenderScene {
                     itemOnGround.quantity = item.quantity;
                     itemOnGround.instanceId = item.instanceId;
                     itemOnGround.item = item.item;
+                    itemOnGround.map = item.map;
                     itemEntity.transform.position = item.position as any;
                     itemEntity.transform.position.z = 9;
                     const mesh = itemEntity.getComponent(MeshPrimitive)!;
                     mesh.texture = ITEMS[item.item].texture;
                     mesh.notifyUpdate();
 
-                    State.items.set(item.instanceId, itemEntity);
+                    State.addItem(item.map, item.instanceId, itemEntity);
+
+                    //State.items.set(item.instanceId, itemEntity);
                 }
 
                 for (const item of joined.inventory) {

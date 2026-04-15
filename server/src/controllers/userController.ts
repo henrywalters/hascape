@@ -8,11 +8,11 @@ export class UserController extends Controller {
         super(app, "user");
 
         app.get('/self', async (req, res) => {
-            return this.handle(req, res, new SuccessResult(await this.getUser(req)));
+            return this.handle(req, res, async (req, res) => new SuccessResult(await this.getUser(req)));
         })
 
         app.post('/user/auth-level', async (req, res) => {
-            return this.handle(req, res, await this.setAuthLevel(req, res));
+            return this.handle(req, res, async (req, res) => this.setAuthLevel(req, res));
         })
     }
 

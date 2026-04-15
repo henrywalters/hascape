@@ -9,20 +9,23 @@ export class ItemSystem extends BaseSystem {
 
         const runtime = this.scene as Runtime;
 
-        const despawn: string[] = [];
+        const despawn: Map<string, string[]> = new Map();
 
         this.scene.components.forEach(ItemOnGround, (item) => {
             if (item.despawnRate > 0) {
                 item.spawnedFor += dt;
 
                 if (item.spawnedFor > item.despawnRate) {
-                    despawn.push(item.instanceId);
+                    if (!despawn.has(item.map)) {
+                        despawn.set(item.map, []);
+                    }
+                    despawn.get(item.map)!.push(item.instanceId);
                 }
             }
         })
 
-        if (despawn.length > 0) {
-            this.despawnItems(despawn);
+        for (const [name, items] of despawn) {
+            this.despawnItems(name, items);
         }
     }
 }

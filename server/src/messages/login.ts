@@ -39,6 +39,9 @@ export class LoggedIn extends NetMessage {
     @Param({type: Types.String})
     username: string;
 
+    @Param({type: Types.String})
+    map: string;
+
     @Param({type: Types.Vector3})
     position: Vector3;
 

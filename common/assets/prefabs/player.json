@@ -316,7 +316,7 @@
       "id": 539773402193,
       "name": "SpriteSheet",
       "params": {
-        "spriteSheet": "warrior_idle",
+        "spriteSheet": "idle",
         "animated": true,
         "animationSpeed": 1,
         "timeSinceTick": 0.13476666659698347,
