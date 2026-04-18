@@ -9,6 +9,8 @@ import { State } from "./state";
 
 AppDataSource.initialize().then(async () => {
 
+console.log(AppDataSource.entityMetadatas.map(m => m.name));
+
     const maps = new MapService();
     const tiles = new TileService();
     State.updateMaps(await maps.getAll(), await tiles.getAll());
