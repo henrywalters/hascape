@@ -6,6 +6,7 @@ import { AppDataSource } from "./data-source";
 import { MapService } from "./services/map";
 import { TileService } from "./services/tile";
 import { State } from "./state";
+import { AuthLevel } from "./entity/user";
 
 AppDataSource.initialize().then(async () => {
 
