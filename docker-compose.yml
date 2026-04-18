@@ -6,16 +6,9 @@ services:
     container_name: hascape_postgres
     restart: always
     environment:
-      DB_HOST: postgres
-      DB_PORT: 5432
-      DB_USER: ${POSTGRES_USER}
-      DB_PASSWORD: ${POSTGRES_PASSWORD}
-      DB_NAME: ${POSTGRES_DB}
-      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
-      S3_SECRET_KEY: ${S3_SECRET_KEY}
-      S3_URL: ${S3_URL}
-      S3_BUCKET: ${S3_BUCKET}
-      S3_ROOT: ${S3_ROOT}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
     volumes:
       - postgres_data:/var/lib/postgresql/data
     healthcheck:
@@ -43,7 +36,6 @@ services:
       DB_PASSWORD: ${POSTGRES_PASSWORD}
       DB_NAME: ${POSTGRES_DB}
       GAME_SERVER_HOST: hascape-game
-      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
       S3_SECRET_KEY: ${S3_SECRET_KEY}
       S3_URL: ${S3_URL}
       S3_BUCKET: ${S3_BUCKET}
@@ -64,11 +56,20 @@ services:
     restart: always
     environment:
       NODE_ENV: production
-      DATABASE_URL: postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@postgres:5432/${POSTGRES_DB}
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: ${POSTGRES_USER}
+      DB_PASSWORD: ${POSTGRES_PASSWORD}
+      DB_NAME: ${POSTGRES_DB}
       PORT: 4200
       GAME_SERVER_HOST: hascape-game
       SERVER_HOST: 0.0.0.0
       SERVER_PORT: 4200
+      S3_ACCESS_KEY: ${S3_ACCESS_KEY}
+      S3_SECRET_KEY: ${S3_SECRET_KEY}
+      S3_URL: ${S3_URL}
+      S3_BUCKET: ${S3_BUCKET}
+      S3_ROOT: ${S3_ROOT}
     depends_on:
       postgres:
         condition: service_healthy
