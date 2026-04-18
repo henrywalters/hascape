@@ -1,15 +1,15 @@
 import { Repository } from "typeorm";
-import { Map, MapTile } from "../entity/map";
+import { GameMap, MapTile } from "../entity/map";
 import { AppDataSource } from "../data-source";
 import { MapDTO } from "@hascape/common";
 
 export class MapService {
     private tiles: Repository<MapTile>;
-    private maps: Repository<Map>;
+    private maps: Repository<GameMap>;
 
     constructor() {
         this.tiles = AppDataSource.getRepository(MapTile);
-        this.maps = AppDataSource.getRepository(Map);
+        this.maps = AppDataSource.getRepository(GameMap);
     }
 
     async getDefaultMap() {
@@ -45,7 +45,7 @@ export class MapService {
         })
     }
 
-    async update(map: Map, name: string, defaultMap: boolean, data: MapDTO) {
+    async update(map: GameMap, name: string, defaultMap: boolean, data: MapDTO) {
 
         if (name.trim().length === 0) {
             throw new Error("Map name can't be empty");
@@ -85,7 +85,7 @@ export class MapService {
             throw new Error("Map with this name already exists");
         }
 
-        const map = new Map();
+        const map = new GameMap();
         map.tiles = [];
         map.name = name;
         map.playerSpawnX = data.playerSpawnX;

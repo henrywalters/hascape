@@ -16,12 +16,12 @@ export class MapTile implements IMapTile{
     @Column('varchar')
     tileType: string;
 
-    @ManyToOne(() => Map, map => map.tiles)
-    map: Map;
+    @ManyToOne(() => GameMap, map => map.tiles)
+    map: GameMap;
 }
 
 @Entity()
-export class Map implements IMap {
+export class GameMap implements IMap {
     @PrimaryGeneratedColumn("uuid")
     id: string;
 

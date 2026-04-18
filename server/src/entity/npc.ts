@@ -1,7 +1,7 @@
 import { Column, Entity, JoinColumn, ManyToOne, OneToOne, PrimaryGeneratedColumn } from "typeorm";
 import {INPC} from "@hascape/common";
 import { Prefab } from "./prefab";
-import { Map } from "./map";
+import { GameMap } from "./map";
 
 @Entity()
 export class NPC {
@@ -72,7 +72,7 @@ export class NPCSpawner {
     @Column('float')
     minDelay: number;
 
-    @Column('float')
+    @Column('float') 
     maxDelay: number;
 
     @Column('int')
@@ -81,6 +81,6 @@ export class NPCSpawner {
     @Column('int')
     y: number;
 
-    @ManyToOne(() => Map, map => map.npcSpawners)
-    map: Map;
+    @ManyToOne(() => GameMap, map => map.npcSpawners)
+    map: GameMap;
 }

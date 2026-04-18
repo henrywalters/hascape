@@ -17,6 +17,6 @@ export class WizardsAssistant extends BaseSystem {
             }
         }
 
-        this.spawnItems('Overworld', items); 
+        // this.spawnItems('Overworld', items); 
     }
 }
