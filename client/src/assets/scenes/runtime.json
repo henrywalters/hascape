@@ -172,6 +172,7 @@
                           0.9559733532482866,
                           0
                         ],
+                        "focusable": false,
                         "opacity": 1,
                         "alignment": "Left",
                         "anchorAlignment": "Left",

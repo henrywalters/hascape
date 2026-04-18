@@ -16,6 +16,8 @@ export enum ServerMessages {
     OtherPlayerJoined,
     PlayerLeft,
     PlayerMoved,
+    PlayerTeleported,
+    OtherPlayerTeleported,
     PlayerMessaged,
     MovementUpdate,
     NPCJoined,

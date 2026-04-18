@@ -274,8 +274,8 @@
       "id": 823139532364,
       "name": "CameraZoom",
       "params": {
-        "minZoom": 0.1,
-        "maxZoom": 100,
+        "minZoom": 0.5,
+        "maxZoom": 2,
         "speed": 10
       }
     },

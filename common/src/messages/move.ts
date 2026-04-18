@@ -1,7 +1,9 @@
 import { NetMessage } from "hagamets/dist/net/messages.js";
 import { ClientMessages, ServerMessages } from "./types";
-import { Array, Float, Int, Param, String, Types } from "hagamets/dist/core/reflection.js";
+import { Array, Class, Float, Int, Param, String, Types } from "hagamets/dist/core/reflection.js";
 import { Vector3 } from "three";
+import { IOtherPlayerMessage, IPlayerMessage, NPCInstance, PlayerInstance } from "./player";
+import { ItemPickup } from "./items";
 
 export class PlayerMove extends NetMessage {
     type = ClientMessages.PlayerMove;
@@ -30,6 +32,29 @@ export class PlayerMoved extends NetMessage {
 
     @String()
     sessionId: string = "";
+}
+
+export class PlayerTeleported extends NetMessage implements IPlayerMessage {
+    type = ServerMessages.PlayerTeleported;
+
+    @Class(PlayerInstance)
+    player: PlayerInstance;
+
+    @Array(Types.Class, PlayerInstance)
+    otherPlayers: PlayerInstance[] = [];
+
+    @Array(Types.Class, NPCInstance)
+    npcs: NPCInstance[] = [];
+
+    @Array(Types.Class, ItemPickup)
+    items: ItemPickup[] = [];
+}
+
+export class OtherPlayerTeleported extends NetMessage implements IOtherPlayerMessage {
+    type = ServerMessages.OtherPlayerTeleported;
+
+    @Class(PlayerInstance)
+    player: PlayerInstance;
 }
 
 export class MovementUpdate extends NetMessage {

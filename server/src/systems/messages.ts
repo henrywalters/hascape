@@ -5,7 +5,7 @@ import { Runtime } from "../runtime";
 import { State } from "../state";
 import { Commands } from "../commands";
 import { TestCommand } from "../commands/test";
-import { ListMaps, Teleport } from "../commands/teleport";
+import { ListMaps, MoveTo, Teleport } from "../commands/teleport";
 import { Help } from "../commands/help";
 import { PlayerStats } from "../commands/stats";
 
@@ -14,6 +14,7 @@ export class MessageSystem extends System {
     onInit(): void {
         Commands.register('test', TestCommand)
         Commands.register('list_maps', ListMaps);
+        Commands.register('move', MoveTo);
         Commands.register('teleport', Teleport);
         Commands.register('stats', PlayerStats);
         Commands.register('help', Help);

@@ -9,7 +9,10 @@ export class PlayerStats implements ICommand {
     run(player: Character, scene: Runtime): boolean {
         const cell = State.grid.getCellIndex(player.entity.position);
         scene.sendResponse(player, [{
-            message: `Session ID: '${player.sessionId}' Position: ${player.entity.position.x.toFixed(2)}, ${player.entity.position.x.toFixed(2)}, ${player.entity.position.z.toFixed(2)} Cell: ${serialize({type: Types.Vector2}, cell)}`,
+            message: `Session ID: ${player.sessionId} ` + 
+                `Map: ${player.map} ` +
+                `Position: ${player.entity.position.x.toFixed(2)}, ${player.entity.position.x.toFixed(2)}, ${player.entity.position.z.toFixed(2)} ` +
+                `Cell: ${serialize({type: Types.Vector2}, cell)}`,
             responseType: ResponseType.Info,
         }])
         return true;

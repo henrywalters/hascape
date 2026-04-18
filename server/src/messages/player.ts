@@ -11,6 +11,9 @@ export class PlayerSetPosition extends NetMessage {
 
     @Param({type: Types.Vector3})
     position: Vector3;
+
+    @String()
+    map: string;
 }
 
 

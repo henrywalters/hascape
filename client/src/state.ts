@@ -4,7 +4,7 @@ import { InteractEvent } from "./interactionEvents";
 import { GridMap } from "hagamets/dist/utils/gridMap.js";
 import { Grid } from "hagamets/dist/utils/grid.js";
 import { InventoryEvent } from "./inventoryEvents";
-import { IMap, ITile } from "@hascape/common";
+import { Character, IMap, ITile } from "@hascape/common";
 import { Vector2 } from "three";
 
 class MapData {
@@ -33,6 +33,7 @@ class MapData {
 
 class _State {
     sessionId: string;
+    player: Character;
     tick: number = 0;
     grid: Grid = new Grid();
     isTyping: boolean = false;

@@ -1,6 +1,6 @@
 import { RenderScene } from "hagamets/dist/common/scenes/renderScene.js";
 import { State } from "../state";
-import { CELL_SIZE, OtherPlayerJoined, Character, PlayerJoined, CommandResponse, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem, IMap } from "@hascape/common";
+import { CELL_SIZE, OtherPlayerJoined, Character, PlayerJoined, CommandResponse, PlayerLeft, PlayerMessaged, PlayerMove, PlayerMoved, ServerMessages, WORLD_SIZE, Player, MovementUpdate, CharacterAttacked, CharacterChangeHealth, CharacterDied, NPCJoined, NPCs, ItemsSpawned, ItemOnGround, ITEMS, ItemsDespawned, Prefabs, PrefabTypes, CELLS, CHUNK_SIZE, PickedUpItem, DroppedItem, InventoryItem, IMap, PlayerTeleported, PlayerInstance, IPlayerMessage, OtherPlayerTeleported } from "@hascape/common";
 import { IEntity } from "hagamets/dist/ecs/interfaces/entity.js";
 import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
@@ -58,6 +58,9 @@ export class Runtime extends RenderScene {
     setMap(map: IMap) {
         let index = 0;
         for (const tile of map.tiles) {
+            this.tilemaps.get(tile.tileType)!.gridMap.clear();
+        }
+        for (const tile of map.tiles) {
             this.tilemaps.get(tile.tileType)!.gridMap.set(new Vector2(tile.x, tile.y) as any);
         }
         for (const [name, tilemap] of this.tilemaps) {
@@ -74,6 +77,93 @@ export class Runtime extends RenderScene {
             }
         });
         return out
+    }
+
+    spawnPlayer(instance: PlayerInstance) {
+        const entity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], instance.username);
+
+        const character = entity.getComponent(Character)!;
+        const player = entity.getComponent(Player)!;
+        character.sessionId = instance.sessionId;
+        character.health = instance.health;
+        character.totalHealth = instance.totalHealth;
+        character.map = instance.map;
+        player.username = instance.username;
+
+        entity.transform.position = instance.position as any;
+
+        const smooth = entity.getComponent(Smooth)!;
+        smooth.targetPosition = entity.position;
+
+        const text = entity.getComponentInChildren(TextMesh)!;
+        text.text = instance.username;
+        text.notifyUpdate();
+
+        return entity;
+    }
+
+    clearEntities() {
+        this.components.forEach(Character, (character) => {
+            if (State.player.sessionId === character.sessionId) return;
+            this.removeEntity(character.entity);
+        });
+
+        this.components.forEach(ItemOnGround, (item) => {
+            this.removeEntity(item.entity);
+        })
+    }
+
+    spawnEntities(message: IPlayerMessage) {
+        for (const other of message.otherPlayers) {
+            if (other.map !== message.player.map) continue;
+            const otherEntity = this.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], other.username)
+            const otherCharacter = otherEntity.getComponent(Character)!;
+            const otherPlayer = otherEntity.getComponent(Player)!;
+            otherCharacter.sessionId = other.sessionId;
+            otherPlayer.username = other.username;
+            otherCharacter.totalHealth = other.totalHealth;
+            otherCharacter.health = other.health;
+            otherCharacter.map = other.map;
+
+            otherEntity.transform.position = other.position as any;
+            otherEntity.getComponent(Smooth)!.targetPosition = otherEntity.position;
+
+            const otherText = otherEntity.getComponentInChildren(TextMesh)!;
+            otherText.text = otherPlayer.username;
+            otherText.notifyUpdate();
+        }
+
+        for (const npc of message.npcs) {
+            if (npc.map !== message.player.map) continue;
+            const npcEntity = this.addEntityFromPrefab(NPCs[npc.npcType].prefab);
+            npcEntity.transform.position = npc.position as any;
+            npcEntity.transform.position.z = 10;
+
+            const character = npcEntity.getComponent(Character)!;
+            character.sessionId = npc.sessionId;
+            character.health = npc.health;
+            character.totalHealth = npc.totalHealth;
+            character.map = npc.map;
+        }
+
+        for (const item of message.items) {
+            if (item.map !== message.player.map) continue;
+            const itemEntity = this.addEntityFromPrefab(Prefabs[PrefabTypes.ItemOnGround]);
+            const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
+            itemOnGround.quantity = item.quantity;
+            itemOnGround.instanceId = item.instanceId;
+            itemOnGround.item = item.item;
+            itemOnGround.map = item.map;
+            itemEntity.transform.position = item.position as any;
+            itemEntity.transform.position.z = 9;
+            const mesh = itemEntity.getComponent(MeshPrimitive)!;
+            mesh.texture = ITEMS[item.item].texture;
+            mesh.notifyUpdate();
+
+            State.addItem(item.map, item.instanceId, itemEntity);
+
+            //State.items.set(item.instanceId, itemEntity);
+        }
     }
 
     onUpdate(dt: number) {
@@ -119,43 +209,22 @@ export class Runtime extends RenderScene {
         this.game.client.flushMessages((msg) => {
 
             if (msg.message.type === ServerMessages.ActionReceived) {
-                console.log(msg.message);
+                
             }
 
             if (msg.message.type === ServerMessages.OtherPlayerJoined) {
                 const joined = msg.message as OtherPlayerJoined;
-                console.log(joined);
+
+                if (joined.player.map !== thisCharacter.map) return;
                     
-                const entity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], joined.player.username);
-
-                const character = entity.getComponent(Character)!;
-                const player = entity.getComponent(Player)!;
-                character.sessionId = joined.player.sessionId;
-                character.health = joined.player.health;
-                character.totalHealth = joined.player.totalHealth;
-                character.map = joined.player.map;
-                player.username = joined.player.username;
-
-                entity.transform.position = joined.player.position as any;
-
-                const smooth = entity.getComponent(Smooth)!;
-                smooth.targetPosition = entity.position;
-
-                const text = entity.getComponentInChildren(TextMesh)!;
-                text.text = joined.player.username;
-                text.notifyUpdate();
-
-                console.log(this.entities);
+                this.spawnPlayer(joined.player);
             }
 
             if (msg.message.type === ServerMessages.PlayerLeft) {
                 const left = msg.message as PlayerLeft;
 
-                console.log(left);
-                
                 const entity = this.getPlayer(left.sessionId);
                 if (entity) {
-                    console.log(`Entity ${entity.name} has left`);
                     this.removeEntity(entity.id);
                 }
             }
@@ -165,7 +234,6 @@ export class Runtime extends RenderScene {
 
                 const entity = this.getPlayer(moved.sessionId);
                 if (entity) {
-                    console.log(moved);
                     const smooth = entity.getComponent(Smooth);
                     const player = entity.getComponent(Character)!;
                     player.entity.transform.position.z = 10;
@@ -229,7 +297,6 @@ export class Runtime extends RenderScene {
             if (msg.message.type === ServerMessages.CharacterAttacked) {
                 const message = msg.message as CharacterAttacked;
                 const player = this.getPlayer(message.sessionId);
-                console.log(message);
 
                 if (player) {
                     player.getComponent(Character)!.isAttacking = true;
@@ -255,6 +322,8 @@ export class Runtime extends RenderScene {
             if (msg.message.type === ServerMessages.NPCJoined) {
                 const message = msg.message as NPCJoined;
 
+                if (message.npc.map !== thisCharacter.map) return;
+
                 const npcEntity = this.game.currentScene!.addEntityFromPrefab(NPCs[message.npc.npcType].prefab);
                 npcEntity.transform.position = message.npc.position as any;
                 npcEntity.transform.position.z = 10;
@@ -267,10 +336,13 @@ export class Runtime extends RenderScene {
             }
 
             if (msg.message.type === ServerMessages.ItemsSpawned) {
-                console.log(msg.message);
+
                 const message = msg.message as ItemsSpawned;
 
                 for (const item of message.items) {
+
+                    if (item.map !== thisCharacter.map) continue;
+
                     const itemEntity = this.game.currentScene!.addEntityFromPrefab(Prefabs[PrefabTypes.ItemOnGround]);
                     const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
                     itemOnGround.quantity = item.quantity;
@@ -316,6 +388,53 @@ export class Runtime extends RenderScene {
                     type: InventoryEvents.RemoveItemFromInventory,
                     item,
                 })
+            }
+
+            if (msg.message.type === ServerMessages.PlayerTeleported) {
+                const moved = msg.message as PlayerTeleported;
+
+                const entity = this.getPlayer(moved.player.sessionId);
+                if (entity) {
+                    const smooth = entity.getComponent(Smooth);
+                    const player = entity.getComponent(Character)!;
+                    player.entity.transform.position.x = moved.player.position.x;
+                    player.entity.transform.position.y = moved.player.position.y;
+                    player.entity.transform.position.z = 10;
+                    player.map = moved.player.map;
+                    moved.player.position.z = 10;
+                    smooth!.speed = player.speed;
+                    smooth!.targetPosition = moved.player.position as any;
+                    player.direction = new Vector3(0, 0, 0);
+
+                    this.clearEntities();
+                    this.setMap(State.getMap(player.map).map);
+                    this.spawnEntities(moved);
+                }
+            }
+
+            if (msg.message.type === ServerMessages.OtherPlayerTeleported) {
+                const moved = msg.message as OtherPlayerTeleported;
+
+                let entity = this.getPlayer(moved.player.sessionId);
+
+                if (moved.player.map !== thisCharacter.map) {
+                    if (!entity) return;
+                    this.removeEntity(entity);
+                } else {
+                    if (!entity) {
+                        entity = this.spawnPlayer(moved.player);
+                    }
+                    const smooth = entity.getComponent(Smooth);
+                    const player = entity.getComponent(Character)!;
+                    player.entity.transform.position.x = moved.player.position.x;
+                    player.entity.transform.position.y = moved.player.position.y;
+                    player.entity.transform.position.z = 10;
+                    player.map = moved.player.map;
+                    moved.player.position.z = 10;
+                    smooth!.speed = player.speed;
+                    smooth!.targetPosition = moved.player.position as any;
+                    player.direction = new Vector3(0, 0, 0);
+                }
             }
         });
     }

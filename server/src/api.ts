@@ -134,7 +134,7 @@ AppDataSource.initialize().then(async () => {
             const setPos = message as PlayerSetPosition;
             const session = await players.getSession(setPos.sessionId);
             if (!session) return;
-            await players.setPlayerPosition(session.player, setPos.position);
+            await players.setPlayerPosition(session.player, setPos.position, setPos.map);
         }
 
         if (message.type === ServerMessages.PlayerSendMessage) {

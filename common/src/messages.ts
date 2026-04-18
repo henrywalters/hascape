@@ -1,6 +1,6 @@
 import { NetMessages } from "hagamets/dist/net/messages.js";
 import { ClientConnect, ClientConnectFailed, Ping, Pong } from "./messages/connect";
-import { MovementUpdate, PlayerMove, PlayerMoved } from "./messages/move";
+import { MovementUpdate, OtherPlayerTeleported, PlayerMove, PlayerMoved, PlayerTeleported } from "./messages/move";
 import { ActionReceived, CharacterAction, CharacterChangeHealth, CharacterDied, CharacterInteract, NPCJoined, OtherPlayerJoined, PlayerJoined, PlayerLeft } from "./messages/player";
 import { PlayerMessage, PlayerMessaged } from "./messages/chat";
 import { CharacterAttack, CharacterAttacked } from "./messages/attack";
@@ -21,6 +21,8 @@ export const CLIENT_MESSAGES = new NetMessages([
 export const SERVER_MESSAGES = new NetMessages([
     Pong,
     PlayerMoved,
+    PlayerTeleported,
+    OtherPlayerTeleported,
     PlayerJoined,
     ClientConnectFailed,
     OtherPlayerJoined,

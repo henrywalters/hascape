@@ -20,7 +20,8 @@ export class CameraController extends Script {
     onUpdate(dt: number) {
         const camera = this.entity.getComponent(OrthographicCamera);
         if (camera) {
-            camera.zoom = clamp(camera.zoom + this.input.getAxis(Axes.MouseWheel).y * dt * this.zoomSpeed, this.minZoom, this.maxZoom);
+            // camera.zoom = clamp(camera.zoom + this.input.getAxis(Axes.MouseWheel).y * dt * this.zoomSpeed, this.minZoom, this.maxZoom);
+            console.log(camera.zoom);
         }
     }
 }

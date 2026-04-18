@@ -7,6 +7,7 @@ import { Smooth } from "hagamets/dist/common/components/smooth.js";
 import { MeshPrimitive, TextMesh } from "hagamets/dist/common/components/mesh.js";
 import { CameraZoom } from "hagamets/dist/common/components/camera.js";
 import { InventoryEvents } from "../inventoryEvents";
+import { Runtime } from "./runtime";
 
 export class LoginMenu extends RenderScene {
     constructor(game: IGame) {
@@ -31,13 +32,11 @@ export class LoginMenu extends RenderScene {
 
                 State.sessionId = joined.player.sessionId;
 
-                const scene = this.game.getScene('runtime');
+                const scene = this.game.getScene('runtime') as Runtime;
 
                 const entity = scene.addEntityFromPrefab(Prefabs[PrefabTypes.Player], joined.player.username);
 
                 entity.transform.position = joined.player.position as any;
-
-                entity.addComponent(CameraZoom);
 
                 const character = entity.getComponent(Character)!;
                 const player = entity.getComponent(Player)!;
@@ -47,7 +46,7 @@ export class LoginMenu extends RenderScene {
                 character.sessionId = joined.player.sessionId;
                 character.map = joined.player.map;
 
-                console.log(character);
+                State.player = character;
 
                 player.username = joined.player.username;
 
@@ -59,54 +58,7 @@ export class LoginMenu extends RenderScene {
                 
                 entity.transform.position = joined.player.position as any;
 
-                for (const other of joined.otherPlayers) {
-                    const otherEntity = scene.addEntityFromPrefab(Prefabs[PrefabTypes.OtherPlayer], other.username)
-                    const otherCharacter = otherEntity.getComponent(Character)!;
-                    const otherPlayer = otherEntity.getComponent(Player)!;
-                    otherCharacter.sessionId = other.sessionId;
-                    otherPlayer.username = other.username;
-                    otherCharacter.totalHealth = other.totalHealth;
-                    otherCharacter.health = other.health;
-                    otherCharacter.map = other.map;
-
-                    otherEntity.transform.position = other.position as any;
-                    otherEntity.getComponent(Smooth)!.targetPosition = otherEntity.position;
-
-                    const otherText = otherEntity.getComponentInChildren(TextMesh)!;
-                    otherText.text = otherPlayer.username;
-                    otherText.notifyUpdate();
-                }
-
-                for (const npc of joined.npcs) {
-                    const npcEntity = scene.addEntityFromPrefab(NPCs[npc.npcType].prefab);
-                    npcEntity.transform.position = npc.position as any;
-                    npcEntity.transform.position.z = 10;
-
-                    const character = npcEntity.getComponent(Character)!;
-                    character.sessionId = npc.sessionId;
-                    character.health = npc.health;
-                    character.totalHealth = npc.totalHealth;
-                    character.map = npc.map;
-                }
-
-                for (const item of joined.items) {
-                    console.log(item);
-                    const itemEntity = scene.addEntityFromPrefab(ItemOnGroundPrefab);
-                    const itemOnGround = itemEntity.getComponent(ItemOnGround)!;
-                    itemOnGround.quantity = item.quantity;
-                    itemOnGround.instanceId = item.instanceId;
-                    itemOnGround.item = item.item;
-                    itemOnGround.map = item.map;
-                    itemEntity.transform.position = item.position as any;
-                    itemEntity.transform.position.z = 9;
-                    const mesh = itemEntity.getComponent(MeshPrimitive)!;
-                    mesh.texture = ITEMS[item.item].texture;
-                    mesh.notifyUpdate();
-
-                    State.addItem(item.map, item.instanceId, itemEntity);
-
-                    //State.items.set(item.instanceId, itemEntity);
-                }
+                scene.spawnEntities(joined);
 
                 for (const item of joined.inventory) {
                     State.inventoryEvents.emit({

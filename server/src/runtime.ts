@@ -1,6 +1,6 @@
 import { IGame } from "hagamets/dist/core/interfaces/game.js";
 import { Scene } from "hagamets/dist/core/scene.js";
-import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed, IMap, IResponseMessage, CommandResponse, ResponseMessage } from "@hascape/common";
+import { ClientConnect, ClientMessages, Character, PlayerJoined, OtherPlayerJoined, PlayerLeft, PlayerMove, PlayerMoved, PlayerInstance, PlayerMessage, PlayerMessaged, Player, NPC, NPCInstance, MovementUpdate, CharacterAttacked, SERVER_MESSAGES, CharacterChangeHealth, NPCJoined,  ItemInstance, ItemOnGround, ItemPickup, ItemsSpawned, ItemsDespawned, CharacterAction, Actions, ActionReceived, INVENTORY_SLOTS, PickedUpItem, DroppedItem, ClientConnectFailed, IMap, IResponseMessage, CommandResponse, ResponseMessage, PlayerTeleported, OtherPlayerTeleported } from "@hascape/common";
 import { Pubsub, PubsubType } from "./services/pubsub";
 import { WebSocket } from "ws";
 import { LoggedIn, LoggedOut, Login, LoginFailed, Logout } from "./messages/login";
@@ -67,6 +67,7 @@ export class Runtime extends Scene {
                 if (!player) return;
                 const character = e.entity.getComponent(Character)!;
                 const setPos = new PlayerSetPosition();
+                setPos.map = character.map;
                 setPos.sessionId = character.sessionId;
                 setPos.position = e.entity.position as any;
                 this.pubsub.send(setPos);
@@ -135,6 +136,64 @@ export class Runtime extends Scene {
         this.characterMoves.clear();
     }
 
+    private getOtherPlayers(player: Character) {
+
+        const instances: PlayerInstance[] = [];
+
+        this.components.forEach(Character, (other) => {
+            if (other.id === player.id) return;
+            const otherPlayer = other.entity.getComponent(Player)!;
+
+            if (player.map !== other.map) return;
+
+            const existing = new PlayerInstance();
+            existing.sessionId = other.sessionId;
+            existing.health = other.health;
+            existing.totalHealth = other.totalHealth;
+            existing.username = otherPlayer.username;
+            existing.position = other.entity.position as any;
+            existing.map = other.map;
+            
+            instances.push(existing);
+        });
+
+        return instances;
+    }
+
+    private getOtherNPCs(character: Character) {
+        const instances: NPCInstance[] = [];
+        this.components.forEach(NPC, (npc) => {
+            if (npc.map !== character.map) return;
+            const instance = new NPCInstance();
+            const otherCharacter = npc.entity.getComponent(Character)!;
+            instance.sessionId = otherCharacter.sessionId;
+            instance.npcType = npc.npcType;
+            instance.totalHealth = otherCharacter.totalHealth;
+            instance.health = otherCharacter.health;
+            instance.position = npc.entity.position as any;
+            instance.map = npc.map;
+
+            instances.push(instance);
+        });
+
+        return instances;
+    }
+
+    private getOtherItems(character: Character) {
+        const instances: ItemPickup[] = [];
+        this.components.forEach(ItemOnGround, (item) => {
+            if (item.map !== character.map) return;
+            const instance = new ItemPickup();
+            instance.item = item.item;
+            instance.quantity = item.quantity; 
+            instance.instanceId = item.instanceId; 
+            instance.position = item.entity.position as any;
+            instance.map = item.map;
+            instances.push(instance);
+        })
+        return instances;
+    }
+    
     private loggedIn(loggedIn: LoggedIn) {
         if (State.playerSessions.has(loggedIn.sessionId)) {
             const connectFailed = new ClientConnectFailed();
@@ -143,9 +202,6 @@ export class Runtime extends Scene {
             return;
         }
 
-        // const entity = this.addEntity();
-        // entity.addComponent(Transform);
-        // const player = entity.addComponent(Character);
         const entity = this.addEntityFromPrefab(PlayerPrefab, loggedIn.username);
         const character = entity.getComponent(Character)!;
 
@@ -181,47 +237,9 @@ export class Runtime extends Scene {
         State.socketSessions.set(socket, message.player.sessionId);
         State.sessionSockets.set(message.player.sessionId, socket);
 
-        this.components.forEach(Player, (other) => {
-            if (other.id === player.id) return;
-            const otherCharacter = other.entity.getComponent(Character)!;
-
-            if (character.map !== otherCharacter.map) return;
-
-            const existing = new PlayerInstance();
-            existing.sessionId = otherCharacter.sessionId;
-            existing.health = otherCharacter.health;
-            existing.totalHealth = otherCharacter.totalHealth;
-            existing.username = other.username;
-            existing.position = other.entity.position as any;
-            existing.map = otherCharacter.map;
-            
-            message.otherPlayers.push(existing);
-        })
-
-        this.components.forEach(NPC, (npc) => {
-            if (npc.map !== character.map) return;
-            const instance = new NPCInstance();
-            const otherCharacter = npc.entity.getComponent(Character)!;
-            instance.sessionId = otherCharacter.sessionId;
-            instance.npcType = npc.npcType;
-            instance.totalHealth = otherCharacter.totalHealth;
-            instance.health = otherCharacter.health;
-            instance.position = npc.entity.position as any;
-            instance.map = npc.map;
-
-            message.npcs.push(instance);
-        })
-
-        this.components.forEach(ItemOnGround, (item) => {
-            if (item.map !== character.map) return;
-            const instance = new ItemPickup();
-            instance.item = item.item;
-            instance.quantity = item.quantity; 
-            instance.instanceId = item.instanceId; 
-            instance.position = item.entity.position as any;
-            instance.map = item.map;
-            message.items.push(instance);
-        })
+        message.otherPlayers = this.getOtherPlayers(character);
+        message.npcs = this.getOtherNPCs(character);
+        message.items = this.getOtherItems(character);
 
         socket.send(this.game.server.serverMessages.write(message));
 
@@ -283,6 +301,66 @@ export class Runtime extends Scene {
         }
 
         this.characterMoves.get(chunk)!.push(moved);
+    }
+
+    public characterTeleport(player: Character, position: Vector3, map: string) {
+
+        let notify: Set<WebSocket> = new Set();
+
+        const thisPlayer = player.entity.getComponent(Player)!;
+
+        const appendNotify = () => {
+            const startChunk = State.chunks.getCellIndex(player.entity.position as any);
+            const startMap = State.getMap(player.map);
+            for (const neighbor of State.chunks.getNeighborhood(startChunk)) {
+                const neighbors = startMap.players.get(neighbor);
+                if (neighbors) {
+                    for (const other of neighbors) {
+                        const character = other.getComponent(Character);
+                        if (!character || character.id === player.id) continue;
+                        if (State.sessionSockets.has(character.sessionId)) {
+                            notify.add(State.sessionSockets.get(character.sessionId)!);
+                        }
+                    }
+                }
+            }
+        }
+
+        appendNotify();
+
+        player.map = map;
+        player.entity.transform.position.copy(position);
+        player.entity.getComponent(Transform)!.notifyUpdate();
+
+        const instance = new PlayerInstance();
+        instance.health = player.health;
+        instance.isAdmin = thisPlayer.isAdmin;
+        instance.username = thisPlayer.username;
+        instance.map = player.map;
+        instance.position = player.entity.position as any;
+        instance.sessionId = player.sessionId;
+        instance.totalHealth = player.totalHealth;
+
+        appendNotify();
+
+        const teleported = new PlayerTeleported();
+        teleported.player = instance;
+        teleported.otherPlayers = this.getOtherPlayers(player);
+        teleported.items = this.getOtherItems(player);
+        teleported.npcs = this.getOtherNPCs(player);
+
+        const otherTeleported = new OtherPlayerTeleported();
+        otherTeleported.player = instance;
+
+        State.sessionSockets.get(player.sessionId)!.send(this.game.server.serverMessages.write(teleported));
+
+        player.path = [];
+
+        const buffer = this.game.server.serverMessages.write(otherTeleported);
+
+        for (const socket of notify) {
+            socket.send(buffer);
+        }
     }
 
     private sendMessage(mapName: string, msg: ArrayBuffer, chunk: Vector2) {

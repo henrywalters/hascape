@@ -41,13 +41,9 @@ export class Inventory extends Script {
 
                 this.slots[e.item.position].item = e.item;
             } else if (e.type === InventoryEvents.RemoveItemFromInventory) {
-                console.log(e);
                 for (let slot of this.slots) {
-                    console.log(slot);
                     if (slot.item && slot.item.instanceId === e.item.instanceId) {
-                        console.log("Hit");
                         slot.entity.removeChildren();
-                        console.log("Removed: " + slot.entity.id);
                         slot.item = void 0;
                     }
                 }

@@ -53,7 +53,18 @@ export class NPCInstance {
     map: string;
 }
 
-export class PlayerJoined extends NetMessage {
+export interface IPlayerMessage {
+    player: PlayerInstance;
+    otherPlayers: PlayerInstance[];
+    npcs: NPCInstance[];
+    items: ItemPickup[];
+}
+
+export interface IOtherPlayerMessage {
+    player: PlayerInstance;
+}
+
+export class PlayerJoined extends NetMessage implements IPlayerMessage {
     type = ServerMessages.PlayerJoined;
 
     @Class(PlayerInstance)
@@ -72,7 +83,7 @@ export class PlayerJoined extends NetMessage {
     inventory: InventoryItem[] = [];
 }
 
-export class OtherPlayerJoined extends NetMessage {
+export class OtherPlayerJoined extends NetMessage implements IOtherPlayerMessage {
     type = ServerMessages.OtherPlayerJoined;
 
     @Class(PlayerInstance)
