@@ -1,3 +1,4 @@
+import "reflect-metadata"
 import { Clock } from "three";
 import { Game } from "hagamets/dist/core/game.js";
 import { Manifest } from "./manifest";
