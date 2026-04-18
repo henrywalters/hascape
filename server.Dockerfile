@@ -48,4 +48,6 @@ COPY --from=build /app/hgts/ ./node_modules/hagamets/
 
 EXPOSE 4200
 
-CMD ["tsx", "--tsconfig", "server/tsconfig.json", "server/src/server.ts"]
+WORKDIR /app/server
+
+CMD ["tsx", "--tsconfig", "tsconfig.json", "src/server.ts"]
